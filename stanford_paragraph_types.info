@@ -13,6 +13,7 @@ dependencies[] = strongarm
 dependencies[] = tablefield
 dependencies[] = text
 dependencies[] = video_embed_field
+stylesheets[all][] = css/stanford-paragraph-types.min.css
 features[ctools][] = strongarm:strongarm:1
 features[features_api][] = api:2
 features[field_base][] = field_s_author
