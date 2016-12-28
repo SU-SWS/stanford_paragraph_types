@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_p_wysiwyg
+    - paragraphs.paragraphs_type.stanford_callout_text
+  module:
+    - allowed_formats
+    - text
+third_party_settings:
+  allowed_formats:
+    restricted_html: restricted_html
+    content_editor: '0'
+    markdown: '0'
+    basic_html: '0'
+    full_html: '0'
+    plain_text: '0'
+id: paragraph.stanford_callout_text.field_p_wysiwyg
+field_name: field_p_wysiwyg
+entity_type: paragraph
+bundle: stanford_callout_text
+label: WYSIWYG
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+field_type: text_with_summary

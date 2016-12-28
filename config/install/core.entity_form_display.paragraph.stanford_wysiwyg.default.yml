@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_wysiwyg.field_p_wysiwyg
+    - paragraphs.paragraphs_type.stanford_wysiwyg
+  module:
+    - text
+id: paragraph.stanford_wysiwyg.default
+targetEntityType: paragraph
+bundle: stanford_wysiwyg
+mode: default
+content:
+  field_p_wysiwyg:
+    weight: 0
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea_with_summary
+hidden:
+  created: true
+  status: true
+  uid: true

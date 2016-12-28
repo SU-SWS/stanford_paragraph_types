@@ -1,0 +1,57 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_hero.field_p_hero_headline
+    - field.field.paragraph.stanford_hero.field_p_hero_image
+    - field.field.paragraph.stanford_hero.field_p_hero_more_link
+    - field.field.paragraph.stanford_hero.field_p_hero_superhead
+    - field.field.paragraph.stanford_hero.field_p_hero_video
+    - image.style.thumbnail
+    - paragraphs.paragraphs_type.stanford_hero
+  module:
+    - image
+    - link
+    - video_embed_field
+id: paragraph.stanford_hero.default
+targetEntityType: paragraph
+bundle: stanford_hero
+mode: default
+content:
+  field_p_hero_headline:
+    weight: 4
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_p_hero_image:
+    weight: 1
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+  field_p_hero_more_link:
+    weight: 5
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+  field_p_hero_superhead:
+    weight: 3
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+  field_p_hero_video:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    type: video_embed_field_textfield
+hidden:
+  created: true
+  status: true
+  uid: true

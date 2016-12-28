@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_p_hero_more_link
+    - paragraphs.paragraphs_type.stanford_hero
+  module:
+    - link
+id: paragraph.stanford_hero.field_p_hero_more_link
+field_name: field_p_hero_more_link
+entity_type: paragraph
+bundle: stanford_hero
+label: 'More Link'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+  title_predefined: ''
+field_type: link

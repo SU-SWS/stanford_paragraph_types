@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_callout_text.field_p_callout_more_link
+    - field.field.paragraph.stanford_callout_text.field_p_wysiwyg
+    - paragraphs.paragraphs_type.stanford_callout_text
+  module:
+    - link
+    - text
+id: paragraph.stanford_callout_text.default
+targetEntityType: paragraph
+bundle: stanford_callout_text
+mode: default
+content:
+  field_p_callout_more_link:
+    weight: 1
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+  field_p_wysiwyg:
+    weight: 0
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+hidden:
+  created: true
+  uid: true

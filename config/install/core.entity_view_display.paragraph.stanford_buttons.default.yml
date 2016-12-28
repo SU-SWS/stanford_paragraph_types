@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_buttons.field_p_buttons_button
+    - paragraphs.paragraphs_type.stanford_buttons
+  module:
+    - link
+id: paragraph.stanford_buttons.default
+targetEntityType: paragraph
+bundle: stanford_buttons
+mode: default
+content:
+  field_p_buttons_button:
+    weight: 0
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+hidden:
+  created: true
+  uid: true
