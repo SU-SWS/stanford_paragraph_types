@@ -1,11 +1,16 @@
 #[Stanford Paragraph Types](https://github.com/SU-SWS/stanford_paragraph_types)
 ##### Version: 7.x-1.x
 
-Maintainers: [jbickar](https://github.com/jbickar), [sherakama](https://github.com/sherakama)
+Maintainers: [pookmish](https://github.com/pookmish), [jbickar](https://github.com/jbickar), [sherakama](https://github.com/sherakama)
 [Changelog.txt](CHANGELOG.txt)
 
-The Stanford Module feature is used to hold a package of common and useful
-Paragraph types.
+The Stanford Module feature is used to hold a package of common and useful Paragraph types.
+
+Sub Modules
+---
+
+**[Stanford Minimal Filter](modules/stanford_minimal_filter)**
+This sub module contains a minimal html filter and wysiwyg setting option for use in simple Paragraph types.
 
 Installation
 ---

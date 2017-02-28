@@ -8,7 +8,7 @@
  * Implements hook_ctools_plugin_api().
  */
 function stanford_paragraph_types_ctools_plugin_api($module = NULL, $api = NULL) {
-  if ($module == "strongarm" && $api == "strongarm") {
+  if ($module == "field_group" && $api == "field_group") {
     return array("version" => "1");
   }
 }
@@ -18,39 +18,34 @@ function stanford_paragraph_types_ctools_plugin_api($module = NULL, $api = NULL)
  */
 function stanford_paragraph_types_paragraphs_info() {
   $items = array(
-    'stanford_block' => array(
-      'name' => 'Block',
-      'bundle' => 'stanford_block',
+    'p_buttons' => array(
+      'name' => 'Buttons',
+      'bundle' => 'p_buttons',
       'locked' => '1',
     ),
-    'stanford_gallery' => array(
-      'name' => 'Gallery',
-      'bundle' => 'stanford_gallery',
+    'p_callout' => array(
+      'name' => 'Callout Text',
+      'bundle' => 'p_callout',
       'locked' => '1',
     ),
-    'stanford_image' => array(
-      'name' => 'Image',
-      'bundle' => 'stanford_image',
+    'p_cards' => array(
+      'name' => 'Teaser Cards',
+      'bundle' => 'p_cards',
       'locked' => '1',
     ),
-    'stanford_pull_quote' => array(
-      'name' => 'Pull Quote',
-      'bundle' => 'stanford_pull_quote',
+    'p_hero' => array(
+      'name' => 'Hero',
+      'bundle' => 'p_hero',
       'locked' => '1',
     ),
-    'stanford_table_data' => array(
-      'name' => 'Table Data',
-      'bundle' => 'stanford_table_data',
+    'p_menu' => array(
+      'name' => 'Menu',
+      'bundle' => 'p_menu',
       'locked' => '1',
     ),
-    'stanford_video' => array(
-      'name' => 'Video',
-      'bundle' => 'stanford_video',
-      'locked' => '1',
-    ),
-    'stanford_wysiwyg' => array(
+    'p_wysiwyg' => array(
       'name' => 'WYSIWYG',
-      'bundle' => 'stanford_wysiwyg',
+      'bundle' => 'p_wysiwyg',
       'locked' => '1',
     ),
   );

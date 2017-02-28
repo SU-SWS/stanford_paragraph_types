@@ -1,7 +1,361 @@
 <?php
+
 /**
  * @file
  * Code for the Stanford Paragraph Types feature.
  */
 
 include_once 'stanford_paragraph_types.features.inc';
+
+/**
+ * Implements hook_theme_registry_alter().
+ *
+ * @see https://www.drupal.org/docs/7/creating-custom-modules/howtos/using-template-tplphp-files-in-your-own-module
+ */
+function stanford_paragraph_types_theme_registry_alter(&$theme_registry) {
+  $module_path = drupal_get_path('module', 'stanford_paragraph_types');
+  $template_objects = drupal_find_theme_templates($theme_registry, '.tpl.php', $module_path);
+  foreach ($template_objects as $key => $template_object) {
+    if (!isset($theme_registry[$key]['theme path']) || !preg_match('#/themes/#', $theme_registry[$key]['theme path'])) {
+      $theme_registry[$key]['theme path'] = $module_path;
+      $theme_registry[$key] = array_merge($theme_registry[$key], $template_object);
+      $theme_registry[$key]['type'] = 'module';
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_entity().
+ *
+ * Apply classes to certain paragraph entities & alter the field collection
+ * within the Teaser Cards paragraph type.
+ */
+function stanford_paragraph_types_preprocess_entity(&$vars) {
+  if (isset($vars['paragraphs_item'])) {
+    drupal_add_css(drupal_get_path('module', 'stanford_paragraph_types') . '/css/stanford_paragraph_types.css');
+    $entity = &$vars['paragraphs_item'];
+
+    // Adds to push following fields down.
+    $vars['classes_array'][] = 'clearfix';
+
+    switch ($entity->bundle) {
+      case 'p_hero':
+        // Adds class to tell where the overlay should live.
+        $classes = explode(' ', $entity->field_p_hero_alignment[LANGUAGE_NONE][0]['value']);
+        foreach ($classes as $class) {
+          $vars['classes_array'][] = $class;
+        }
+        break;
+
+      default:
+        // Other paragraph types that should be centered and not full width.
+        $vars['classes_array'][] = 'span12';
+        $vars['classes_array'][] = 'center';
+        break;
+    }
+  }
+
+  if ($vars['entity_type'] == 'field_collection_item' && isset($vars['field_p_card_image'])) {
+    // Depending what the user wants to use as the CTA link, hide the unwanted.
+    if ($vars['field_collection_item']->field_p_card_action_button[LANGUAGE_NONE][0]['value'] == 'link') {
+      unset($vars['content']['field_p_card_file']);
+    }
+    else {
+      unset($vars['content']['field_p_card_cta']);
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_block().
+ */
+function stanford_paragraph_types_preprocess_block(&$vars) {
+  if (isset($vars['elements']['#blockreference_element'])) {
+
+    // Change span* classes so the block will be 100% of the field area for
+    // blockreference field rendered blocks.
+    array_walk($vars['classes_array'], function (&$array) {
+      $array = preg_replace("/span[1-9]/", "reference-$0", $array);
+    });
+  }
+}
+
+/**
+ * Implements hook_preprocess_entity().
+ */
+function stanford_paragraph_types_preprocess_field(&$vars) {
+  switch ($vars['element']['#field_name']) {
+    case 'field_p_cards_card':
+
+      // Sets a class depending how many items exist.
+      $class = count($vars['items']) == 2 ? 'span6' : 'span4';
+      foreach ($vars['items'] as &$item) {
+        $item['#attributes']['class'][] = $class;
+      }
+
+      break;
+
+    case 'field_p_card_image':
+
+      // Change the image's link based on configured fields.
+      $object = $vars['element']['#object'];
+      unset($vars['items'][0]['#path']);
+
+      if ($object->field_p_card_action_button['und'][0]['value'] == 'file') {
+        // File Link Type.
+        if (!empty($object->field_p_card_file)) {
+          // File field is populated.
+          $vars['items'][0]['#path']['path'] = file_create_url($object->field_p_card_file[LANGUAGE_NONE][0]['uri']);
+        }
+      }
+      else {
+        // Normal Link Type.
+        if (!empty($object->field_p_card_cta)) {
+          // CTA field is populated.
+          $vars['items'][0]['#path']['path'] = $vars['element']['#object']->field_p_card_cta[LANGUAGE_NONE][0]['url'];
+        }
+      }
+
+      break;
+
+    case 'field_p_card_file':
+
+      // Make a simple link from the href and add btn class to tag instead of
+      // the normal display mode.
+      foreach ($vars['element']['#items'] as $delta => $item) {
+        if (!empty($item['description'])) {
+          $title = t($item['description']);
+        }
+        else {
+          $title = t($item['filename']);
+        }
+        $vars['items'][$delta]['#markup'] = l($title, file_create_url($item['uri']), array('attributes' => array('class' => array('btn'))));
+      }
+      break;
+
+    case 'field_p_hero_video':
+    case 'field_p_hero_image':
+      drupal_add_js(drupal_get_path('module', 'stanford_paragraph_types') . '/js/stanford_paragraph_types.js');
+      break;
+  }
+}
+
+/**
+ * Implements hook_field_group_pre_render().
+ */
+function stanford_paragraph_types_field_group_pre_render(&$element, $group, &$form) {
+
+  // ALL paragraph types only on the edit form.
+  if ($group->entity_type == 'paragraphs_item' && !$group->parent_name && !isset($form['#theme'])) {
+    // Collapse top level field groups to make UI slimmer if editing.
+    $field_instances = field_info_instances($group->entity_type, $group->bundle);
+    foreach (array_keys($field_instances) as $field_name) {
+      if (!empty($form['#entity']->{$field_name}) && !empty($form['#entity']->{$field_name}[LANGUAGE_NONE])) {
+        $group->format_settings['formatter'] = 'collapsed';
+      }
+    }
+  }
+
+  // WYSIWYG Paragraph Type.
+  if ($group->bundle == 'p_wysiwyg') {
+    if (isset($form['field_p_wysiwyg_image']) && isset($form['field_p_wysiwyg_button'])) {
+      // Move button from right column to the left column.
+      if ($group->group_name == 'group_left_column') {
+        $element['field_p_wysiwyg_button'] = $form['field_p_wysiwyg_button'];
+      }
+      if ($group->group_name == 'group_right_column') {
+        unset($element['field_p_wysiwyg_button']);
+      }
+    }
+    else {
+      // Change left column to span9 since there is no right column.
+      if ($group->group_name == 'group_left_column' && !empty($element['field_p_wysiwyg_body'])) {
+        $object = $element['field_p_wysiwyg_body']['#object'];
+        if (empty($object->field_p_wysiwyg_button) && empty($object->field_p_wysiwyg_image)) {
+          $classes = &$group->format_settings['instance_settings']['classes'];
+          $classes = str_replace('span6', 'span9', $classes);
+        }
+      }
+    }
+  }
+
+  // Menu Paragraph Type.
+  if ($group->bundle == 'p_menu' && $group->group_name == 'group_menu_main') {
+    $left_column = $form['group_menu_column'];
+
+    // Removes span9 from classes if left column does not have anything in the
+    // left sidebar fields.
+    if (empty($left_column['group_sidebar']['field_p_menu_menu']) && empty($left_column['field_p_menu_below_menu'])) {
+      $classes = explode(' ', $group->format_settings['instance_settings']['classes']);
+      $pos = array_search('span9', $classes);
+      unset($classes[$pos]);
+      $group->format_settings['instance_settings']['classes'] = implode(' ', $classes);
+    }
+  }
+}
+
+/**
+ * Implements hook_field_attach_form().
+ */
+function stanford_paragraph_types_field_attach_form($entity_type, $entity, &$form, &$form_state, $langcode) {
+  if ($entity_type == 'paragraphs_item') {
+    $form['#attached']['js'][] = drupal_get_path('module', 'stanford_paragraph_types') . '/js/stanford_paragraph_types.admin.js';
+
+    switch ($form['#bundle']) {
+      // Teaser Cards.
+      case 'p_cards':
+        if (count(element_children($form['field_p_cards_card'][LANGUAGE_NONE])) >= 4) {
+
+          // Prevent the user from adding more than 3 cards.
+          unset($form['field_p_cards_card'][LANGUAGE_NONE]['add_more']);
+        }
+        break;
+
+      // Menu.
+      case 'p_menu':
+
+        // Disables the menu block reference field from editing.
+        $element = &$form['field_p_menu_menu'][LANGUAGE_NONE];
+        if (!empty($element['#default_value'])) {
+          $default = reset($element['#default_value']);
+          if (array_key_exists($default, $element['#options'])) {
+            $element['#attributes']['disabled'] = TRUE;
+          }
+        }
+        break;
+
+      // Buttons.
+      case 'p_buttons':
+        foreach (element_children($form['field_p_buttons_button'][LANGUAGE_NONE]) as $delta) {
+          $item = &$form['field_p_buttons_button'][LANGUAGE_NONE][$delta];
+          if ($item['#type'] == 'link_field') {
+            $language = $form['#language'];
+            $parents = array('field_p_buttons_button', $language, $delta);
+
+            // Add remove button on link field.
+            // @see https://www.drupal.org/node/905492#comment-11553141
+            $item['remove_button'] = array(
+              '#delta' => $delta,
+              '#name' => implode('_', $parents) . '_remove_button',
+              '#type' => 'submit',
+              '#value' => t('Remove'),
+              '#validate' => array(),
+              '#submit' => array('stanford_paragraph_types_link_remove_submit'),
+              '#limit_validation_errors' => array(),
+              '#weight' => 1000,
+              '#ajax' => array(
+                'effect' => 'fade',
+                'callback' => 'stanford_paragraph_types_link_remove_callback',
+                'wrapper' => $form['field_p_buttons_button'][LANGUAGE_NONE]['add_more']['#ajax']['wrapper'],
+              ),
+            );
+          }
+        }
+        break;
+    }
+  }
+}
+
+/**
+ * Remove link submit handler.
+ *
+ * @see https://www.drupal.org/node/905492#comment-11553141
+ */
+function stanford_paragraph_types_link_remove_submit($form, &$form_state) {
+  // Determine which delta the 'Remove' button was triggered.
+  $button = $form_state['triggering_element'];
+  $delta = $button['#delta'];
+
+  $address = array_slice($button['#array_parents'], 0, -2);
+
+  $parent_element = drupal_array_get_nested_value($form, $address);
+  $field_name = $parent_element['#field_name'];
+  $langcode = $parent_element['#language'];
+  $parents = $parent_element['#field_parents'];
+
+  $field_state = field_form_get_state($parents, $field_name, $langcode, $form_state);
+
+  for ($i = $delta; $i <= $field_state['items_count']; $i++) {
+    $old_element_address = array_merge($address, array($i + 1));
+    $new_element_address = array_merge($address, array($i));
+
+    $moving_element = drupal_array_get_nested_value($form, $old_element_address);
+    $moving_element_value = drupal_array_get_nested_value($form_state['values'], $old_element_address);
+    $moving_element_input = drupal_array_get_nested_value($form_state['input'], $old_element_address);
+    $moving_element_field = drupal_array_get_nested_value($form_state['field']['#parents'], $old_element_address);
+
+    // Tell the element where it's being moved to.
+    $moving_element['#parents'] = $new_element_address;
+
+    // Move the element around.
+    form_set_value($moving_element, $moving_element_value, $form_state);
+    drupal_array_set_nested_value($form_state['input'], $moving_element['#parents'], $moving_element_input);
+    drupal_array_set_nested_value($form_state['field']['#parents'], $moving_element['#parents'], $moving_element_field);
+
+    // Move the entity in our saved state.
+    if (isset($field_state['entity'][$i + 1])) {
+      $field_state['entity'][$i] = $field_state['entity'][$i + 1];
+    }
+    else {
+      unset($field_state['entity'][$i]);
+    }
+  }
+
+  // Replace the deleted entity with an empty one. This helps to ensure that
+  // trying to add a new entity won't ressurect a deleted entity
+  // from thev trash bin.
+  // $count = count($field_state['entity']);
+  // Then remove the last item. But we must not go negative.
+  if ($field_state['items_count'] > 0) {
+    $field_state['items_count']--;
+  }
+
+  // Fix the weights. Field UI lets the weights be in a range of
+  // (-1 * item_count) to (item_count). This means that when we remove one,
+  // the range shrinks; weights outside of that range then get set to
+  // the first item in the select by the browser, floating them to the top.
+  // We use a brute force method because we lost weights on both ends
+  // and if the user has moved things around, we have to cascade because
+  // if I have items weight weights 3 and 4, and I change 4 to 3 but leave
+  // the 3, the order of the two 3s now is undefined and may not match what
+  // the user had selected.
+  $input = drupal_array_get_nested_value($form_state['input'], $address);
+  // Sort by weight.
+  uasort($input, '_field_sort_items_helper');
+
+  // Reweight everything in the correct order.
+  $weight = -1 * $field_state['items_count'];
+  foreach ($input as $key => $item) {
+    if ($item) {
+      $input[$key]['_weight'] = $weight++;
+    }
+  }
+  drupal_array_set_nested_value($form_state['input'], $address, $input);
+  field_form_set_state($parents, $field_name, $langcode, $form_state, $field_state);
+
+  $form_state['rebuild'] = TRUE;
+}
+
+/**
+ * Remove button callback.
+ *
+ * @see https://www.drupal.org/node/905492#comment-11553141
+ */
+function stanford_paragraph_types_link_remove_callback($form, &$form_state) {
+  $button = $form_state['triggering_element'];
+
+  // Go one level up in the form, to the widgets container.
+  $element = drupal_array_get_nested_value($form, array_slice($button['#array_parents'], 0, -2));
+  $field_name = $element['#field_name'];
+  $langcode = $element['#language'];
+  $parents = $element['#field_parents'];
+
+  $field_state = field_form_get_state($parents, $field_name, $langcode, $form_state);
+
+  $field = $field_state['field'];
+  if ($field['cardinality'] != FIELD_CARDINALITY_UNLIMITED) {
+    return;
+  }
+
+  return $element;
+}

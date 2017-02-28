@@ -1,0 +1,102 @@
+.entity-paragraphs-item.center {
+  margin: 0 auto;
+  float: none;
+}
+
+.paragraphs-item-p-hero > .content {
+  position: relative;
+}
+.paragraphs-item-p-hero > .content .player {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+}
+.paragraphs-item-p-hero > .content iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.paragraphs-item-p-hero > .content .field-name-field-p-hero-image img {
+  width: 100%;
+}
+.paragraphs-item-p-hero .group-overlay-text {
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 40px;
+  border-radius: 20px;
+}
+.paragraphs-item-p-hero.overlay-top .group-overlay-text {
+  top: 20px;
+}
+.paragraphs-item-p-hero.overlay-bottom .group-overlay-text {
+  bottom: 20px;
+}
+.paragraphs-item-p-hero.overlay-left .group-overlay-text {
+  left: 20px;
+}
+.paragraphs-item-p-hero.overlay-right .group-overlay-text {
+  right: 20px;
+}
+.paragraphs-item-p-hero a.play-video {
+  display: block;
+  position: absolute;
+  font-size: 0;
+  right: 50%;
+  top: calc(50% - 70px);
+  color: #ccc;
+}
+.paragraphs-item-p-hero a.play-video:hover, .paragraphs-item-p-hero a.play-video:focus {
+  color: #bb0000;
+  text-decoration: none;
+}
+.paragraphs-item-p-hero a.play-video i:before {
+  font-size: 140px;
+}
+.paragraphs-item-p-hero .field-name-field-p-hero-video:nth-child(2) {
+  display: none;
+}
+
+.paragraphs-item-p-buttons {
+  text-align: center;
+}
+.paragraphs-item-p-buttons .field-item {
+  margin-bottom: 30px;
+}
+
+.paragraphs-item-p-callout {
+  text-align: center;
+}
+
+.paragraphs-item-p-cards .field-item .field-collection-view {
+  padding: 0 10px;
+}
+.paragraphs-item-p-cards .field-item:first-child .field-collection-view {
+  padding: 0 10px 0 0;
+}
+.paragraphs-item-p-cards .field-item:last-child .field-collection-view {
+  padding: 0 0 0 10px;
+}
+.paragraphs-item-p-cards img {
+  margin: 0 auto;
+  display: block;
+}
+
+.paragraphs-item-p-wysiwyg .group-left-column {
+  margin-left: 0;
+}
+.paragraphs-item-p-wysiwyg .group-right-column {
+  text-align: center;
+}
+
+.paragraphs-item-p-menu .group-featured-image {
+  float: right;
+  margin-left: 1em;
+  margin-bottom: 1em;
+  max-width: 270px;
+}
+.paragraphs-item-p-menu .group-featured-image div.field {
+  margin-bottom: 0;
+}
