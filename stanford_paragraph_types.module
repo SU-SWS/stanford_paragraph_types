@@ -45,6 +45,16 @@ function stanford_paragraph_types_preprocess_entity(&$vars) {
         foreach ($classes as $class) {
           $vars['classes_array'][] = $class;
         }
+
+        // If the style is not "both" unset the unwanted field.
+        $style = $entity->field_p_hero_style[LANGUAGE_NONE][0]['value'];
+        if ($style == 'image') {
+          unset($vars['content']['field_p_hero_video']);
+        }
+        elseif ($style == 'video') {
+          unset($vars['content']['field_p_hero_image']);
+        }
+
         break;
 
       default:
@@ -101,7 +111,7 @@ function stanford_paragraph_types_preprocess_field(&$vars) {
       $object = $vars['element']['#object'];
       unset($vars['items'][0]['#path']);
 
-      if ($object->field_p_card_action_button['und'][0]['value'] == 'file') {
+      if ($object->field_p_card_action_button[LANGUAGE_NONE][0]['value'] == 'file') {
         // File Link Type.
         if (!empty($object->field_p_card_file)) {
           // File field is populated.
@@ -134,7 +144,6 @@ function stanford_paragraph_types_preprocess_field(&$vars) {
       break;
 
     case 'field_p_hero_video':
-    case 'field_p_hero_image':
       drupal_add_js(drupal_get_path('module', 'stanford_paragraph_types') . '/js/stanford_paragraph_types.js');
       break;
   }
@@ -252,6 +261,38 @@ function stanford_paragraph_types_field_attach_form($entity_type, $entity, &$for
           }
         }
         break;
+    }
+  }
+}
+
+/**
+ * Implements hook_field_attach_validate().
+ */
+function stanford_paragraph_types_field_attach_validate($entity_type, $entity, &$errors) {
+  if ($entity_type == 'paragraphs_item' && $entity->bundle == 'p_hero') {
+
+    // If the hero is set to display only the image or only the video, validate
+    // that the appropriate field is popuplated.
+    $style = $entity->field_p_hero_style[LANGUAGE_NONE][0]['value'];
+    $images = field_get_items($entity_type, $entity, 'field_p_hero_image');
+    $videos = field_get_items($entity_type, $entity, 'field_p_hero_video');
+
+    if ($style == 'image' || $style == 'both') {
+      if (!$images || !$images[0]['fid']) {
+        $errors['field_p_hero_image'][LANGUAGE_NONE][0][] = array(
+          'error' => 'field_example_invalid',
+          'message' => t('Image required.'),
+        );
+      }
+    }
+
+    if ($style == 'video' || $style == 'both') {
+      if (!$videos || !array_filter($videos[0])) {
+        $errors['field_p_hero_video'][LANGUAGE_NONE][0][] = array(
+          'error' => 'field_example_invalid',
+          'message' => t('Video Required.'),
+        );
+      }
     }
   }
 }

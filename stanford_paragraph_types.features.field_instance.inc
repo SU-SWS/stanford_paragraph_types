@@ -759,7 +759,7 @@ function stanford_paragraph_types_field_default_field_instances() {
         'label' => 'hidden',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 3,
+        'weight' => 4,
       ),
       'paragraphs_editor_preview' => array(
         'label' => 'above',
@@ -1001,7 +1001,7 @@ function stanford_paragraph_types_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 1,
+      'weight' => 9,
     ),
   );
 
@@ -1059,6 +1059,46 @@ function stanford_paragraph_types_field_default_field_instances() {
       'settings' => array(),
       'type' => 'link_field',
       'weight' => 7,
+    ),
+  );
+
+  // Exported field_instance: 'paragraphs_item-p_hero-field_p_hero_style'.
+  $field_instances['paragraphs_item-p_hero-field_p_hero_style'] = array(
+    'bundle' => 'p_hero',
+    'default_value' => array(
+      0 => array(
+        'value' => 'image',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 3,
+      ),
+      'paragraphs_editor_preview' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'paragraphs_item',
+    'field_name' => 'field_p_hero_style',
+    'label' => 'Hero Style',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
+      'weight' => 8,
     ),
   );
 
@@ -1171,7 +1211,7 @@ function stanford_paragraph_types_field_default_field_instances() {
       'module' => 'video_embed_field',
       'settings' => array(),
       'type' => 'video_embed_field_video',
-      'weight' => 2,
+      'weight' => 10,
     ),
   );
 
@@ -2267,6 +2307,7 @@ function stanford_paragraph_types_field_default_field_instances() {
   t('Header');
   t('Headline');
   t('Hero Image');
+  t('Hero Style');
   t('Hero Video');
   t('Image');
   t('Image insert');

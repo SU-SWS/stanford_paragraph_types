@@ -433,7 +433,7 @@ function stanford_paragraph_types_field_group_info() {
   $field_group->parent_name = 'group_p_hero';
   $field_group->data = array(
     'label' => 'Overlay Text',
-    'weight' => '3',
+    'weight' => '11',
     'children' => array(
       0 => 'field_p_hero_alignment',
       1 => 'field_p_hero_headline',
@@ -587,7 +587,8 @@ function stanford_paragraph_types_field_group_info() {
     'children' => array(
       0 => 'field_p_hero_image',
       1 => 'field_p_hero_video',
-      2 => 'group_overlay_text',
+      2 => 'field_p_hero_style',
+      3 => 'group_overlay_text',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
