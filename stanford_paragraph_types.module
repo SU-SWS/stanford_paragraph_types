@@ -91,6 +91,27 @@ function stanford_paragraph_types_preprocess_block(&$vars) {
 }
 
 /**
+ * Implements hook_field_widget_form_alter().
+ */
+function stanford_paragraph_types_field_widget_form_alter(&$element, &$form_state, $context) {
+  if (isset($element['#field_name']) && $element['#field_name'] == 'field_p_menu_menu') {
+    if (!module_exists('menu_block')) {
+      return;
+    }
+
+    // Find the menu block that has the correct config and use that as the
+    // default value in the field.
+    $blocks = menu_block_block_info();
+    foreach ($blocks as $delta => $block) {
+      $config = menu_block_get_config($delta);
+      if ($config['level'] == 2 && $config['depth'] == 3) {
+        $element['#default_value'][0] = "menu_block:$delta";
+      }
+    }
+  }
+}
+
+/**
  * Implements hook_preprocess_entity().
  */
 function stanford_paragraph_types_preprocess_field(&$vars) {
