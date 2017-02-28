@@ -376,7 +376,7 @@ function stanford_paragraph_types_field_group_info() {
       'label' => 'Main',
       'instance_settings' => array(
         'id' => '',
-        'classes' => 'group-menu-main field-group-div span9',
+        'classes' => 'group-menu-main field-group-div span6',
         'description' => '',
         'show_label' => '0',
         'label_element' => 'h3',
