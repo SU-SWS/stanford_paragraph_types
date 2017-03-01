@@ -171,6 +171,16 @@ function stanford_paragraph_types_preprocess_field(&$vars) {
 }
 
 /**
+ * Implements hook_entity_view_mode_alter().
+ */
+function stanford_paragraph_types_entity_view_mode_alter(&$view_mode, $context) {
+  $entity = $context['entity'];
+  if(!empty($entity->field_p_wysiwyg_button) || !empty($entity->field_p_wysiwyg_image)){
+    $view_mode = 'default';
+  }
+}
+
+/**
  * Implements hook_field_group_pre_render().
  */
 function stanford_paragraph_types_field_group_pre_render(&$element, $group, &$form) {
@@ -188,24 +198,16 @@ function stanford_paragraph_types_field_group_pre_render(&$element, $group, &$fo
 
   // WYSIWYG Paragraph Type.
   if ($group->bundle == 'p_wysiwyg') {
-    if (isset($form['field_p_wysiwyg_image']) && isset($form['field_p_wysiwyg_button'])) {
-      // Move button from right column to the left column.
+    $entity = $form['#entity'];
+
+    if (!empty($entity->field_p_wysiwyg_image) && !empty($entity->field_p_wysiwyg_button)) {
       if ($group->group_name == 'group_left_column') {
         $element['field_p_wysiwyg_button'] = $form['field_p_wysiwyg_button'];
       }
       if ($group->group_name == 'group_right_column') {
         unset($element['field_p_wysiwyg_button']);
       }
-    }
-    else {
-      // Change left column to span9 since there is no right column.
-      if ($group->group_name == 'group_left_column' && !empty($element['field_p_wysiwyg_body'])) {
-        $object = $element['field_p_wysiwyg_body']['#object'];
-        if (empty($object->field_p_wysiwyg_button) && empty($object->field_p_wysiwyg_image)) {
-          $classes = &$group->format_settings['instance_settings']['classes'];
-          $classes = str_replace('span6', 'span9', $classes);
-        }
-      }
+      return;
     }
   }
 

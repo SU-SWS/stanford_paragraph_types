@@ -637,6 +637,68 @@ function stanford_paragraph_types_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_p_wysiwyg_body|paragraphs_item|p_wysiwyg|full';
+  $field_group->group_name = 'group_p_wysiwyg_body';
+  $field_group->entity_type = 'paragraphs_item';
+  $field_group->bundle = 'p_wysiwyg';
+  $field_group->mode = 'full';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Main Content',
+    'weight' => '1',
+    'children' => array(
+      0 => 'field_p_wysiwyg_body',
+    ),
+    'format_type' => 'div',
+    'format_settings' => array(
+      'label' => 'Main Content',
+      'instance_settings' => array(
+        'id' => '',
+        'classes' => 'group-p-wysiwyg-body field-group-div span9',
+        'description' => '',
+        'show_label' => '0',
+        'label_element' => 'h3',
+        'effect' => 'none',
+        'speed' => 'fast',
+      ),
+      'formatter' => 'open',
+    ),
+  );
+  $field_groups['group_p_wysiwyg_body|paragraphs_item|p_wysiwyg|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_p_wysiwyg_title|paragraphs_item|p_wysiwyg|full';
+  $field_group->group_name = 'group_p_wysiwyg_title';
+  $field_group->entity_type = 'paragraphs_item';
+  $field_group->bundle = 'p_wysiwyg';
+  $field_group->mode = 'full';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'WYSIWYG Title',
+    'weight' => '0',
+    'children' => array(
+      0 => 'field_p_wysiwyg_title',
+    ),
+    'format_type' => 'html-element',
+    'format_settings' => array(
+      'label' => 'WYSIWYG Title',
+      'instance_settings' => array(
+        'id' => '',
+        'classes' => 'group-p-wysiwyg-title field-group-html-element',
+        'element' => 'h2',
+        'show_label' => '0',
+        'label_element' => 'div',
+        'attributes' => '',
+      ),
+    ),
+  );
+  $field_groups['group_p_wysiwyg_title|paragraphs_item|p_wysiwyg|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_p_wysiwyg|paragraphs_item|p_wysiwyg|form';
   $field_group->group_name = 'group_p_wysiwyg';
   $field_group->entity_type = 'paragraphs_item';
