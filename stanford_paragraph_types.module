@@ -174,9 +174,15 @@ function stanford_paragraph_types_preprocess_field(&$vars) {
  * Implements hook_entity_view_mode_alter().
  */
 function stanford_paragraph_types_entity_view_mode_alter(&$view_mode, $context) {
-  $entity = $context['entity'];
-  if(!empty($entity->field_p_wysiwyg_button) || !empty($entity->field_p_wysiwyg_image)){
-    $view_mode = 'default';
+  if ($context['entity_type'] == 'paragraphs_item') {
+    $entity = $context['entity'];
+    switch ($entity->bundle) {
+      case 'p_wysiwyg':
+        if (!empty($entity->field_p_wysiwyg_button) || !empty($entity->field_p_wysiwyg_image)) {
+          $view_mode = 'default';
+        }
+        break;
+    }
   }
 }
 
@@ -217,7 +223,7 @@ function stanford_paragraph_types_field_group_pre_render(&$element, $group, &$fo
 
     // Removes span9 from classes if left column does not have anything in the
     // left sidebar fields.
-    if (empty($left_column['group_sidebar']['field_p_menu_menu']) && empty($left_column['field_p_menu_below_menu'])) {
+    if (empty($left_column['group_sidebar']['field_p_menu_menu'])) {
       $classes = explode(' ', $group->format_settings['instance_settings']['classes']);
       $pos = array_search('span9', $classes);
       unset($classes[$pos]);

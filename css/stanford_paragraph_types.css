@@ -1,17 +1,26 @@
+/* line 1, ../scss/stanford_paragraph_types.scss */
+.entity-paragraphs-item {
+  margin-bottom: 3em;
+}
+
+/* line 5, ../scss/stanford_paragraph_types.scss */
 .entity-paragraphs-item.center {
-  margin: 0 auto;
+  margin: 0 auto 3em;
   float: none;
 }
 
+/* line 11, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-hero > .content {
   position: relative;
 }
+/* line 14, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-hero > .content .player {
   position: relative;
   width: 100%;
   height: 0;
   padding-bottom: 56.25%;
 }
+/* line 21, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-hero > .content iframe {
   position: absolute;
   top: 0;
@@ -19,84 +28,191 @@
   width: 100%;
   height: 100%;
 }
+/* line 29, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-hero > .content .field-name-field-p-hero-image img {
   width: 100%;
 }
+/* line 34, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-hero .group-overlay-text {
   position: absolute;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: #ffffff;
   padding: 40px;
-  border-radius: 20px;
 }
+/* line 40, ../scss/stanford_paragraph_types.scss */
+.paragraphs-item-p-hero .group-overlay-text .field-name-field-p-hero-superhead {
+  font-size: 2.4em;
+  font-weight: 400;
+  letter-spacing: -.5px;
+  line-height: 1.2em;
+}
+/* line 47, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-hero.overlay-top .group-overlay-text {
   top: 20px;
 }
+/* line 51, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-hero.overlay-bottom .group-overlay-text {
   bottom: 20px;
 }
+/* line 55, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-hero.overlay-left .group-overlay-text {
   left: 20px;
 }
+/* line 59, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-hero.overlay-right .group-overlay-text {
   right: 20px;
 }
+/* line 63, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-hero a.play-video {
   display: block;
   position: absolute;
   font-size: 0;
-  right: 50%;
-  top: calc(50% - 70px);
-  color: #ccc;
+  right: 45%;
+  top: 45%;
+  color: #ffffff;
 }
-.paragraphs-item-p-hero a.play-video:hover, .paragraphs-item-p-hero a.play-video:focus {
-  color: #bb0000;
+/* line 71, ../scss/stanford_paragraph_types.scss */
+.paragraphs-item-p-hero a.play-video:focus, .paragraphs-item-p-hero a.play-video:hover {
+  color: #b6b1a9;
   text-decoration: none;
 }
+/* line 77, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-hero a.play-video i:before {
   font-size: 140px;
 }
+/* line 82, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-hero .field-name-field-p-hero-video:nth-child(2) {
   display: none;
 }
+/* line 86, ../scss/stanford_paragraph_types.scss */
+.paragraphs-item-p-hero .field-name-field-p-hero-superhead {
+  margin-bottom: 0;
+}
 
+/* line 91, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-buttons {
   text-align: center;
 }
+/* line 94, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-buttons .field-item {
   margin-bottom: 30px;
 }
 
+/* line 99, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-callout {
   text-align: center;
 }
+/* line 102, ../scss/stanford_paragraph_types.scss */
+.paragraphs-item-p-callout p {
+  font-size: 2em;
+  line-height: 1.2em;
+  font-weight: 600;
+}
 
+/* line 110, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-cards .field-item .field-collection-view {
   padding: 0 10px;
 }
+/* line 114, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-cards .field-item:first-child .field-collection-view {
   padding: 0 10px 0 0;
 }
+/* line 118, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-cards .field-item:last-child .field-collection-view {
   padding: 0 0 0 10px;
 }
+/* line 122, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-cards img {
   margin: 0 auto;
   display: block;
 }
 
+/* line 129, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-wysiwyg .group-left-column {
   margin-left: 0;
 }
+/* line 133, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-wysiwyg .group-right-column {
   text-align: center;
 }
+/* line 137, ../scss/stanford_paragraph_types.scss */
+.paragraphs-item-p-wysiwyg .group-p-wysiwyg-body {
+  margin-left: 0;
+}
 
+/* line 143, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-menu .group-featured-image {
   float: right;
   margin-left: 1em;
   margin-bottom: 1em;
   max-width: 270px;
 }
+/* line 149, ../scss/stanford_paragraph_types.scss */
 .paragraphs-item-p-menu .group-featured-image div.field {
   margin-bottom: 0;
+}
+
+/* line 156, ../scss/stanford_paragraph_types.scss */
+.paragraphs-item-p-buttons .btn a, .paragraphs-item-p-buttons a.btn {
+  padding: 1.5em 2em;
+  font-size: 1.2em;
+  line-height: 1.2em;
+}
+
+@media (max-width: 767px) {
+  /* line 165, ../scss/stanford_paragraph_types.scss */
+  .paragraphs-item-p-hero .group-overlay-text {
+    position: static;
+  }
+  /* line 168, ../scss/stanford_paragraph_types.scss */
+  .paragraphs-item-p-hero a.play-video {
+    right: 43%;
+    top: 40%;
+  }
+
+  /* line 175, ../scss/stanford_paragraph_types.scss */
+  .paragraphs-item-p-cards .field-item .field-collection-view,
+  .paragraphs-item-p-cards .field-item:first-child .field-collection-view,
+  .paragraphs-item-p-cards .field-item:last-child .field-collection-view {
+    padding: 0;
+  }
+  /* line 180, ../scss/stanford_paragraph_types.scss */
+  .paragraphs-item-p-cards .field-name-field-p-card-cta,
+  .paragraphs-item-p-cards .field-name-field-p-card-text {
+    padding: 0 1em;
+  }
+  /* line 184, ../scss/stanford_paragraph_types.scss */
+  .paragraphs-item-p-cards .group-card-title {
+    padding: 0 0.6em;
+  }
+
+  /* line 189, ../scss/stanford_paragraph_types.scss */
+  .paragraphs-item-p-menu {
+    padding: 0 1em;
+  }
+  /* line 191, ../scss/stanford_paragraph_types.scss */
+  .paragraphs-item-p-menu .group-menu-column.field-group-div {
+    display: none;
+  }
+
+  /* line 196, ../scss/stanford_paragraph_types.scss */
+  .paragraphs-item-p-buttons {
+    padding: 0 1em;
+  }
+  /* line 199, ../scss/stanford_paragraph_types.scss */
+  .paragraphs-item-p-buttons .btn a, .paragraphs-item-p-buttons a.btn {
+    width: 100%;
+    padding: 1.5em 0;
+  }
+
+  /* line 205, ../scss/stanford_paragraph_types.scss */
+  .paragraphs-item-p-wysiwyg {
+    padding: 0 1em;
+  }
+}
+@media (max-width: 480px) {
+  /* line 213, ../scss/stanford_paragraph_types.scss */
+  .paragraphs-item-p-hero a.play-video {
+    right: 37%;
+    top: 30%;
+  }
 }

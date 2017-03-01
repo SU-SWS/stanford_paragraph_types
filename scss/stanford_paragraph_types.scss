@@ -1,5 +1,9 @@
+.entity-paragraphs-item {
+  margin-bottom: 3em;
+}
+
 .entity-paragraphs-item.center {
-  margin: 0 auto;
+  margin: 0 auto 3em;
   float: none;
 }
 
@@ -29,9 +33,15 @@
 
   .group-overlay-text {
     position: absolute;
-    background-color: rgba(255, 255, 255, 0.7);
+    background-color: #ffffff;
     padding: 40px;
-    border-radius: 20px;
+  }
+
+  .group-overlay-text .field-name-field-p-hero-superhead {
+    font-size: 2.4em;
+    font-weight: 400;
+    letter-spacing: -.5px;
+    line-height: 1.2em;
   }
 
   &.overlay-top .group-overlay-text {
@@ -54,13 +64,13 @@
     display: block;
     position: absolute;
     font-size: 0;
-    right: 50%;
-    top: calc(50% - 70px);
-    color: #ccc;
+    right: 45%;
+    top: 45%;
+    color: #ffffff;
 
-    &:hover,
-    &:focus {
-      color: #bb0000;
+    &:focus,
+    &:hover {
+      color: #b6b1a9;
       text-decoration: none;
     }
 
@@ -71,6 +81,10 @@
 
   .field-name-field-p-hero-video:nth-child(2) {
     display: none;
+  }
+
+  .field-name-field-p-hero-superhead {
+    margin-bottom: 0;
   }
 }
 
@@ -84,6 +98,12 @@
 
 .paragraphs-item-p-callout {
   text-align: center;
+
+  p {
+    font-size: 2em;
+    line-height: 1.2em;
+    font-weight: 600;
+  }
 }
 
 .paragraphs-item-p-cards {
@@ -113,6 +133,10 @@
   .group-right-column {
     text-align: center;
   }
+
+  .group-p-wysiwyg-body {
+    margin-left: 0;
+  }
 }
 
 .paragraphs-item-p-menu {
@@ -124,6 +148,77 @@
 
     div.field {
       margin-bottom: 0;
+    }
+  }
+}
+
+.paragraphs-item-p-buttons {
+  .btn a,
+  a.btn {
+    padding: 1.5em 2em;
+    font-size: 1.2em;
+    line-height: 1.2em;
+  }
+}
+
+@media (max-width: 767px) {
+  .paragraphs-item-p-hero {
+    .group-overlay-text {
+      position: static;
+    }
+
+    a.play-video {
+      right: 43%;
+      top: 40%;
+    }
+  }
+
+  .paragraphs-item-p-cards {
+    .field-item .field-collection-view,
+    .field-item:first-child .field-collection-view,
+    .field-item:last-child .field-collection-view {
+      padding: 0;
+    }
+
+    .field-name-field-p-card-cta,
+    .field-name-field-p-card-text {
+      padding: 0 1em;
+    }
+
+    .group-card-title {
+      padding: 0 0.6em;
+    }
+  }
+
+  .paragraphs-item-p-menu {
+    padding: 0 1em;
+
+    .group-menu-column.field-group-div {
+      display: none;
+    }
+  }
+
+  .paragraphs-item-p-buttons {
+    padding: 0 1em;
+
+    .btn a,
+    a.btn {
+      width: 100%;
+      padding: 1.5em 0;
+    }
+  }
+
+  .paragraphs-item-p-wysiwyg {
+    padding: 0 1em;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .paragraphs-item-p-hero {
+    a.play-video {
+      right: 37%;
+      top: 30%;
     }
   }
 }
