@@ -82,9 +82,14 @@
   .field-name-field-p-hero-video:nth-child(2) {
     display: none;
   }
+}
 
-  .field-name-field-p-hero-superhead {
-    margin-bottom: 0;
+.page-node .content-body {
+  .paragraphs-item-p-hero {
+    .field-name-field-p-hero-headline,
+    .field-name-field-p-hero-superhead {
+      margin-bottom: 0;
+    }
   }
 }
 
