@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Stanford Paragraph Types Defaults Install.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function stanford_paragraph_types_defaults_schema() {
+  $schema = array();
+
+  return $schema;
+}

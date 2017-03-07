@@ -1,0 +1,38 @@
+<?php
+
+/**
+ * @file
+ * Stanford Paragraph Types Defaults.
+ */
+
+/**
+ * Implements hook_permission().
+ */
+function stanford_paragraph_types_defaults_permission() {
+  return array(
+    'administer stanford paragraph types defaults' => array(
+      'title' => t('Administer Stanford Paragraph Types Defaults'),
+      'description' => t('Create and modify default paragraph items.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function stanford_paragraph_types_defaults_menu() {
+  $items = array();
+  $items['admin/structure/paragraphs/defaults'] = array(
+    'title' => 'Paragraph Defaults',
+    'page callback' => 'drupal',
+    'access arguments' => array('access content'),
+    'type' => MENU_SUGGESTED_ITEM,
+  );
+  $items['admin/structure/paragraphs/defaults/%'] = array(
+    'title' => 'Example Page',
+    'page callback' => 'example_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_SUGGESTED_ITEM,
+  );
+  return $items;
+}
