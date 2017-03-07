@@ -166,6 +166,7 @@
     padding: 0
   }
   .paragraphs-item-p-cards .field-name-field-p-card-cta,
+  .paragraphs-item-p-cards .field-name-field-p-card-file,
   .paragraphs-item-p-cards .field-name-field-p-card-text {
     padding: 0 1em
   }
@@ -174,9 +175,6 @@
   }
   .paragraphs-item-p-menu {
     padding: 0 1em
-  }
-  .paragraphs-item-p-menu .group-menu-column.field-group-div {
-    display: none
   }
   .paragraphs-item-p-buttons {
     padding: 0 1em
