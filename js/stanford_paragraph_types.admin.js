@@ -39,11 +39,11 @@
       // item was added.
       function teaserCardsCTA($group, radioVal) {
         if (radioVal == 'link') {
-          group.find('.field-name-field-p-card-cta').show();
-          group.find('.field-name-field-p-card-file').hide();
+          $group.find('.field-name-field-p-card-cta').show();
+          $group.find('.field-name-field-p-card-file').hide();
         } else {
-          group.find('.field-name-field-p-card-cta').hide();
-          group.find('.field-name-field-p-card-file').show();
+          $group.find('.field-name-field-p-card-cta').hide();
+          $group.find('.field-name-field-p-card-file').show();
         }
       }
 
