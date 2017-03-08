@@ -271,6 +271,7 @@ function stanford_paragraph_types_field_group_info() {
     'weight' => '1',
     'children' => array(
       0 => 'field_p_wysiwyg_body',
+      1 => 'group_wysiwyg_title',
     ),
     'format_type' => 'div',
     'format_settings' => array(
@@ -741,8 +742,8 @@ function stanford_paragraph_types_field_group_info() {
     'label' => 'Right Column',
     'weight' => '2',
     'children' => array(
-      0 => 'field_p_wysiwyg_image',
-      1 => 'field_p_wysiwyg_button',
+      0 => 'field_p_wysiwyg_button',
+      1 => 'field_p_wysiwyg_image',
     ),
     'format_type' => 'div',
     'format_settings' => array(
@@ -801,7 +802,7 @@ function stanford_paragraph_types_field_group_info() {
   $field_group->entity_type = 'paragraphs_item';
   $field_group->bundle = 'p_wysiwyg';
   $field_group->mode = 'default';
-  $field_group->parent_name = '';
+  $field_group->parent_name = 'group_left_column';
   $field_group->data = array(
     'label' => 'WYSIWYG Title',
     'weight' => '0',

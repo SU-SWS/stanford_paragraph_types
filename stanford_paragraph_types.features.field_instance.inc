@@ -1674,7 +1674,7 @@ function stanford_paragraph_types_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 2,
+        'weight' => 1,
       ),
       'full' => array(
         'label' => 'hidden',
