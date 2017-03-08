@@ -649,13 +649,14 @@ function stanford_paragraph_types_field_group_info() {
     'weight' => '1',
     'children' => array(
       0 => 'field_p_wysiwyg_body',
+      1 => 'group_p_wysiwyg_title',
     ),
     'format_type' => 'div',
     'format_settings' => array(
       'label' => 'Main Content',
       'instance_settings' => array(
         'id' => '',
-        'classes' => 'group-p-wysiwyg-body field-group-div span9',
+        'classes' => 'group-p-wysiwyg-body field-group-div span6 offset3',
         'description' => '',
         'show_label' => '0',
         'label_element' => 'h3',
@@ -675,7 +676,7 @@ function stanford_paragraph_types_field_group_info() {
   $field_group->entity_type = 'paragraphs_item';
   $field_group->bundle = 'p_wysiwyg';
   $field_group->mode = 'full';
-  $field_group->parent_name = '';
+  $field_group->parent_name = 'group_p_wysiwyg_body';
   $field_group->data = array(
     'label' => 'WYSIWYG Title',
     'weight' => '0',
