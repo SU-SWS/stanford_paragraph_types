@@ -24,9 +24,14 @@ function stanford_paragraph_types_defaults_menu() {
   $items = array();
   $items['admin/structure/paragraphs/defaults'] = array(
     'title' => 'Paragraph Defaults',
-    'page callback' => 'drupal',
-    'access arguments' => array('access content'),
-    'type' => MENU_SUGGESTED_ITEM,
+    'page callback' => 'stanford_paragraph_types_defaults_overview',
+    'file' => 'stanford_paragraph_types_defaults.forms.inc',
+    'access arguments' => array('administer stanford paragraph types defaults'),
+    'type' => MENU_LOCAL_TASK | MENU_NORMAL_ITEM,
+  );
+  $items['admin/structure/paragraphs/defaults/overview'] = array(
+    'title' => 'Paragraph Defaults',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
   );
   $items['admin/structure/paragraphs/defaults/%'] = array(
     'title' => 'Example Page',
@@ -35,4 +40,25 @@ function stanford_paragraph_types_defaults_menu() {
     'type' => MENU_SUGGESTED_ITEM,
   );
   return $items;
+}
+
+
+/**
+ * Implements hook_form_alter().
+ */
+function stanford_paragraph_types_defaults_form_alter(&$form, &$form_state, $form_id) {
+  if (!isset($form['#entity_type']) || !isset($form['#bundle'])) {
+    return;
+  }
+  $fields = field_read_fields(array(
+    'type' => 'paragraphs',
+    'entity_type' => $form['#entity_type'],
+    'bundle' => $form['#bundle'],
+  ));
+  if (empty($fields)) {
+    return;
+  }
+
+  dpm($fields);
+  dpm($form);
 }

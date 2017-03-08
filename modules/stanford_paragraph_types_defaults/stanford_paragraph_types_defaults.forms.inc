@@ -8,8 +8,10 @@
 /**
  * Overview list page of existing defaults.
  */
-function stanford_paragraph_types_defaults_overview(){
+function stanford_paragraph_types_defaults_overview() {
+  $output = array('#markup' => t('Here'));
 
+  return $output;
 }
 
 /**
