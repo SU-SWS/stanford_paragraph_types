@@ -656,7 +656,7 @@ function stanford_paragraph_types_field_group_info() {
       'label' => 'Main Content',
       'instance_settings' => array(
         'id' => '',
-        'classes' => 'group-p-wysiwyg-body field-group-div span6 offset3',
+        'classes' => 'group-p-wysiwyg-body field-group-div span9 offset1',
         'description' => '',
         'show_label' => '0',
         'label_element' => 'h3',
