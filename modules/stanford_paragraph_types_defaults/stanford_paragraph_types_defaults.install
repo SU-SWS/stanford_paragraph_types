@@ -10,6 +10,51 @@
  */
 function stanford_paragraph_types_defaults_schema() {
   $schema = array();
-
+  $schema['stanford_paragraphs_defaults'] = array(
+    'description' => 'Stores serialized paragraph defaults.',
+    'fields' => array(
+      'label' => array(
+        'description' => 'The administrative label',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'machine_name' => array(
+        'description' => 'The machine name of the setting',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'item_id' => array(
+        'description' => 'Primary Key: Unique paragraph item ID.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'entity_type' => array(
+        'description' => 'The target entity type',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'field_name' => array(
+        'description' => 'The connected field name',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'bundle' => array(
+        'description' => 'The connected bundle name',
+        'type' => 'varchar',
+        'length' => 32,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+    ),
+  );
   return $schema;
 }

@@ -22,22 +22,40 @@ function stanford_paragraph_types_defaults_permission() {
  */
 function stanford_paragraph_types_defaults_menu() {
   $items = array();
-  $items['admin/structure/paragraphs/defaults'] = array(
+  $items['admin/structure/paragraphs/stanford-defaults'] = array(
     'title' => 'Paragraph Defaults',
-    'page callback' => 'stanford_paragraph_types_defaults_overview',
+    'page callback' => 'stanford_ptd_overview',
     'file' => 'stanford_paragraph_types_defaults.forms.inc',
     'access arguments' => array('administer stanford paragraph types defaults'),
     'type' => MENU_LOCAL_TASK | MENU_NORMAL_ITEM,
   );
-  $items['admin/structure/paragraphs/defaults/overview'] = array(
+  $items['admin/structure/paragraphs/stanford-defaults/overview'] = array(
     'title' => 'Paragraph Defaults',
     'type' => MENU_DEFAULT_LOCAL_TASK,
   );
-  $items['admin/structure/paragraphs/defaults/%'] = array(
-    'title' => 'Example Page',
-    'page callback' => 'example_page',
-    'access arguments' => array('access content'),
-    'type' => MENU_SUGGESTED_ITEM,
+  $items['admin/structure/paragraphs/stanford-defaults/add/%/%/%'] = array(
+    'title' => 'Add Default',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('stanford_ptd_add', 5, 6, 7),
+    'file' => 'stanford_paragraph_types_defaults.forms.inc',
+    'access arguments' => array('administer stanford paragraph types defaults'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['admin/structure/paragraphs/stanford-defaults/edit/%'] = array(
+    'title' => 'Edit Default',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('stanford_ptd_edit', 5),
+    'file' => 'stanford_paragraph_types_defaults.forms.inc',
+    'access arguments' => array('administer stanford paragraph types defaults'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['admin/structure/paragraphs/stanford-defaults/delete/%'] = array(
+    'title' => 'Edit Default',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('stanford_ptd_edit', 5),
+    'file' => 'stanford_paragraph_types_defaults.forms.inc',
+    'access arguments' => array('administer stanford paragraph types defaults'),
+    'type' => MENU_NORMAL_ITEM,
   );
   return $items;
 }
@@ -50,15 +68,160 @@ function stanford_paragraph_types_defaults_form_alter(&$form, &$form_state, $for
   if (!isset($form['#entity_type']) || !isset($form['#bundle'])) {
     return;
   }
-  $fields = field_read_fields(array(
-    'type' => 'paragraphs',
-    'entity_type' => $form['#entity_type'],
-    'bundle' => $form['#bundle'],
-  ));
-  if (empty($fields)) {
+  $defaults = stanford_ptd_load_defaults($form['#entity_type'], $form['#bundle']);
+
+  if (!$defaults) {
     return;
   }
 
-  dpm($fields);
+  foreach ($defaults as $field_name => $default_items) {
+    $form[$field_name]['default_buttons'] = array(
+      '#type' => 'container',
+      '#title' => t('Build Default'),
+      '#weight' => -99,
+    );
+    foreach ($default_items as $machine_name => $label) {
+      $ajax = array('callback' => 'stanford_ptd_build_default_js');
+      $form[$field_name]['default_buttons'][$machine_name] = array(
+        '#type' => 'submit',
+        '#value' => $label,
+        '#submit' => array('stanford_ptd_build_default'),
+        '#ajax' => $ajax + $form[$field_name]['und']['add_more']['add_more']['#ajax'],
+        '#machine_name' => $machine_name,
+        '#field_name' => $field_name,
+      );
+    }
+  }
+}
+
+function stanford_ptd_build_default_js(&$form, &$form_state) {
+  return $form[$form_state['triggering_element']['#field_name']];
+
+//  $button = $form_state['triggering_element'];
+//
+//  // Go one level up in the form, to the widgets container.
+//  $element = drupal_array_get_nested_value($form, array_slice($button['#array_parents'], 0, -2));
+//  $field_name = $element['#field_name'];
+//  $langcode = $element['#language'];
+//  $parents = $element['#field_parents'];
+//
+//  $field_state = field_form_get_state($parents, $field_name, $langcode, $form_state);
+//
+//  $field = $field_state['field'];
+//
+//  // Add a DIV around the delta receiving the Ajax effect.
+//  $delta = $element['#max_delta'];
+//  $element[$delta]['#prefix'] = '<div class="ajax-new-content">' . (isset($element[$delta]['#prefix']) ? $element[$delta]['#prefix'] : '');
+//  $element[$delta]['#suffix'] = (isset($element[$delta]['#suffix']) ? $element[$delta]['#suffix'] : '') . '</div>';
+//
+//  return $element;
+}
+
+function stanford_ptd_build_default(&$form, &$form_state) {
+  $entity = isset($form['#node']) ? $form['#node'] : $form['#entity'];
+  $field = field_info_field($form_state['triggering_element']['#field_name']);
+  $entity_type = $form['#entity_type'];
+  $bundle = $form['#bundle'];
+  $instance = field_info_instance($entity_type, $field['field_name'], $bundle);
+  $paragraphs = stanford_ptd_load_default_paragraphs($form_state['triggering_element']['#machine_name']);
+
+  $items = array();
+  foreach ($paragraphs as $paragraphs_item) {
+    $items[]['entity'] = replicate_clone_entity('paragraphs_item', $paragraphs_item);
+  }
+
+  $paragraphs_field = field_default_form($entity_type, $entity, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
+
+//  $button = $form_state['triggering_element'];
+//
+//  // Go one level up in the form, to the widgets container.
+//  $element = drupal_array_get_nested_value($form, array_slice($button['#array_parents'], 0, -2));
+//  $field_name = $element['#field_name'];
+//  $langcode = $element['#language'];
+//  $parents = $element['#field_parents'];
+//
+//  // Increment the items count.
+//  $field_state = field_form_get_state($parents, $field_name, $langcode, $form_state);
+//
+//  $field = $field_state['field'];
+//
+//  if ($field['cardinality'] == FIELD_CARDINALITY_UNLIMITED || $field_state['real_items_count'] < $field['cardinality']) {
+//    $field_state['items_count']++;
+//  }
+//
+//  field_form_set_state($parents, $field_name, $langcode, $form_state, $field_state);
+
+//  unset($form[$field['field_name']]);
+//  unset($form_state['field'][$field['field_name']]);
+
   dpm($form);
+  $form += $paragraphs_field;
+//  $form_state['rebuild'] = TRUE;
+}
+
+function stanford_ptd_load_defaults($entity_type, $bundle, $field_name = NULL) {
+  $defaults = array();
+  /** @var DatabaseStatementBase $query */
+  $query = db_select('stanford_paragraphs_defaults', 's')
+    ->fields('s', array('machine_name', 'field_name', 'label'))
+    ->condition('entity_type', $entity_type)
+    ->condition('bundle', $bundle);
+  if ($field_name) {
+    $query->condition('field_name', $field_name);
+  }
+  $query = $query->execute();
+  while ($row = $query->fetchAssoc()) {
+    $defaults[$row['field_name']][$row['machine_name']] = $row['label'];
+  }
+  return $defaults;
+}
+
+function stanford_ptd_load_default_paragraphs($machine_name) {
+  $query = db_select('stanford_paragraphs_defaults', 's')
+    ->fields('s', array('item_id'))
+    ->condition('machine_name', $machine_name)
+    ->execute()
+    ->fetchAllKeyed();
+  if ($query) {
+    return paragraphs_item_load_multiple(array_keys($query));
+  }
+  return array();
+}
+
+function stanford_ptd_save_defaults($entity_type, $bundle, $field_name, $label, $machine_name, $value) {
+  if (isset($value[LANGUAGE_NONE]) && !empty($value[LANGUAGE_NONE])) {
+    foreach ($value[LANGUAGE_NONE] as $key => &$item) {
+      if (isset($item['entity'])) {
+        if ($entity = paragraphs_field_get_entity($item)) {
+          if (isset($entity->removed) && $entity->removed) {
+            db_delete('stanford_paragraphs_defaults')
+              ->condition('item_id', $entity->item_id)
+              ->execute();
+            $entity->delete();
+          }
+          else {
+            // Save, but don't set the host entity.
+            $entity->save(TRUE);
+            // Keep track of the entity_id's in our own table.
+            db_merge('stanford_paragraphs_defaults')
+              ->insertFields(array(
+                'label' => $label,
+                'machine_name' => $machine_name,
+                'entity_type' => $entity_type,
+                'field_name' => $field_name,
+                'bundle' => $bundle,
+                'item_id' => $entity->item_id,
+              ))
+              ->updateFields(array(
+                'item_id' => $entity->item_id,
+              ))
+              ->key(array(
+                'item_id' => $entity->item_id,
+              ))
+              ->execute();
+          }
+        }
+      }
+    }
+  }
 }
