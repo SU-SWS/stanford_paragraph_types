@@ -19,8 +19,9 @@ function stanford_ptd_overview() {
       foreach ($bundles as $bundle) {
         $defaults = stanford_ptd_load_defaults($type, $bundle, $field_name);
         foreach ($defaults[$field_name] as $item_id => $label) {
-          $actions = l(t('Edit'), "$path/edit/$item_id") . ' | ';
-          $actions .= l(t('Delete'), "$path/delete/$item_id");
+          $key = bin2hex("$type:$bundle:$item_id");
+          $actions = l(t('Edit'), "$path/edit/$key") . ' | ';
+          $actions .= l(t('Delete'), "$path/delete/$key");
           $rows[] = array(
             $type,
             $bundle,
@@ -130,13 +131,9 @@ function _stanford_ptd_machine_name($string, $form, &$form_state) {
 }
 
 function stanford_ptd_edit($form, &$form_state, $field) {
-  $form = array();
+  list($type, $bundle, $machine_name) = explode(':', hex2bin($field));
+  $defaults = stanford_ptd_load_default_paragraphs($type, $bundle, $machine_name);
 
-
-  $form['save'] = array(
-    '#type' => 'submit',
-    '#value' => t('Save'),
-  );
   return $form;
 }
 
