@@ -1700,10 +1700,10 @@ function stanford_paragraph_types_field_default_field_instances() {
           'content_editor_text_format' => 0,
           'filtered_html' => 0,
           'full_html' => 0,
-          'minimal_html' => 'minimal_html',
+          'minimal_html' => 0,
           'plain_text' => 0,
         ),
-        'allowed_formats_toggle' => 1,
+        'allowed_formats_toggle' => 0,
         'default_order_toggle' => 0,
         'default_order_wrapper' => array(
           'formats' => array(
