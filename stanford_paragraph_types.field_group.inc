@@ -335,8 +335,7 @@ function stanford_paragraph_types_field_group_info() {
     'label' => 'Menu Column',
     'weight' => '0',
     'children' => array(
-      0 => 'field_p_menu_below_menu',
-      1 => 'group_sidebar',
+      0 => 'group_sidebar',
     ),
     'format_type' => 'div',
     'format_settings' => array(
@@ -377,7 +376,7 @@ function stanford_paragraph_types_field_group_info() {
       'label' => 'Main',
       'instance_settings' => array(
         'id' => '',
-        'classes' => 'group-menu-main field-group-div span6',
+        'classes' => 'group-menu-main field-group-div span9',
         'description' => '',
         'show_label' => '0',
         'label_element' => 'h3',
