@@ -643,7 +643,7 @@ function stanford_paragraph_types_field_group_info() {
   $field_group->entity_type = 'paragraphs_item';
   $field_group->bundle = 'p_wysiwyg';
   $field_group->mode = 'full';
-  $field_group->parent_name = '';
+  $field_group->parent_name = 'group_p_wysiwyg_wrapper';
   $field_group->data = array(
     'label' => 'Main Content',
     'weight' => '1',
@@ -656,7 +656,7 @@ function stanford_paragraph_types_field_group_info() {
       'label' => 'Main Content',
       'instance_settings' => array(
         'id' => '',
-        'classes' => 'group-p-wysiwyg-body field-group-div span9 offset1',
+        'classes' => 'group-p-wysiwyg-body field-group-div span8 offset2',
         'description' => '',
         'show_label' => '0',
         'label_element' => 'h3',
@@ -697,6 +697,38 @@ function stanford_paragraph_types_field_group_info() {
     ),
   );
   $field_groups['group_p_wysiwyg_title|paragraphs_item|p_wysiwyg|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_p_wysiwyg_wrapper|paragraphs_item|p_wysiwyg|full';
+  $field_group->group_name = 'group_p_wysiwyg_wrapper';
+  $field_group->entity_type = 'paragraphs_item';
+  $field_group->bundle = 'p_wysiwyg';
+  $field_group->mode = 'full';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Wrapper',
+    'weight' => '0',
+    'children' => array(
+      0 => 'group_p_wysiwyg_body',
+    ),
+    'format_type' => 'div',
+    'format_settings' => array(
+      'label' => 'Wrapper',
+      'instance_settings' => array(
+        'id' => '',
+        'classes' => 'group-p-wysiwyg-wrapper field-group-div row-fluid',
+        'description' => '',
+        'show_label' => '0',
+        'label_element' => 'h3',
+        'effect' => 'none',
+        'speed' => 'fast',
+      ),
+      'formatter' => 'open',
+    ),
+  );
+  $field_groups['group_p_wysiwyg_wrapper|paragraphs_item|p_wysiwyg|full'] = $field_group;
 
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
@@ -848,6 +880,7 @@ function stanford_paragraph_types_field_group_info() {
   t('Teaser Cards');
   t('WYSIWYG');
   t('WYSIWYG Title');
+  t('Wrapper');
 
   return $field_groups;
 }

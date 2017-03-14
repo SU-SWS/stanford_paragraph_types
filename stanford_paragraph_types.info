@@ -77,6 +77,7 @@ features[field_group][] = group_p_hero|paragraphs_item|p_hero|form
 features[field_group][] = group_p_menu|paragraphs_item|p_menu|form
 features[field_group][] = group_p_wysiwyg_body|paragraphs_item|p_wysiwyg|full
 features[field_group][] = group_p_wysiwyg_title|paragraphs_item|p_wysiwyg|full
+features[field_group][] = group_p_wysiwyg_wrapper|paragraphs_item|p_wysiwyg|full
 features[field_group][] = group_p_wysiwyg|paragraphs_item|p_wysiwyg|form
 features[field_group][] = group_right_column|paragraphs_item|p_wysiwyg|default
 features[field_group][] = group_sidebar|paragraphs_item|p_menu|default
