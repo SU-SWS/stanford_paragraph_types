@@ -17,9 +17,7 @@
             teaserCardsCTA($group, $(this).val());
           });
         });
-
       });
-
 
       $('.field-name-field-p-hero-style', context).each(function () {
         $style = $(this);
@@ -33,7 +31,6 @@
           });
         });
       });
-
 
       // Used this method vs conditional_fields since the contrib module failed to function correctly after a 2nd
       // item was added.

@@ -1,0 +1,28 @@
+.paragraphs-item-p-cards .field-item .field-collection-view {
+  padding: 0 10px;
+}
+.paragraphs-item-p-cards .field-item:first-child .field-collection-view {
+  padding: 0 10px 0 0;
+}
+.paragraphs-item-p-cards .field-item:last-child .field-collection-view {
+  padding: 0 0 0 10px;
+}
+.paragraphs-item-p-cards img {
+  margin: 0 auto;
+  display: block;
+}
+@media (max-width: 767px) {
+  .paragraphs-item-p-cards .field-item .field-collection-view,
+  .paragraphs-item-p-cards .field-item:first-child .field-collection-view,
+  .paragraphs-item-p-cards .field-item:last-child .field-collection-view {
+    padding: 0;
+  }
+  .paragraphs-item-p-cards .field-name-field-p-card-cta,
+  .paragraphs-item-p-cards .field-name-field-p-card-file,
+  .paragraphs-item-p-cards .field-name-field-p-card-text {
+    padding: 0 1em;
+  }
+  .paragraphs-item-p-cards .group-card-title {
+    padding: 0 0.6em;
+  }
+}

@@ -525,9 +525,10 @@ function stanford_paragraph_types_field_group_info() {
     'label' => 'Call To Action',
     'weight' => '3',
     'children' => array(
-      0 => 'field_p_card_cta',
-      1 => 'field_p_card_file',
-      2 => 'field_p_card_action_button',
+      0 => 'field_p_card_action_button',
+      1 => 'field_p_card_cta',
+      2 => 'field_p_card_file',
+      3 => 'field_p_card_hide_cta',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

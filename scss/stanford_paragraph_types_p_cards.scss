@@ -1,0 +1,36 @@
+.paragraphs-item-p-cards {
+  .field-item .field-collection-view {
+    padding: 0 10px;
+  }
+
+  .field-item:first-child .field-collection-view {
+    padding: 0 10px 0 0;
+  }
+
+  .field-item:last-child .field-collection-view {
+    padding: 0 0 0 10px;
+  }
+
+  img {
+    margin: 0 auto;
+    display: block;
+  }
+
+  @media (max-width: 767px) {
+    .field-item .field-collection-view,
+    .field-item:first-child .field-collection-view,
+    .field-item:last-child .field-collection-view {
+      padding: 0;
+    }
+
+    .field-name-field-p-card-cta,
+    .field-name-field-p-card-file,
+    .field-name-field-p-card-text {
+      padding: 0 1em;
+    }
+
+    .group-card-title {
+      padding: 0 0.6em;
+    }
+  }
+}
