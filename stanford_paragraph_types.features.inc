@@ -42,12 +42,12 @@ function stanford_paragraph_types_paragraphs_info() {
       'locked' => '1',
     ),
     'p_menu' => array(
-      'name' => 'Menu',
+      'name' => 'Menu with Text Area',
       'bundle' => 'p_menu',
       'locked' => '1',
     ),
     'p_wysiwyg' => array(
-      'name' => 'WYSIWYG',
+      'name' => 'Text Area',
       'bundle' => 'p_wysiwyg',
       'locked' => '1',
     ),

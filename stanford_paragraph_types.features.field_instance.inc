@@ -26,7 +26,7 @@ function stanford_paragraph_types_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 5,
+        'weight' => 6,
       ),
     ),
     'entity_type' => 'field_collection_item',
@@ -93,7 +93,7 @@ function stanford_paragraph_types_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 5,
+      'weight' => 6,
     ),
   );
 
@@ -187,7 +187,44 @@ function stanford_paragraph_types_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'file_generic',
-      'weight' => 6,
+      'weight' => 7,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'field_collection_item-field_p_cards_card-field_p_card_hide_cta'.
+  $field_instances['field_collection_item-field_p_cards_card-field_p_card_hide_cta'] = array(
+    'bundle' => 'field_p_cards_card',
+    'default_value' => array(
+      0 => array(
+        'value' => 0,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => 'Check this to hide the link button, but still link the image in the teaser card.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 5,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_p_card_hide_cta',
+    'label' => 'Hide Call To Action Button',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(
+        'display_label' => 1,
+      ),
+      'type' => 'options_onoff',
+      'weight' => 5,
     ),
   );
 
@@ -1681,7 +1718,7 @@ function stanford_paragraph_types_field_default_field_instances() {
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 2,
+        'weight' => 1,
       ),
       'paragraphs_editor_preview' => array(
         'label' => 'above',
@@ -1700,10 +1737,10 @@ function stanford_paragraph_types_field_default_field_instances() {
           'content_editor_text_format' => 0,
           'filtered_html' => 0,
           'full_html' => 0,
-          'minimal_html' => 'minimal_html',
+          'minimal_html' => 0,
           'plain_text' => 0,
         ),
-        'allowed_formats_toggle' => 1,
+        'allowed_formats_toggle' => 0,
         'default_order_toggle' => 0,
         'default_order_wrapper' => array(
           'formats' => array(
@@ -1758,7 +1795,7 @@ function stanford_paragraph_types_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 3,
+        'weight' => 2,
       ),
       'paragraphs_editor_preview' => array(
         'label' => 'above',
@@ -1823,7 +1860,7 @@ function stanford_paragraph_types_field_default_field_instances() {
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 4,
+        'weight' => 3,
       ),
       'paragraphs_editor_preview' => array(
         'label' => 'above',
@@ -2003,6 +2040,7 @@ function stanford_paragraph_types_field_default_field_instances() {
   t('Caption');
   t('Card Title');
   t('Cards');
+  t('Check this to hide the link button, but still link the image in the teaser card.');
   t('Choose what you want type of link to display below the text and also what the image will link to.');
   t('Featured Image');
   t('File');
@@ -2012,6 +2050,7 @@ function stanford_paragraph_types_field_default_field_instances() {
   t('Hero Image');
   t('Hero Style');
   t('Hero Video');
+  t('Hide Call To Action Button');
   t('Image');
   t('Image insert');
   t('Menu');

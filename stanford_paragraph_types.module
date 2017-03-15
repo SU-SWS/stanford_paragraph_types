@@ -31,41 +31,19 @@ function stanford_paragraph_types_theme_registry_alter(&$theme_registry) {
  * within the Teaser Cards paragraph type.
  */
 function stanford_paragraph_types_preprocess_entity(&$vars) {
-  if (isset($vars['paragraphs_item'])) {
-    drupal_add_css(drupal_get_path('module', 'stanford_paragraph_types') . '/css/stanford_paragraph_types.css');
-    $entity = &$vars['paragraphs_item'];
-
-    // Adds to push following fields down.
-    $vars['classes_array'][] = 'clearfix';
-
-    switch ($entity->bundle) {
-      case 'p_hero':
-        // Adds class to tell where the overlay should live.
-        $classes = explode(' ', $entity->field_p_hero_alignment[LANGUAGE_NONE][0]['value']);
-        foreach ($classes as $class) {
-          $vars['classes_array'][] = $class;
-        }
-
-        // If the style is not "both" unset the unwanted field.
-        $style = $entity->field_p_hero_style[LANGUAGE_NONE][0]['value'];
-        if ($style == 'image') {
-          unset($vars['content']['field_p_hero_video']);
-        }
-        elseif ($style == 'video') {
-          unset($vars['content']['field_p_hero_image']);
-        }
-
-        break;
-
-      default:
-        // Other paragraph types that should be centered and not full width.
-        $vars['classes_array'][] = 'span12';
-        $vars['classes_array'][] = 'center';
-        break;
-    }
+  $function = '_stanford_paragraph_types_preprocess_entity_' . $vars['entity_type'];
+  if (function_exists($function)) {
+    $function($vars);
   }
+}
 
-  if ($vars['entity_type'] == 'field_collection_item' && isset($vars['field_p_card_image'])) {
+/**
+ * Helper for stanford_paragraph_types_preprocess_entity().
+ *
+ * Field Collection items.
+ */
+function _stanford_paragraph_types_preprocess_entity_field_collection_item(&$vars) {
+  if (isset($vars['field_p_card_image'])) {
     // Depending what the user wants to use as the CTA link, hide the unwanted.
     if ($vars['field_collection_item']->field_p_card_action_button[LANGUAGE_NONE][0]['value'] == 'link') {
       unset($vars['content']['field_p_card_file']);
@@ -73,6 +51,54 @@ function stanford_paragraph_types_preprocess_entity(&$vars) {
     else {
       unset($vars['content']['field_p_card_cta']);
     }
+
+    if ($vars['field_collection_item']->field_p_card_hide_cta[LANGUAGE_NONE][0]['value']) {
+      unset($vars['content']['field_p_card_cta']);
+      unset($vars['content']['field_p_card_file']);
+    }
+  }
+}
+
+/**
+ * Helper for stanford_paragraph_types_preprocess_entity().
+ *
+ * Paragraph items.
+ */
+function _stanford_paragraph_types_preprocess_entity_paragraphs_item(&$vars) {
+  $entity = $vars['elements']['#entity'];
+  $css_file = drupal_get_path('module', 'stanford_paragraph_types') . '/css/stanford_paragraph_types_' . $entity->bundle . '.css';
+  if (file_exists($css_file)) {
+    drupal_add_css($css_file);
+  }
+  drupal_add_css(drupal_get_path('module', 'stanford_paragraph_types') . '/css/stanford_paragraph_types.css');
+
+  // Adds to push following Paragraph Items down.
+  $vars['classes_array'][] = 'clearfix';
+
+  switch ($entity->bundle) {
+    case 'p_hero':
+      // Adds class to tell where the overlay should live.
+      $classes = explode(' ', $entity->field_p_hero_alignment[LANGUAGE_NONE][0]['value']);
+      foreach ($classes as $class) {
+        $vars['classes_array'][] = $class;
+      }
+
+      // If the style is not "both" unset the unwanted field.
+      $style = $entity->field_p_hero_style[LANGUAGE_NONE][0]['value'];
+      if ($style == 'image') {
+        unset($vars['content']['field_p_hero_video']);
+      }
+      elseif ($style == 'video') {
+        unset($vars['content']['field_p_hero_image']);
+      }
+
+      break;
+
+    default:
+      // Other paragraph types that should be centered and not full width.
+      $vars['classes_array'][] = 'span12';
+      $vars['classes_array'][] = 'center';
+      break;
   }
 }
 
@@ -102,7 +128,7 @@ function stanford_paragraph_types_field_widget_form_alter(&$element, &$form_stat
     // Find the menu block that has the correct config and use that as the
     // default value in the field.
     $blocks = menu_block_block_info();
-    foreach ($blocks as $delta => $block) {
+    foreach (array_keys($blocks) as $delta) {
       $config = menu_block_get_config($delta);
       if ($config['level'] == 2 && $config['depth'] == 3) {
         $element['#default_value'][0] = "menu_block:$delta";
@@ -115,59 +141,69 @@ function stanford_paragraph_types_field_widget_form_alter(&$element, &$form_stat
  * Implements hook_preprocess_entity().
  */
 function stanford_paragraph_types_preprocess_field(&$vars) {
-  switch ($vars['element']['#field_name']) {
-    case 'field_p_cards_card':
-
-      // Sets a class depending how many items exist.
-      $class = count($vars['items']) == 2 ? 'span6' : 'span4';
-      foreach ($vars['items'] as &$item) {
-        $item['#attributes']['class'][] = $class;
-      }
-
-      break;
-
-    case 'field_p_card_image':
-
-      // Change the image's link based on configured fields.
-      $object = $vars['element']['#object'];
-      unset($vars['items'][0]['#path']);
-
-      if ($object->field_p_card_action_button[LANGUAGE_NONE][0]['value'] == 'file') {
-        // File Link Type.
-        if (!empty($object->field_p_card_file)) {
-          // File field is populated.
-          $vars['items'][0]['#path']['path'] = file_create_url($object->field_p_card_file[LANGUAGE_NONE][0]['uri']);
-        }
-      }
-      else {
-        // Normal Link Type.
-        if (!empty($object->field_p_card_cta)) {
-          // CTA field is populated.
-          $vars['items'][0]['#path']['path'] = $vars['element']['#object']->field_p_card_cta[LANGUAGE_NONE][0]['url'];
-        }
-      }
-
-      break;
-
-    case 'field_p_card_file':
-
-      // Make a simple link from the href and add btn class to tag instead of
-      // the normal display mode.
-      foreach ($vars['element']['#items'] as $delta => $item) {
-        if (!empty($item['description'])) {
-          $title = t($item['description']);
-        }
-        else {
-          $title = t($item['filename']);
-        }
-        $vars['items'][$delta]['#markup'] = l($title, file_create_url($item['uri']), array('attributes' => array('class' => array('btn'))));
-      }
-      break;
-
-    case 'field_p_hero_video':
-      drupal_add_js(drupal_get_path('module', 'stanford_paragraph_types') . '/js/stanford_paragraph_types.js');
-      break;
+  $function = '_stanford_paragraph_types_preprocess_field_' . $vars['element']['#field_name'];
+  if (function_exists($function)) {
+    $function($vars);
   }
+}
+
+/**
+ * Helper for stanford_paragraph_types_preprocess_field().
+ */
+function _stanford_paragraph_types_preprocess_field_field_p_cards_card(&$vars) {
+  // Sets a class depending how many items exist.
+  $class = count($vars['items']) == 2 ? 'span6' : 'span4';
+  foreach ($vars['items'] as &$item) {
+    $item['#attributes']['class'][] = $class;
+  }
+}
+
+/**
+ * Helper for stanford_paragraph_types_preprocess_field().
+ */
+function _stanford_paragraph_types_preprocess_field_field_p_card_image(&$vars) {
+  // Change the image's link based on configured fields.
+  $object = $vars['element']['#object'];
+  unset($vars['items'][0]['#path']);
+
+  if ($object->field_p_card_action_button[LANGUAGE_NONE][0]['value'] == 'file') {
+    // File Link Type.
+    if (!empty($object->field_p_card_file)) {
+      // File field is populated.
+      $vars['items'][0]['#path']['path'] = file_create_url($object->field_p_card_file[LANGUAGE_NONE][0]['uri']);
+    }
+  }
+  else {
+    // Normal Link Type.
+    if (!empty($object->field_p_card_cta)) {
+      // CTA field is populated.
+      $vars['items'][0]['#path']['path'] = $vars['element']['#object']->field_p_card_cta[LANGUAGE_NONE][0]['url'];
+    }
+  }
+}
+
+/**
+ * Helper for stanford_paragraph_types_preprocess_field().
+ */
+function _stanford_paragraph_types_preprocess_field_field_p_card_file(&$vars) {
+  // Make a simple link from the href and add btn class to tag instead of
+  // the normal display mode.
+  foreach ($vars['element']['#items'] as $delta => $item) {
+    if (!empty($item['description'])) {
+      $title = $item['description'];
+    }
+    else {
+      $title = $item['filename'];
+    }
+    $vars['items'][$delta]['#markup'] = l($title, file_create_url($item['uri']), array('attributes' => array('class' => array('btn'))));
+  }
+}
+
+/**
+ * Helper for stanford_paragraph_types_preprocess_field().
+ */
+function _stanford_paragraph_types_preprocess_field_field_p_hero_video(&$vars) {
+  drupal_add_js(drupal_get_path('module', 'stanford_paragraph_types') . '/js/stanford_paragraph_types.js');
 }
 
 /**
@@ -191,34 +227,52 @@ function stanford_paragraph_types_entity_view_mode_alter(&$view_mode, $context) 
  */
 function stanford_paragraph_types_field_group_pre_render(&$element, $group, &$form) {
 
-  // ALL paragraph types only on the edit form.
-  if ($group->entity_type == 'paragraphs_item' && !$group->parent_name && !isset($form['#theme'])) {
-    // Collapse top level field groups to make UI slimmer if editing.
-    $field_instances = field_info_instances($group->entity_type, $group->bundle);
-    foreach (array_keys($field_instances) as $field_name) {
-      if (!empty($form['#entity']->{$field_name}) && !empty($form['#entity']->{$field_name}[LANGUAGE_NONE])) {
-        $group->format_settings['formatter'] = 'collapsed';
+  if ($group->entity_type == 'paragraphs_item') {
+    // All paragraph types only on the edit form.
+    if (!$group->parent_name && !isset($form['#theme'])) {
+      // Collapse top level field groups to make UI slimmer if editing.
+      $field_instances = field_info_instances($group->entity_type, $group->bundle);
+      foreach (array_keys($field_instances) as $field_name) {
+        if (!empty($form['#entity']->{$field_name}) && !empty($form['#entity']->{$field_name}[LANGUAGE_NONE])) {
+          $group->format_settings['formatter'] = 'collapsed';
+        }
       }
     }
-  }
 
-  // WYSIWYG Paragraph Type.
-  if ($group->bundle == 'p_wysiwyg') {
-    $entity = $form['#entity'];
-
-    if (!empty($entity->field_p_wysiwyg_image) && !empty($entity->field_p_wysiwyg_button)) {
-      if ($group->group_name == 'group_left_column') {
-        $element['field_p_wysiwyg_button'] = $form['field_p_wysiwyg_button'];
-      }
-      if ($group->group_name == 'group_right_column') {
-        unset($element['field_p_wysiwyg_button']);
-      }
-      return;
+    $function = '_stanford_paragraph_types_field_group_pre_render_' . $group->bundle;
+    if (function_exists($function)) {
+      $function($element, $group, $form);
     }
   }
+}
 
+/**
+ * Helper for stanford_paragraph_types_field_group_pre_render().
+ *
+ * WYSIWYG Items: Moves button to a different group if image is empty.
+ */
+function _stanford_paragraph_types_field_group_pre_render_p_wysiwyg(&$element, $group, &$form) {
+  $entity = $form['#entity'];
+
+  if (!empty($entity->field_p_wysiwyg_image) && !empty($entity->field_p_wysiwyg_button)) {
+    if ($group->group_name == 'group_left_column') {
+      $element['field_p_wysiwyg_button'] = $form['field_p_wysiwyg_button'];
+    }
+    if ($group->group_name == 'group_right_column') {
+      unset($element['field_p_wysiwyg_button']);
+    }
+    return;
+  }
+}
+
+/**
+ * Helper for stanford_paragraph_types_field_group_pre_render().
+ *
+ * Menu Item: If left column is empty, remove the span9 class.
+ */
+function _stanford_paragraph_types_field_group_pre_render_p_menu(&$element, $group, &$form) {
   // Menu Paragraph Type.
-  if ($group->bundle == 'p_menu' && $group->group_name == 'group_menu_main') {
+  if ($group->group_name == 'group_menu_main') {
     $left_column = $form['group_menu_column'];
 
     // Removes span9 from classes if left column does not have anything in the
@@ -239,57 +293,68 @@ function stanford_paragraph_types_field_attach_form($entity_type, $entity, &$for
   if ($entity_type == 'paragraphs_item') {
     $form['#attached']['js'][] = drupal_get_path('module', 'stanford_paragraph_types') . '/js/stanford_paragraph_types.admin.js';
 
-    switch ($form['#bundle']) {
-      // Teaser Cards.
-      case 'p_cards':
-        if (count(element_children($form['field_p_cards_card'][LANGUAGE_NONE])) >= 4) {
+    $function = '_stanford_paragraph_types_field_attach_form_' . $form['#bundle'];
+    if (function_exists($function)) {
+      $function($entity_type, $entity, $form, $form_state, $langcode);
+    }
+  }
+}
 
-          // Prevent the user from adding more than 3 cards.
-          unset($form['field_p_cards_card'][LANGUAGE_NONE]['add_more']);
-        }
-        break;
+/**
+ * Helper function for stanford_paragraph_types_field_attach_form().
+ *
+ * On Teaser Cards: Prevent the user from adding more than 3 cards.
+ */
+function _stanford_paragraph_types_field_attach_form_p_cards($entity_type, $entity, &$form, &$form_state, $langcode) {
+  if (count(element_children($form['field_p_cards_card'][LANGUAGE_NONE])) >= 4) {
+    unset($form['field_p_cards_card'][LANGUAGE_NONE]['add_more']);
+  }
+}
 
-      // Menu.
-      case 'p_menu':
+/**
+ * Helper function for stanford_paragraph_types_field_attach_form().
+ *
+ * For Buttons: Add remove button on link field.
+ *
+ * @see https://www.drupal.org/node/905492#comment-11553141
+ */
+function _stanford_paragraph_types_field_attach_form_p_buttons($entity_type, $entity, &$form, &$form_state, $langcode) {
+  foreach (element_children($form['field_p_buttons_button'][LANGUAGE_NONE]) as $delta) {
+    $item = &$form['field_p_buttons_button'][LANGUAGE_NONE][$delta];
+    if ($item['#type'] == 'link_field') {
+      $language = $form['#language'];
+      $parents = array('field_p_buttons_button', $language, $delta);
 
-        // Disables the menu block reference field from editing.
-        $element = &$form['field_p_menu_menu'][LANGUAGE_NONE];
-        if (!empty($element['#default_value'])) {
-          $default = reset($element['#default_value']);
-          if (array_key_exists($default, $element['#options'])) {
-            $element['#attributes']['disabled'] = TRUE;
-          }
-        }
-        break;
+      $item['remove_button'] = array(
+        '#delta' => $delta,
+        '#name' => implode('_', $parents) . '_remove_button',
+        '#type' => 'submit',
+        '#value' => t('Remove'),
+        '#validate' => array(),
+        '#submit' => array('stanford_paragraph_types_link_remove_submit'),
+        '#limit_validation_errors' => array(),
+        '#weight' => 1000,
+        '#ajax' => array(
+          'effect' => 'fade',
+          'callback' => 'stanford_paragraph_types_link_remove_callback',
+          'wrapper' => $form['field_p_buttons_button'][LANGUAGE_NONE]['add_more']['#ajax']['wrapper'],
+        ),
+      );
+    }
+  }
+}
 
-      // Buttons.
-      case 'p_buttons':
-        foreach (element_children($form['field_p_buttons_button'][LANGUAGE_NONE]) as $delta) {
-          $item = &$form['field_p_buttons_button'][LANGUAGE_NONE][$delta];
-          if ($item['#type'] == 'link_field') {
-            $language = $form['#language'];
-            $parents = array('field_p_buttons_button', $language, $delta);
-
-            // Add remove button on link field.
-            // @see https://www.drupal.org/node/905492#comment-11553141
-            $item['remove_button'] = array(
-              '#delta' => $delta,
-              '#name' => implode('_', $parents) . '_remove_button',
-              '#type' => 'submit',
-              '#value' => t('Remove'),
-              '#validate' => array(),
-              '#submit' => array('stanford_paragraph_types_link_remove_submit'),
-              '#limit_validation_errors' => array(),
-              '#weight' => 1000,
-              '#ajax' => array(
-                'effect' => 'fade',
-                'callback' => 'stanford_paragraph_types_link_remove_callback',
-                'wrapper' => $form['field_p_buttons_button'][LANGUAGE_NONE]['add_more']['#ajax']['wrapper'],
-              ),
-            );
-          }
-        }
-        break;
+/**
+ * Helper function for stanford_paragraph_types_field_attach_form().
+ *
+ * For Menu W/ Text Area: Disables the menu block reference field from editing.
+ */
+function _stanford_paragraph_types_field_attach_form_p_menu($entity_type, $entity, &$form, &$form_state, $langcode) {
+  $element = &$form['field_p_menu_menu'][LANGUAGE_NONE];
+  if (!empty($element['#default_value'])) {
+    $default = reset($element['#default_value']);
+    if (array_key_exists($default, $element['#options'])) {
+      $element['#attributes']['disabled'] = TRUE;
     }
   }
 }
@@ -298,31 +363,39 @@ function stanford_paragraph_types_field_attach_form($entity_type, $entity, &$for
  * Implements hook_field_attach_validate().
  */
 function stanford_paragraph_types_field_attach_validate($entity_type, $entity, &$errors) {
-  if ($entity_type == 'paragraphs_item' && $entity->bundle == 'p_hero') {
+  if ($entity_type != 'paragraphs_item') {
+    return;
+  }
+  $function = '_stanford_paragraph_types_field_attach_validate_' . $entity->bundle;
+  if (function_exists($function)) {
+    $function($entity_type, $entity, $errors);
+  }
+}
 
-    // If the hero is set to display only the image or only the video, validate
-    // that the appropriate field is popuplated.
-    $style = $entity->field_p_hero_style[LANGUAGE_NONE][0]['value'];
-    $images = field_get_items($entity_type, $entity, 'field_p_hero_image');
-    $videos = field_get_items($entity_type, $entity, 'field_p_hero_video');
+/**
+ * Helper for stanford_paragraph_types_field_attach_validate().
+ *
+ * If the hero is set to display only the image or only the video, validate
+ * that the appropriate field is populated.
+ */
+function _stanford_paragraph_types_field_attach_validate_p_hero($entity_type, $entity, &$errors) {
 
-    if ($style == 'image' || $style == 'both') {
-      if (!$images || !$images[0]['fid']) {
-        $errors['field_p_hero_image'][LANGUAGE_NONE][0][] = array(
-          'error' => 'field_example_invalid',
-          'message' => t('Image required.'),
-        );
-      }
-    }
+  $style = $entity->field_p_hero_style[LANGUAGE_NONE][0]['value'];
+  $images = field_get_items($entity_type, $entity, 'field_p_hero_image');
+  $videos = field_get_items($entity_type, $entity, 'field_p_hero_video');
 
-    if ($style == 'video' || $style == 'both') {
-      if (!$videos || !array_filter($videos[0])) {
-        $errors['field_p_hero_video'][LANGUAGE_NONE][0][] = array(
-          'error' => 'field_example_invalid',
-          'message' => t('Video Required.'),
-        );
-      }
-    }
+  if (($style == 'image' || $style == 'both') && (!$images || !$images[0]['fid'])) {
+    $errors['field_p_hero_image'][LANGUAGE_NONE][0][] = array(
+      'error' => 'field_example_invalid',
+      'message' => t('Image required.'),
+    );
+  }
+
+  if (($style == 'video' || $style == 'both') && (!$videos || !array_filter($videos[0]))) {
+    $errors['field_p_hero_video'][LANGUAGE_NONE][0][] = array(
+      'error' => 'field_example_invalid',
+      'message' => t('Video Required.'),
+    );
   }
 }
 

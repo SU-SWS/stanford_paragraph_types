@@ -164,6 +164,31 @@ function stanford_paragraph_types_field_default_field_bases() {
     'type' => 'file',
   );
 
+  // Exported field_base: 'field_p_card_hide_cta'.
+  $field_bases['field_p_card_hide_cta'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_p_card_hide_cta',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        0 => '',
+        1 => '',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_boolean',
+  );
+
   // Exported field_base: 'field_p_card_image'.
   $field_bases['field_p_card_image'] = array(
     'active' => 1,
@@ -239,11 +264,15 @@ function stanford_paragraph_types_field_default_field_bases() {
       'revision_id' => array(
         0 => 'revision_id',
       ),
+      'value' => array(
+        0 => 'value',
+      ),
     ),
     'locked' => 0,
     'module' => 'field_collection',
     'settings' => array(
       'hide_blank_items' => 1,
+      'hide_initial_item' => FALSE,
       'path' => '',
     ),
     'translatable' => 0,
