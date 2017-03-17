@@ -9,9 +9,12 @@
  * Implements hook_features_export_options().
  */
 function paragraph_defaults_features_export_options() {
-  return db_select('stanford_paragraphs_defaults', 's')
-    ->fields('s', array('pid', 'label'))
-    ->execute()->fetchAllKeyed();
+  $defaults = stanford_paragraphs_defaults_load_multiple();
+  $items = array();
+  foreach ($defaults as $uid => $default) {
+    $items[$uid] = $default['label'];
+  }
+  return $items;
 }
 
 /**
@@ -19,16 +22,9 @@ function paragraph_defaults_features_export_options() {
  */
 function paragraph_defaults_features_export($data, &$export, $module_name) {
   $export['dependencies']['stanford_paragraph_types_defaults'] = 'stanford_paragraph_types_defaults';
-  $query = db_select('stanford_paragraphs_defaults', 's')
-    ->fields('s')
-    ->condition('pid', $data, 'IN')
-    ->execute();
-
-  while ($default = $query->fetchAssoc()) {
-    $id = "{$default['entity_type']}-{$default['bundle']}-{$default['machine_name']}";
-    $export['features']['paragraph_defaults'][$id] = $id;
+  foreach ($data as $uid) {
+    $export['features']['paragraph_defaults'][$uid] = $uid;
   }
-
   return array();
 }
 
@@ -36,34 +32,33 @@ function paragraph_defaults_features_export($data, &$export, $module_name) {
  * Implements hook_features_export_render().
  */
 function paragraph_defaults_features_export_render($module_name, $data, $export = NULL) {
+  $defaults = stanford_paragraphs_defaults_load_multiple($data);
+  $code = array('  $paragraph_defaults = array();');
 
-  $code = array();
-  $code[] = '  $paragraph_defaults = array();';
-  foreach ($data as $item) {
-    list($type, $bundle, $machine_name) = explode('-', $item);
+  foreach ($defaults as $uid => $item) {
+    unset($item['uid'], $item['item_ids']);
 
-    $defaults = stanford_ptd_load_default_paragraphs($type, $bundle, $machine_name);
-    $items = array(
-      '#type' => $type,
-      '#bundle' => $bundle,
-      '#machine_name' => $machine_name,
-    );
+    foreach ($item['paragraphs'] as &$paragraph_item) {
+      unset($paragraph_item->item_id, $paragraph_item->revision_id);
+      unset($paragraph_item->default_revision, $paragraph_item->archived);
 
-    foreach ($defaults as $default) {
-      $object = new stdClass();
-      foreach ($default as $prop => $value) {
-        $object->{$prop} = $value;
+      $new_object = new stdClass();
+      foreach ($paragraph_item as $property => $value) {
+        if (!empty($value)) {
+          $new_object->{$property} = $value;
+        }
       }
-      unset($object->item_id, $object->revision_id, $object->default_revision, $object->archived);
-      $items['paragraphs'][] = $object;
+      $paragraph_item = $new_object;
     }
+    $item['paragraphs'] = array_values($item['paragraphs']);
 
-    $code[] = "  \$paragraph_defaults['{$item}'] = " . features_var_export($items) . ";";
+    $code[] = "  \$paragraph_defaults['{$uid}'] = " . features_var_export($item, '  ') . ";";
     $code[] = '';
   }
 
-  $code[] = "return \$paragraph_defaults;";
+  $code[] = '  return $paragraph_defaults;';
   $code = implode("\n", $code);
+
   return array('paragraph_defaults' => $code);
 }
 
@@ -92,9 +87,49 @@ function paragraph_defaults_features_revert($module_name) {
 }
 
 function paragraph_defaults_save($default) {
-  $existing_defaults = stanford_ptd_load_default_paragraphs($default['#type'], $default['#bundle'], $default['#machine_name']);
-  foreach ($existing_defaults as $paragraph_item) {
-    dpm($paragraph_item);
-//    entity_delete('paragraphs_item', $paragraph_item);
+  // Clear out old default configuration.
+  $uid = "{$default['entity_type']}-{$default['bundle']}-{$default['field_name']}-{$default['machine_name']}";
+
+  if ($original_default = stanford_paragraphs_defaults_load($uid)) {
+    $item_ids = array();
+    foreach ($original_default['paragraphs'] as $paragraph_item) {
+      $item_ids[] = $paragraph_item->item_id;
+    }
+    entity_delete_multiple('paragraphs_item', $item_ids);
   }
+
+  $item_ids = array();
+  foreach ($default['paragraphs'] as $weight => $item) {
+    $paragraph = new ParagraphsItemEntity(array(
+      'field_name' => $item['field_name'],
+      'bundle' => $item['bundle'],
+    ));
+    $paragraph->is_new = TRUE;
+
+    $fields = field_info_instances('paragraphs_item', $item['bundle']);
+    foreach (array_keys($fields) as $field_name) {
+      if (isset($item[$field_name])) {
+        $paragraph->{$field_name} = $item[$field_name];
+      }
+    }
+    $paragraph->save(TRUE);
+    $item_ids[$paragraph->item_id] = $weight;
+  }
+
+  db_merge('stanford_paragraphs_defaults')
+    ->insertFields(array(
+      'label' => $default['label'],
+      'machine_name' => $default['machine_name'],
+      'entity_type' => $default['entity_type'],
+      'field_name' => $default['field_name'],
+      'bundle' => $default['bundle'],
+      'item_ids' => serialize($item_ids),
+    ))
+    ->updateFields(array(
+      'item_ids' => serialize($item_ids),
+    ))
+    ->key(array(
+      'uid' => $uid,
+    ))
+    ->execute();
 }

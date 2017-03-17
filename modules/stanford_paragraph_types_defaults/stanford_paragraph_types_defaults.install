@@ -13,11 +13,12 @@ function stanford_paragraph_types_defaults_schema() {
   $schema['stanford_paragraphs_defaults'] = array(
     'description' => 'Stores serialized paragraph defaults.',
     'fields' => array(
-      'pid' => array(
+      'uid' => array(
         'description' => 'Unique id of the config',
-        'type' => 'serial',
-        'unsigned' => TRUE,
+        'type' => 'varchar',
+        'length' => 500,
         'not null' => TRUE,
+        'default' => '',
       ),
       'label' => array(
         'description' => 'The administrative label',
@@ -35,10 +36,10 @@ function stanford_paragraph_types_defaults_schema() {
       ),
       'item_ids' => array(
         'description' => 'Paragraph item IDs in the default.',
-        'type' => 'varchar',
-        'length' => 500,
-        'not null' => TRUE,
-        'default' => '',
+        'type' => 'blob',
+        'not null' => FALSE,
+        'size' => 'big',
+        'serialize' => TRUE,
       ),
       'entity_type' => array(
         'description' => 'The target entity type',
@@ -62,7 +63,7 @@ function stanford_paragraph_types_defaults_schema() {
         'default' => '',
       ),
     ),
-    'primary key' => array('pid'),
+    'primary key' => array('uid'),
   );
   return $schema;
 }
@@ -72,7 +73,7 @@ function stanford_paragraph_types_defaults_schema() {
  */
 function stanford_paragraph_types_defaults_uninstall() {
   $query = db_select('stanford_paragraphs_defaults', 's')
-    ->fields('s', array('item_id'))
+    ->fields('s', array('item_ids'))
     ->execute();
   while ($item_ids = $query->fetchField()) {
     $item_ids = explode(',', $item_ids);
