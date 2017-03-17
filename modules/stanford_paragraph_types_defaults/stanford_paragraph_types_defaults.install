@@ -13,6 +13,12 @@ function stanford_paragraph_types_defaults_schema() {
   $schema['stanford_paragraphs_defaults'] = array(
     'description' => 'Stores serialized paragraph defaults.',
     'fields' => array(
+      'pid' => array(
+        'description' => 'Unique id of the config',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
       'label' => array(
         'description' => 'The administrative label',
         'type' => 'varchar',
@@ -27,11 +33,12 @@ function stanford_paragraph_types_defaults_schema() {
         'not null' => TRUE,
         'default' => '',
       ),
-      'item_id' => array(
-        'description' => 'Primary Key: Unique paragraph item ID.',
-        'type' => 'int',
-        'unsigned' => TRUE,
+      'item_ids' => array(
+        'description' => 'Paragraph item IDs in the default.',
+        'type' => 'varchar',
+        'length' => 500,
         'not null' => TRUE,
+        'default' => '',
       ),
       'entity_type' => array(
         'description' => 'The target entity type',
@@ -55,6 +62,22 @@ function stanford_paragraph_types_defaults_schema() {
         'default' => '',
       ),
     ),
+    'primary key' => array('pid'),
   );
   return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function stanford_paragraph_types_defaults_uninstall() {
+  $query = db_select('stanford_paragraphs_defaults', 's')
+    ->fields('s', array('item_id'))
+    ->execute();
+  while ($item_ids = $query->fetchField()) {
+    $item_ids = explode(',', $item_ids);
+    foreach ($item_ids as $item_id) {
+      entity_delete('paragraphs_item', $item_id);
+    }
+  }
 }

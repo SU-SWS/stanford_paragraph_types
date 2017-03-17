@@ -16,8 +16,14 @@ function stanford_ptd_overview() {
 
     $field = field_info_field($field_name);
     foreach ($field['bundles'] as $type => $bundles) {
+      $entity_info = entity_get_info($type);
+
       foreach ($bundles as $bundle) {
         $defaults = stanford_ptd_load_defaults($type, $bundle, $field_name);
+        $table_caption = $entity_info['label'] . ' - ';
+        $table_caption .= $entity_info['bundles'][$bundle]['label'];
+        $table_caption .= ' - ' . $field_name;
+
         foreach ($defaults[$field_name] as $item_id => $label) {
           $key = bin2hex("$type:$bundle:$item_id");
           $actions = l(t('Edit'), "$path/edit/$key") . ' | ';
@@ -29,19 +35,24 @@ function stanford_ptd_overview() {
             $actions,
           );
         }
+
+        $add_link = l(t('Add New Default'), "$path/add/$type/$bundle/$field_name");
+        $rows[] = array(
+          'data' => array(array('data' => $add_link, 'colspan' => 4)),
+        );
+        $output[$type][$bundle][$field_name] = array(
+          '#theme' => 'table',
+          '#caption' => $table_caption,
+          '#header' => array(
+            t('Entity Type'),
+            t('Entity Bundle'),
+            t('Name'),
+            t('Operations'),
+          ),
+          '#rows' => $rows,
+        );
       }
     }
-    $output[$field_name] = array(
-      '#theme' => 'table',
-      '#caption' => $field_name,
-      '#header' => array(
-        t('Entity Type'),
-        t('Entity Bundle'),
-        t('Default Config'),
-        t('Operations'),
-      ),
-      '#rows' => $rows,
-    );
   }
   return $output;
 }
@@ -84,21 +95,11 @@ function stanford_ptd_add($form, &$form_state, $entity_type, $bundle, $field_nam
   // Add the paragraphs field.
   $field = field_info_field($field_name);
   $instance = field_info_instance($entity_type, $field_name, $bundle);
-  $defaults = array();
-//  $defaults = paragraphs_defaults_load_defaults($entity_type, $field_name, $bundle);
-  $paragraphs = paragraphs_item_load_multiple($defaults);
-
   $host_entity = entity_create($entity_type, array('type' => $bundle));
 
-  // Order any existing paragraphs in a form we can use to set the default
-  // value.
   $items = array();
-  foreach ($paragraphs as $paragraph_item) {
-    $items[]['entity'] = $paragraph_item;
-  }
   $paragraphs_field = field_default_form($entity_type, $host_entity, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
   $form += (array) $paragraphs_field;
-
 
   $form['save'] = array(
     '#type' => 'submit',
@@ -116,6 +117,7 @@ function stanford_ptd_add_submit($form, &$form_state) {
   $label = $form_state['values']['name'];
   $machine_name = $form_state['values']['machine_name'];
   stanford_ptd_save_defaults($entity_type, $bundle, $field_name, $label, $machine_name, $form_state['values'][$field_name]);
+  $form_state['redirect'] = 'admin/structure/paragraphs/stanford-defaults';
 }
 
 function _stanford_ptd_machine_name($string, $form, &$form_state) {
@@ -130,13 +132,68 @@ function _stanford_ptd_machine_name($string, $form, &$form_state) {
   return $query;
 }
 
-function stanford_ptd_edit($form, &$form_state, $field) {
-  list($type, $bundle, $machine_name) = explode(':', hex2bin($field));
+function stanford_ptd_edit($form, &$form_state, $item) {
+  list($type, $bundle, $machine_name) = explode(':', hex2bin($item));
+  $name = db_select('stanford_paragraphs_defaults', 's')
+    ->fields('s', array('label'))
+    ->condition('entity_type', $type)
+    ->condition('bundle', $bundle)
+    ->condition('machine_name', $machine_name)
+    ->execute()->fetchField();
+
   $defaults = stanford_ptd_load_default_paragraphs($type, $bundle, $machine_name);
+  $field_name = $defaults[key($defaults)]->field_name;
+
+  $form = stanford_ptd_add($form, $form_state, $type, $bundle, $field_name);
+  $form['name']['#default_value'] = $name;
+  $form['machine_name']['#default_value'] = $machine_name;
+  $form['machine_name']['#attributes'] = array('disabled' => TRUE);
+
+  $host_entity = entity_create($type, array('type' => $bundle));
+  $field = field_info_field($field_name);
+  $instance = field_info_instance($type, $field_name, $bundle);
+
+  $items = array();
+  foreach ($defaults as $item_id => $paragraph_item) {
+    $items[]['entity'] = $paragraph_item;
+  }
+
+  unset($form[$field_name]);
+  unset($form_state['field'][$field_name]);
+
+  $paragraphs_field = field_default_form($type, $host_entity, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
+  $form += (array) $paragraphs_field;
+  $form['#submit'][] = 'stanford_ptd_add_submit';
 
   return $form;
 }
 
-function stanford_ptd_delete($item_id) {
+function stanford_ptd_delete($form, &$form_state, $item_id) {
+  list($type, $bundle, $machine_name) = explode(':', hex2bin($item_id));
+  $form_state['#entity_type'] = $type;
+  $form_state['#entity_bundle'] = $bundle;
+  $form_state['#machine_name'] = $machine_name;
+  $defaults = stanford_ptd_load_default_paragraphs($type, $bundle, $machine_name);
+  $form_state['#default_paragraphs'] = $defaults;
+  $form['delete'] = array(
+    '#type' => 'submit',
+    '#value' => t('Delete'),
+    '#name' => 'delete',
+  );
+  $form['cancel'] = array(
+    '#type' => 'submit',
+    '#value' => t('Cancel'),
+    '#name' => 'cancel',
+  );
+  return $form;
+}
 
+function stanford_ptd_delete_submit($form, &$form_state) {
+  if ($form_state['triggering_element']['#name'] == 'delete') {
+    foreach ($form_state['#default_paragraphs'] as $paragraph_item) {
+      entity_delete('paragraphs_item', $paragraph_item->item_id);
+    }
+    drupal_set_message(t('Default Configuration deleted'));
+  }
+  $form_state['redirect'] = 'admin/structure/paragraphs/stanford-defaults';
 }

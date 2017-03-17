@@ -6,6 +6,20 @@
  */
 
 /**
+ * Implements hook_features_api().
+ */
+function stanford_paragraph_types_defaults_features_api() {
+  return array(
+    'paragraph_defaults' => array(
+      'default_hook' => 'paragraph_defaults',
+      'default_file' => FEATURES_DEFAULTS_INCLUDED,
+      'feature_source' => TRUE,
+      'file' => drupal_get_path('module', 'stanford_paragraph_types_defaults') . '/stanford_paragraph_types_defaults.features.inc',
+    ),
+  );
+}
+
+/**
  * Implements hook_permission().
  */
 function stanford_paragraph_types_defaults_permission() {
@@ -15,6 +29,40 @@ function stanford_paragraph_types_defaults_permission() {
       'description' => t('Create and modify default paragraph items.'),
     ),
   );
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function stanford_paragraph_types_defaults_entity_delete($entity, $type) {
+  if ($type == 'paragraphs_item') {
+    $item_id = $entity->item_id;
+
+    $query = db_select('stanford_paragraphs_defaults', 's')
+      ->fields('s', array('pid', 'item_ids'))
+      ->condition('item_ids', "%$item_id%", 'LIKE')
+      ->execute()
+      ->fetchAllKeyed();
+
+    foreach ($query as $pid => $item_ids) {
+      $default_items = explode(',', $item_ids);
+      $item_position = array_search($item_id, $default_items);
+      if ($item_position !== FALSE) {
+        unset($default_items[$item_position]);
+      }
+
+      if ($default_items) {
+        db_update('stanford_paragraphs_defaults')
+          ->fields(array('item_ids' => implode(',', $default_items)))
+          ->condition('pid', $pid)
+          ->execute();
+      }
+      else {
+        db_delete('stanford_paragraphs_defaults')
+          ->condition('pid', $pid)->execute();
+      }
+    }
+  }
 }
 
 /**
@@ -52,14 +100,13 @@ function stanford_paragraph_types_defaults_menu() {
   $items['admin/structure/paragraphs/stanford-defaults/delete/%'] = array(
     'title' => 'Edit Default',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('stanford_ptd_edit', 5),
+    'page arguments' => array('stanford_ptd_delete', 5),
     'file' => 'stanford_paragraph_types_defaults.forms.inc',
     'access arguments' => array('administer stanford paragraph types defaults'),
     'type' => MENU_NORMAL_ITEM,
   );
   return $items;
 }
-
 
 /**
  * Implements hook_form_alter().
@@ -166,52 +213,63 @@ function stanford_ptd_load_defaults($entity_type, $bundle, $field_name = NULL) {
 
 function stanford_ptd_load_default_paragraphs($entity_type, $bundle, $machine_name) {
   $query = db_select('stanford_paragraphs_defaults', 's')
-    ->fields('s', array('item_id'))
+    ->fields('s', array('item_ids'))
     ->condition('machine_name', $machine_name)
     ->condition('entity_type', $entity_type)
     ->condition('bundle', $bundle)
     ->execute()
-    ->fetchAllKeyed();
+    ->fetchField();
   if ($query) {
-    return paragraphs_item_load_multiple(array_keys($query));
+    $item_ids = explode(',', $query);
+    return paragraphs_item_load_multiple($item_ids);
   }
   return array();
 }
 
 function stanford_ptd_save_defaults($entity_type, $bundle, $field_name, $label, $machine_name, $value) {
   if (isset($value[LANGUAGE_NONE]) && !empty($value[LANGUAGE_NONE])) {
+    $item_ids = array();
+
     foreach ($value[LANGUAGE_NONE] as $key => &$item) {
       if (isset($item['entity'])) {
         if ($entity = paragraphs_field_get_entity($item)) {
           if (isset($entity->removed) && $entity->removed) {
             db_delete('stanford_paragraphs_defaults')
-              ->condition('item_id', $entity->item_id)
+              ->condition('item_ids', $entity->item_id)
               ->execute();
             $entity->delete();
           }
           else {
             // Save, but don't set the host entity.
             $entity->save(TRUE);
-            // Keep track of the entity_id's in our own table.
-            db_merge('stanford_paragraphs_defaults')
-              ->insertFields(array(
-                'label' => $label,
-                'machine_name' => $machine_name,
-                'entity_type' => $entity_type,
-                'field_name' => $field_name,
-                'bundle' => $bundle,
-                'item_id' => $entity->item_id,
-              ))
-              ->updateFields(array(
-                'item_id' => $entity->item_id,
-              ))
-              ->key(array(
-                'item_id' => $entity->item_id,
-              ))
-              ->execute();
+            $item_ids[] = $entity->item_id;
           }
         }
       }
+    }
+
+    if ($item_ids) {
+      // todo: Weights
+      // Keep track of the entity_id's in our own table.
+      db_merge('stanford_paragraphs_defaults')
+        ->insertFields(array(
+          'label' => $label,
+          'machine_name' => $machine_name,
+          'entity_type' => $entity_type,
+          'field_name' => $field_name,
+          'bundle' => $bundle,
+          'item_ids' => implode(',', $item_ids),
+        ))
+        ->updateFields(array(
+          'item_ids' => implode(',', $item_ids),
+        ))
+        ->key(array(
+          'machine_name' => $machine_name,
+          'entity_type' => $entity_type,
+          'field_name' => $field_name,
+          'bundle' => $bundle,
+        ))
+        ->execute();
     }
   }
 }
