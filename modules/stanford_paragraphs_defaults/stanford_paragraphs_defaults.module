@@ -1,0 +1,359 @@
+<?php
+
+/**
+ * @file
+ * Stanford Paragraph Types Defaults.
+ */
+
+/**
+ * Implements hook_features_api().
+ */
+function stanford_paragraphs_defaults_features_api() {
+  return array(
+    'paragraphs_defaults' => array(
+      'default_hook' => 'paragraphs_defaults',
+      'default_file' => FEATURES_DEFAULTS_INCLUDED,
+      'feature_source' => TRUE,
+      'file' => drupal_get_path('module', 'stanford_paragraphs_defaults') . '/stanford_paragraphs_defaults.features.inc',
+    ),
+  );
+}
+
+/**
+ * Implements hook_permission().
+ */
+function stanford_paragraphs_defaults_permission() {
+  return array(
+    'administer stanford paragraph types defaults' => array(
+      'title' => t('Administer Stanford Paragraph Types Defaults'),
+      'description' => t('Create and modify default paragraph items.'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_entity_delete().
+ */
+function stanford_paragraphs_defaults_entity_delete($entity, $type) {
+  if ($type == 'paragraphs_item') {
+    $item_id = $entity->item_id;
+
+    $query = db_select('stanford_paragraphs_defaults', 's')
+      ->fields('s', array('uid', 'item_ids'))
+      ->condition('item_ids', "%:$item_id;%", 'LIKE')
+      ->execute()
+      ->fetchAllKeyed();
+
+    foreach ($query as $uid => $item_ids) {
+
+      $default_items = unserialize($item_ids);
+      unset($default_items[$item_id]);
+
+      if ($default_items) {
+        db_update('stanford_paragraphs_defaults')
+          ->fields(array('item_ids' => serialize($default_items)))
+          ->condition('uid', $uid)
+          ->execute();
+      }
+      else {
+        db_delete('stanford_paragraphs_defaults')
+          ->condition('uid', $uid)->execute();
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function stanford_paragraphs_defaults_menu() {
+  $items = array();
+  $items['admin/structure/paragraphs/stanford-defaults'] = array(
+    'title' => 'Paragraph Defaults',
+    'page callback' => 'stanford_paragraphs_defaults_overview',
+    'file' => 'stanford_paragraphs_defaults.forms.inc',
+    'access arguments' => array('administer stanford paragraph types defaults'),
+    'type' => MENU_LOCAL_TASK | MENU_NORMAL_ITEM,
+  );
+  $items['admin/structure/paragraphs/stanford-defaults/overview'] = array(
+    'title' => 'Paragraph Defaults',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+  );
+  $items['admin/structure/paragraphs/stanford-defaults/add/%/%/%'] = array(
+    'title' => 'Add Default',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('stanford_paragraphs_defaults_add', 5, 6, 7),
+    'file' => 'stanford_paragraphs_defaults.forms.inc',
+    'access arguments' => array('administer stanford paragraph types defaults'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['admin/structure/paragraphs/stanford-defaults/edit/%stanford_paragraphs_defaults'] = array(
+    'title' => 'Edit Default',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('stanford_paragraphs_defaults_edit', 5),
+    'file' => 'stanford_paragraphs_defaults.forms.inc',
+    'access arguments' => array('administer stanford paragraph types defaults'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  $items['admin/structure/paragraphs/stanford-defaults/delete/%stanford_paragraphs_defaults'] = array(
+    'title' => 'Delete Default',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('stanford_paragraphs_defaults_delete', 5),
+    'file' => 'stanford_paragraphs_defaults.forms.inc',
+    'access arguments' => array('administer stanford paragraph types defaults'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+/**
+ * Load a single default configuration by uid.
+ *
+ * @param string $uid
+ *   UID to load.
+ *
+ * @return array|bool
+ *   Keyed array of the requested default or false if none exists.
+ */
+function stanford_paragraphs_defaults_load($uid) {
+  if ($default = stanford_paragraphs_defaults_load_multiple(array($uid))) {
+    return $default[$uid];
+  }
+  return FALSE;
+}
+
+/**
+ * Loads multiple default configurations by requested UID.
+ *
+ * @param array|null $uids
+ *   UIDs to load.
+ * @param string $entity_type
+ *   Entity type to load defaults.
+ * @param string $bundle
+ *   Entity bundle to load defaults.
+ * @param string $field_name
+ *   Entity field to load defaults.
+ *
+ * @return array
+ *   An associative array with all available defaults.
+ */
+function stanford_paragraphs_defaults_load_multiple($uids = NULL, $entity_type = NULL, $bundle = NULL, $field_name = NULL) {
+  $query = db_select('stanford_paragraphs_defaults', 's')
+    ->fields('s');
+  if ($uids) {
+    $query->condition('uid', $uids, 'IN');
+  }
+  if ($entity_type) {
+    $query->condition('entity_type', $entity_type);
+  }
+  if ($bundle) {
+    $query->condition('bundle', $bundle);
+  }
+  if ($field_name) {
+    $query->condition('field_name', $field_name);
+  }
+  $results = $query->execute();
+
+  $defaults = array();
+  while ($default_item = $results->fetchAssoc()) {
+    $item_ids = unserialize($default_item['item_ids']);
+    $default_item['item_ids'] = $item_ids;
+    asort($item_ids);
+    $paragraphs = paragraphs_item_load_multiple(array_keys($item_ids));
+    $default_item['paragraphs'] = $paragraphs;
+
+    $defaults[$default_item['uid']] = $default_item;
+  }
+  return $defaults;
+}
+
+/**
+ * Implements hook_field_attach_form().
+ */
+function stanford_paragraphs_defaults_field_attach_form($entity_type, $entity, &$form, &$form_state, $langcode) {
+  $uid = '';
+  if (isset($form_state['load_default'])) {
+    $uid = $form_state['load_default'];
+    _stanford_paragraphs_defaults_attach_default($form, $form_state, $uid);
+  }
+
+  $paragraphs_fields = field_read_fields(array(
+    'type' => 'paragraphs',
+    'entity_type' => $entity_type,
+    'bundle' => $form['#bundle'],
+  ));
+
+  foreach (array_keys($paragraphs_fields) as $field_name) {
+    $defaults = stanford_paragraphs_defaults_load_multiple(NULL, $entity_type, $form['#bundle'], $field_name);
+    $state = field_form_get_state(array(), $field_name, LANGUAGE_NONE, $form_state);
+
+    // Skip this field if its already populated, if the default config was
+    // already loaded, or if no defaults are configured.
+    if ($state['items_count'] ||
+      !$defaults ||
+      !isset($form[$field_name]) ||
+      (strpos($uid, $field_name) !== FALSE)
+    ) {
+      continue;
+    }
+
+    $form[$field_name]['defaults'] = array(
+      '#type' => 'fieldset',
+      '#title' => t('Load default layout'),
+      '#weight' => -99,
+    );
+    foreach ($defaults as $uid => $default) {
+      $form[$field_name]['defaults'][$uid] = array(
+        '#type' => 'submit',
+        '#value' => $default['label'],
+        '#name' => $uid,
+        '#submit' => array('stanford_paragraphs_defaults_build_default'),
+        '#limit_validation_errors' => array(),
+      );
+    }
+  }
+}
+
+/**
+ * Attach the default paragraph configuration.
+ *
+ * @param array $form
+ *   Drupal_get_form form array.
+ * @param array $form_state
+ *   Drupal_get_form form_state array.
+ * @param string $uid
+ *   Uid of the default configuration to load.
+ */
+function _stanford_paragraphs_defaults_attach_default(array &$form, array &$form_state, $uid) {
+  $loaded = &drupal_static(__FUNCTION__);
+  if ($loaded) {
+    return;
+  }
+  $loaded = TRUE;
+
+  $default = stanford_paragraphs_defaults_load($uid);
+  $field_name = $default['field_name'];
+  $entity_type = $default['entity_type'];
+
+  if (!isset($form[$field_name])) {
+    return;
+  }
+
+  $entity = isset($form['#node']) ? $form['#node'] : $form['#entity'];
+  $info = entity_get_info($entity_type);
+  if (!empty($info['entity keys']['bundle'])) {
+    // If bundle key isn't set, set it here.
+    // @see entity_extract_ids().
+    if (!isset($entity->{$info['entity keys']['bundle']}) || $entity->{$info['entity keys']['bundle']} === '') {
+      $entity->{$info['entity keys']['bundle']} = $default['bundle'];
+    }
+  }
+  list($entity_id, ,) = entity_extract_ids($entity_type, $entity);
+
+  if (!isset($entity_id)) {
+    // Reset the paragraph field.
+    $field = $form_state['field'][$field_name][LANGUAGE_NONE]['field'];
+    $instance = $form_state['field'][$field_name][LANGUAGE_NONE]['instance'];
+
+    unset($form[$field_name]);
+    unset($form_state['field'][$field_name]);
+
+    // Order any existing paragraphs in a form we can use to set the
+    // default value.
+    $items = array();
+    foreach ($default['paragraphs'] as $paragraphs_item) {
+      $cloned_item = replicate_clone_entity('paragraphs_item', $paragraphs_item);
+      $cloned_item->item_id = NULL;
+      $cloned_item->revision_id = NULL;
+      $items[]['entity'] = $cloned_item;
+    }
+    $paragraphs_field = field_default_form($entity_type, $entity, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
+    $form += (array) $paragraphs_field;
+
+    $field_form_state = &$form_state['field'][$field_name][LANGUAGE_NONE];
+    $field_form_state['items_count'] = $field_form_state['real_items_count'] = count($items);
+    $field_form_state['field'] = $field;
+  }
+}
+
+/**
+ * Default button submit handler.
+ *
+ * Rebuild the form with the form_state changed to indicate which default to
+ * load.
+ */
+function stanford_paragraphs_defaults_build_default(&$form, &$form_state) {
+  $form_state['load_default'] = $form_state['triggering_element']['#name'];
+  $form_state['rebuild'] = TRUE;
+}
+
+/**
+ * Save the paragraph entities and write to defaults table.
+ *
+ * @param string $entity_type
+ *   Parent entity type.
+ * @param string $bundle
+ *   Parent entity bundle.
+ * @param string $field_name
+ *   Field of the paragraphs field.
+ * @param string $label
+ *   Display label.
+ * @param string $machine_name
+ *   Machine name of  the default setting.
+ * @param array $value
+ *   Form submitted values.
+ */
+function stanford_paragraphs_defaults_save_defaults($entity_type, $bundle, $field_name, $label, $machine_name, array $value) {
+  if (isset($value[LANGUAGE_NONE]) && !empty($value[LANGUAGE_NONE])) {
+    $item_ids = array();
+
+    foreach ($value[LANGUAGE_NONE] as $item) {
+      if (isset($item['entity'])) {
+        if ($entity = paragraphs_field_get_entity($item)) {
+          if (isset($entity->removed) && $entity->removed) {
+            $entity->delete();
+          }
+          else {
+            // Save, but don't set the host entity.
+            $entity->save(TRUE);
+            $item_ids[$entity->item_id] = $item['_weight'];
+          }
+        }
+      }
+    }
+    if ($item_ids) {
+      // Keep track of the entity_id's in our own table.
+      $uid = "$entity_type-$bundle-$field_name-$machine_name";
+      $fields = array(
+        'label' => $label,
+        'machine_name' => $machine_name,
+        'entity_type' => $entity_type,
+        'field_name' => $field_name,
+        'bundle' => $bundle,
+        'item_ids' => serialize($item_ids),
+      );
+      db_merge('stanford_paragraphs_defaults')
+        ->insertFields($fields)
+        ->updateFields(array(
+          'item_ids' => serialize($item_ids),
+        ))
+        ->key(array(
+          'uid' => $uid,
+        ))
+        ->execute();
+    }
+  }
+}
+
+/**
+ * Implements hook_cron().
+ */
+function stanford_paragraphs_defaults_cron() {
+  $defaults = stanford_paragraphs_defaults_load_multiple();
+  foreach ($defaults as $default) {
+    $entity_info = entity_get_info($default['entity_type']);
+    if (!$entity_info || !isset($entity_info[$default['bundle']])) {
+      entity_delete('paragraphs_item', array_keys($default['item_ids']));
+    }
+  }
+}

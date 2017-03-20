@@ -2,13 +2,13 @@
 
 /**
  * @file
- * stanford_paragraph_types_defaults.features.inc
+ * Stanford_paragraphs_defaults.features.inc.
  */
 
 /**
  * Implements hook_features_export_options().
  */
-function paragraph_defaults_features_export_options() {
+function paragraphs_defaults_features_export_options() {
   $defaults = stanford_paragraphs_defaults_load_multiple();
   $items = array();
   foreach ($defaults as $uid => $default) {
@@ -20,10 +20,10 @@ function paragraph_defaults_features_export_options() {
 /**
  * Implements hook_features_export().
  */
-function paragraph_defaults_features_export($data, &$export, $module_name) {
-  $export['dependencies']['stanford_paragraph_types_defaults'] = 'stanford_paragraph_types_defaults';
+function paragraphs_defaults_features_export($data, &$export, $module_name) {
+  $export['dependencies']['stanford_paragraphs_defaults'] = 'stanford_paragraphs_defaults';
   foreach ($data as $uid) {
-    $export['features']['paragraph_defaults'][$uid] = $uid;
+    $export['features']['paragraphs_defaults'][$uid] = $uid;
   }
   return array();
 }
@@ -31,9 +31,9 @@ function paragraph_defaults_features_export($data, &$export, $module_name) {
 /**
  * Implements hook_features_export_render().
  */
-function paragraph_defaults_features_export_render($module_name, $data, $export = NULL) {
+function paragraphs_defaults_features_export_render($module_name, $data, $export = NULL) {
   $defaults = stanford_paragraphs_defaults_load_multiple($data);
-  $code = array('  $paragraph_defaults = array();');
+  $code = array('  $paragraphs_defaults = array();');
 
   foreach ($defaults as $uid => $item) {
     unset($item['uid'], $item['item_ids']);
@@ -52,24 +52,24 @@ function paragraph_defaults_features_export_render($module_name, $data, $export 
     }
     $item['paragraphs'] = array_values($item['paragraphs']);
 
-    $code[] = "  \$paragraph_defaults['{$uid}'] = " . features_var_export($item, '  ') . ";";
+    $code[] = "  \$paragraphs_defaults['{$uid}'] = " . features_var_export($item, '  ') . ";";
     $code[] = '';
   }
 
-  $code[] = '  return $paragraph_defaults;';
+  $code[] = '  return $paragraphs_defaults;';
   $code = implode("\n", $code);
 
-  return array('paragraph_defaults' => $code);
+  return array('paragraphs_defaults' => $code);
 }
 
 /**
  * Implements hook_features_rebuild().
  */
-function paragraph_defaults_features_rebuild($module_name) {
-  $paragraph_defaults = module_invoke($module_name, 'paragraph_defaults');
-  if (!empty($paragraph_defaults)) {
-    foreach ($paragraph_defaults as $paragraph_default) {
-      paragraph_defaults_save($paragraph_default);
+function paragraphs_defaults_features_rebuild($module_name) {
+  $paragraphs_defaults = module_invoke($module_name, 'paragraphs_defaults');
+  if (!empty($paragraphs_defaults)) {
+    foreach ($paragraphs_defaults as $paragraph_default) {
+      paragraphs_defaults_save($paragraph_default);
     }
   }
 }
@@ -77,16 +77,22 @@ function paragraph_defaults_features_rebuild($module_name) {
 /**
  * Implements hook_features_revert().
  */
-function paragraph_defaults_features_revert($module_name) {
-  $paragraph_defaults = module_invoke($module_name, 'paragraph_defaults');
-  if (!empty($paragraph_defaults)) {
-    foreach ($paragraph_defaults as $paragraph_default) {
-      paragraph_defaults_save($paragraph_default);
+function paragraphs_defaults_features_revert($module_name) {
+  $paragraphs_defaults = module_invoke($module_name, 'paragraphs_defaults');
+  if (!empty($paragraphs_defaults)) {
+    foreach ($paragraphs_defaults as $paragraph_default) {
+      paragraphs_defaults_save($paragraph_default);
     }
   }
 }
 
-function paragraph_defaults_save($default) {
+/**
+ * Save the features exported default settings.
+ *
+ * @param array $default
+ *   Paragraph default exported.
+ */
+function paragraphs_defaults_save(array $default) {
   // Clear out old default configuration.
   $uid = "{$default['entity_type']}-{$default['bundle']}-{$default['field_name']}-{$default['machine_name']}";
 
@@ -96,6 +102,12 @@ function paragraph_defaults_save($default) {
       $item_ids[] = $paragraph_item->item_id;
     }
     entity_delete_multiple('paragraphs_item', $item_ids);
+  }
+
+  // Check if entity type and bundle exist before saving.
+  $entity_info = entity_get_info($default['entity_type']);
+  if (!$entity_info || !isset($entity_info[$default['bundle']])) {
+    return;
   }
 
   $item_ids = array();
@@ -116,17 +128,19 @@ function paragraph_defaults_save($default) {
     $item_ids[$paragraph->item_id] = $weight;
   }
 
+  $fields = array(
+    'label' => $default['label'],
+    'machine_name' => $default['machine_name'],
+    'entity_type' => $default['entity_type'],
+    'field_name' => $default['field_name'],
+    'bundle' => $default['bundle'],
+    'item_ids' => serialize($item_ids),
+  );
+
   db_merge('stanford_paragraphs_defaults')
-    ->insertFields(array(
-      'label' => $default['label'],
-      'machine_name' => $default['machine_name'],
-      'entity_type' => $default['entity_type'],
-      'field_name' => $default['field_name'],
-      'bundle' => $default['bundle'],
-      'item_ids' => serialize($item_ids),
-    ))
+    ->insertFields($fields)
     ->updateFields(array(
-      'item_ids' => serialize($item_ids),
+      'item_ids' => $fields['item_ids'],
     ))
     ->key(array(
       'uid' => $uid,

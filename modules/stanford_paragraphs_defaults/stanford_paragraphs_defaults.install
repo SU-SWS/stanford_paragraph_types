@@ -2,13 +2,13 @@
 
 /**
  * @file
- * Stanford Paragraph Types Defaults Install.
+ * Stanford Paragraph Defaults Install.
  */
 
 /**
  * Implements hook_schema().
  */
-function stanford_paragraph_types_defaults_schema() {
+function stanford_paragraphs_defaults_schema() {
   $schema = array();
   $schema['stanford_paragraphs_defaults'] = array(
     'description' => 'Stores serialized paragraph defaults.',
@@ -71,14 +71,9 @@ function stanford_paragraph_types_defaults_schema() {
 /**
  * Implements hook_uninstall().
  */
-function stanford_paragraph_types_defaults_uninstall() {
-  $query = db_select('stanford_paragraphs_defaults', 's')
-    ->fields('s', array('item_ids'))
-    ->execute();
-  while ($item_ids = $query->fetchField()) {
-    $item_ids = explode(',', $item_ids);
-    foreach ($item_ids as $item_id) {
-      entity_delete('paragraphs_item', $item_id);
-    }
+function stanford_paragraphs_defaults_uninstall() {
+  $defaults = stanford_paragraphs_defaults_load_multiple();
+  foreach ($defaults as $default) {
+    entity_delete('paragraphs_item', array_keys($default['item_ids']));
   }
 }
