@@ -16,7 +16,7 @@ function stanford_paragraphs_defaults_features_export_files($module_name, $expor
 
   $files = array();
   foreach ($export_files as $file) {
-    $file_name = basename($file);
+    $file_name = drupal_basename($file);
     $files["assets/$file_name"] = array(
       'file_path' => $file,
     );
@@ -67,7 +67,6 @@ function paragraphs_defaults_features_export_render($module_name, $data, $export
   }
 
   $code[] = '  return $paragraphs_defaults;';
-
   return array('paragraphs_defaults' => implode("\n", $code));
 }
 
@@ -95,7 +94,6 @@ function _stanford_paragraphs_defaults_prepare_entity($entity, $entity_type) {
     // Prepare specific field data depending on the field type.
     $prepare_function = '_stanford_paragraphs_defaults_prepare_' . $field['type'];
 
-
     if (function_exists($prepare_function)) {
       $field_items = field_get_items($entity_type, $entity, $field_name);
 
@@ -120,6 +118,10 @@ function _stanford_paragraphs_defaults_prepare_entity($entity, $entity_type) {
   unset($new_object->uuid, $new_object->default_revision);
 
   $new_object->entity_type = $entity_type;
+  $new_object->entity_bundle = $entity->{$bundle_key};
+  if ($entity_type = 'paragraphs') {
+    $new_object->field_name = $entity->field_name;
+  }
   return $new_object;
 }
 
@@ -140,7 +142,7 @@ function _stanford_paragraphs_defaults_prepare_image(array $field_items) {
       'filemime' => $item['filemime'],
       'alt' => $item['alt'],
       'title' => $item['title'],
-      'uri' => basename($item['uri']),
+      'uri' => drupal_basename($item['uri']),
       'filesize' => $item['filesize'],
     );
   }
@@ -164,7 +166,7 @@ function _stanford_paragraphs_defaults_prepare_file(array $field_items) {
       'filemime' => $item['filemmime'],
       'display' => $item['display'],
       'description' => $item['description'],
-      'uri' => basename($item['uri']),
+      'uri' => drupal_basename($item['uri']),
       'filesize' => $item['filesize'],
     );
   }
@@ -228,7 +230,7 @@ function paragraphs_defaults_features_rebuild($module_name) {
   $paragraphs_defaults = module_invoke($module_name, 'paragraphs_defaults');
   if (!empty($paragraphs_defaults)) {
     foreach ($paragraphs_defaults as $paragraph_default) {
-      paragraphs_defaults_save($paragraph_default);
+      paragraphs_defaults_save($paragraph_default, $module_name);
     }
   }
 }
@@ -240,7 +242,7 @@ function paragraphs_defaults_features_revert($module_name) {
   $paragraphs_defaults = module_invoke($module_name, 'paragraphs_defaults');
   if (!empty($paragraphs_defaults)) {
     foreach ($paragraphs_defaults as $paragraph_default) {
-      paragraphs_defaults_save($paragraph_default);
+      paragraphs_defaults_save($paragraph_default, $module_name);
     }
   }
 }
@@ -251,7 +253,7 @@ function paragraphs_defaults_features_revert($module_name) {
  * @param array $default
  *   Paragraph default exported.
  */
-function paragraphs_defaults_save(array $default) {
+function paragraphs_defaults_save(array $default, $module_name) {
   // Clear out old default configuration.
   $uid = "{$default['entity_type']}-{$default['bundle']}-{$default['field_name']}-{$default['machine_name']}";
 
@@ -271,20 +273,8 @@ function paragraphs_defaults_save(array $default) {
 
   $item_ids = array();
   foreach ($default['paragraphs'] as $weight => $item) {
-    $paragraph = new ParagraphsItemEntity(array(
-      'field_name' => $item['field_name'],
-      'bundle' => $item['bundle'],
-    ));
-    $paragraph->is_new = TRUE;
-
-    $fields = field_info_instances('paragraphs_item', $item['bundle']);
-    foreach (array_keys($fields) as $field_name) {
-      if (isset($item[$field_name])) {
-        $paragraph->{$field_name} = $item[$field_name];
-      }
-    }
-    $paragraph->save(TRUE);
-    $item_ids[$paragraph->item_id] = $weight;
+    $item_id = _paragraphs_defaults_save_entity($item['entity_type'], $item['entity_bundle'], $item, $module_name);
+    $item_ids[$item_id] = $weight;
   }
 
   $fields = array(
@@ -305,4 +295,102 @@ function paragraphs_defaults_save(array $default) {
       'uid' => $uid,
     ))
     ->execute();
+}
+
+/**
+ * Create and save an entity with its field data.
+ *
+ * @param string $entity_type
+ *   Type of the entity.
+ * @param string $bundle
+ *   Bundle of the entity.
+ * @param array $fields
+ *   Fields and properties to set in the entity.
+ * @param string $module_name
+ *   Module that defines the default setting.
+ *
+ * @return int
+ *   Entity id of the entity.
+ */
+function _paragraphs_defaults_save_entity($entity_type, $bundle, array $fields, $module_name, $host_entity = NULL, $host_type = NULL) {
+  $entity_info = entity_get_info($entity_type);
+  $entity_options = array(
+    'bundle' => $bundle,
+    'field_name' => $fields['field_name'],
+  );
+  $entity = entity_create($entity_type, $entity_options);
+  $entity->{$entity_info['entity keys']['bundle']} = $bundle;
+  unset($fields['entity_type'], $fields['entity_bundle']);
+
+  foreach ($fields as $field_name => $values) {
+    $entity->{$field_name} = $values;
+  }
+  $entity->is_new = TRUE;
+
+  $fields = field_info_instances($entity_type, $bundle);
+
+  foreach (array_keys($fields) as $field_name) {
+
+    if (!empty($entity->{$field_name})) {
+      $field_items = $entity->{$field_name}[LANGUAGE_NONE];
+      _paragraphs_defaults_save_field_values($field_items, $module_name, $entity, $entity_type);
+      $entity->{$field_name}[LANGUAGE_NONE] = $field_items;
+    }
+  }
+  // Save paragraph item without setting host entity.
+  switch ($entity_type) {
+    case 'paragraphs_item':
+      /* @param ParagraphsItemEntity $entity */
+      $entity->save(TRUE);
+      break;
+
+    case 'field_collection_item':
+      $entity->setHostEntity($host_type, $host_entity);
+      $entity->save(TRUE);
+      break;
+
+    default:
+      entity_save($entity_type, $entity);
+      break;
+  }
+
+  list($entity_id, ,) = entity_extract_ids($entity_type, $entity);
+  return $entity_id;
+}
+
+/**
+ * Manipulate the field items before saving.
+ *
+ * @param array $field_items
+ *   Field data.
+ * @param string $module_name
+ *   Module name of the feature.
+ */
+function _paragraphs_defaults_save_field_values(array &$field_items, $module_name, $host_entity = NULL, $host_type = NULL) {
+  $dir = 'public://paragraphs_defaults';
+  file_prepare_directory($dir, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS);
+
+  $dir = "public://paragraphs_defaults/$module_name";
+  file_prepare_directory($dir, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS);
+
+  foreach ($field_items as &$item) {
+    if (isset($item['entity_type'])) {
+      $entity_id = _paragraphs_defaults_save_entity($item['entity_type'], $item['entity_bundle'], $item, $module_name, $host_entity, $host_type);
+      $item = array('value' => $entity_id);
+    }
+
+    if (isset($item['uri'])) {
+      $old_file = new stdClass();
+      $old_file->uri = drupal_get_path('module', $module_name) . '/assets/' . $item['uri'];
+      $file = file_copy($old_file, "$dir/{$item['uri']}", FILE_EXISTS_REPLACE);
+      if ($file) {
+        unset($item['uri']);
+        foreach ($item as $key => $value) {
+          $file->{$key} = $value;
+        }
+        file_save($file);
+        $item = (array) $file;
+      }
+    }
+  }
 }

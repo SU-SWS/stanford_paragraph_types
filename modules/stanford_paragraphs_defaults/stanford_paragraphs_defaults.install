@@ -69,6 +69,14 @@ function stanford_paragraphs_defaults_schema() {
 }
 
 /**
+ * Implements hook_install().
+ */
+function stanford_paragraphs_defaults_install() {
+  $dir = 'public://paragraphs_defaults';
+  file_prepare_directory($dir, FILE_CREATE_DIRECTORY);
+}
+
+/**
  * Implements hook_uninstall().
  */
 function stanford_paragraphs_defaults_uninstall() {
@@ -76,4 +84,6 @@ function stanford_paragraphs_defaults_uninstall() {
   foreach ($defaults as $default) {
     entity_delete('paragraphs_item', array_keys($default['item_ids']));
   }
+
+  file_unmanaged_delete_recursive('public://paragraph_defaults');
 }
