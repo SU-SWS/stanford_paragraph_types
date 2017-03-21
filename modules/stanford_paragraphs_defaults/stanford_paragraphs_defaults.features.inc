@@ -6,6 +6,25 @@
  */
 
 /**
+ * Implements hook_features_export_files().
+ */
+function stanford_paragraphs_defaults_features_export_files($module_name, $export) {
+  $export_files = &drupal_static('stanford_paragraphs_defaults_files');
+  if (!$export_files) {
+    return array();
+  }
+
+  $files = array();
+  foreach ($export_files as $file) {
+    $file_name = basename($file);
+    $files["assets/$file_name"] = array(
+      'file_path' => $file,
+    );
+  }
+  return $files;
+}
+
+/**
  * Implements hook_features_export_options().
  */
 function paragraphs_defaults_features_export_options() {
@@ -39,16 +58,7 @@ function paragraphs_defaults_features_export_render($module_name, $data, $export
     unset($item['uid'], $item['item_ids']);
 
     foreach ($item['paragraphs'] as &$paragraph_item) {
-      unset($paragraph_item->item_id, $paragraph_item->revision_id);
-      unset($paragraph_item->default_revision, $paragraph_item->archived);
-
-      $new_object = new stdClass();
-      foreach ($paragraph_item as $property => $value) {
-        if (!empty($value)) {
-          $new_object->{$property} = $value;
-        }
-      }
-      $paragraph_item = $new_object;
+      $paragraph_item = _stanford_paragraphs_defaults_prepare_entity($paragraph_item, 'paragraphs_item');
     }
     $item['paragraphs'] = array_values($item['paragraphs']);
 
@@ -57,9 +67,158 @@ function paragraphs_defaults_features_export_render($module_name, $data, $export
   }
 
   $code[] = '  return $paragraphs_defaults;';
-  $code = implode("\n", $code);
 
-  return array('paragraphs_defaults' => $code);
+  return array('paragraphs_defaults' => implode("\n", $code));
+}
+
+/**
+ * Prepare a given entity to produce a basic object with all field data.
+ *
+ * @param object $entity
+ *   The entity to process.
+ * @param string $entity_type
+ *   The type of the entity.
+ *
+ * @return \stdClass
+ *   The prepared and processed entity as a standard object for easy export.
+ */
+function _stanford_paragraphs_defaults_prepare_entity($entity, $entity_type) {
+  $entity_info = entity_get_info($entity_type);
+  $bundle_key = $entity_info['entity keys']['bundle'];
+
+  $fields = field_read_fields(array(
+    'entity_type' => $entity_type,
+    'bundle' => $entity->{$bundle_key},
+  ));
+
+  foreach ($fields as $field_name => $field) {
+    // Prepare specific field data depending on the field type.
+    $prepare_function = '_stanford_paragraphs_defaults_prepare_' . $field['type'];
+
+
+    if (function_exists($prepare_function)) {
+      $field_items = field_get_items($entity_type, $entity, $field_name);
+
+      if ($field_items) {
+        $field_items = $prepare_function($field_items);
+        $entity->{$field_name}[LANGUAGE_NONE] = $field_items;
+      }
+    }
+  }
+
+  // Clone and get just the properties we care about.
+  $new_object = new stdClass();
+  foreach ($entity as $property => $value) {
+    if (!empty($value)) {
+      $new_object->{$property} = $value;
+    }
+  }
+
+  foreach ($entity_info['entity keys'] as $key) {
+    unset($new_object->{$key});
+  }
+  unset($new_object->uuid, $new_object->default_revision);
+
+  $new_object->entity_type = $entity_type;
+  return $new_object;
+}
+
+/**
+ * Prepare image field type items.
+ *
+ * @param array $field_items
+ *   Field items provided by field_get_items().
+ *
+ * @return array
+ *   Prepared field_items.
+ */
+function _stanford_paragraphs_defaults_prepare_image(array $field_items) {
+  $files = &drupal_static('stanford_paragraphs_defaults_files');
+  foreach ($field_items as &$item) {
+    $files[$item['uri']] = $item['uri'];
+    $item = array(
+      'filemime' => $item['filemime'],
+      'alt' => $item['alt'],
+      'title' => $item['title'],
+      'uri' => basename($item['uri']),
+      'filesize' => $item['filesize'],
+    );
+  }
+  return $field_items;
+}
+
+/**
+ * Prepare file field type items.
+ *
+ * @param array $field_items
+ *   Field items provided by field_get_items().
+ *
+ * @return array
+ *   Prepared field_items.
+ */
+function _stanford_paragraphs_defaults_prepare_file(array $field_items) {
+  $files = &drupal_static('stanford_paragraphs_defaults_files');
+  foreach ($field_items as &$item) {
+    $files[$item['uri']] = $item['uri'];
+    $item = array(
+      'filemime' => $item['filemmime'],
+      'display' => $item['display'],
+      'description' => $item['description'],
+      'uri' => basename($item['uri']),
+      'filesize' => $item['filesize'],
+    );
+  }
+  return $field_items;
+}
+
+/**
+ * Prepare video embed field type items.
+ *
+ * @param array $field_items
+ *   Field items provided by field_get_items().
+ *
+ * @return array
+ *   Prepared field_items.
+ */
+function _stanford_paragraphs_defaults_prepare_video_embed_field(array $field_items) {
+  foreach ($field_items as &$item) {
+    unset($item['thumbnail_path']);
+  }
+  return $field_items;
+}
+
+/**
+ * Prepare paragraphs field type items.
+ *
+ * @param array $field_items
+ *   Field items provided by field_get_items().
+ *
+ * @return array
+ *   Prepared field_items.
+ */
+function _stanford_paragraphs_defaults_features_prepare_paragraphs(array $field_items) {
+  foreach ($field_items as &$item) {
+    $paragraph_item = paragraphs_item_load($item['value']);
+    $item = _stanford_paragraphs_defaults_prepare_entity($paragraph_item, 'paragraphs_item');
+  }
+  return $field_items;
+}
+
+/**
+ * Prepare field collection field type items.
+ *
+ * @param array $field_items
+ *   Field items provided by field_get_items().
+ *
+ * @return array
+ *   Prepared field_items.
+ */
+function _stanford_paragraphs_defaults_prepare_field_collection(array $field_items) {
+  foreach ($field_items as &$item) {
+    $item = field_collection_item_load($item['value']);
+    $item = _stanford_paragraphs_defaults_prepare_entity($item, 'field_collection_item');
+  }
+  return $field_items;
 }
 
 /**
@@ -106,7 +265,7 @@ function paragraphs_defaults_save(array $default) {
 
   // Check if entity type and bundle exist before saving.
   $entity_info = entity_get_info($default['entity_type']);
-  if (!$entity_info || !isset($entity_info[$default['bundle']])) {
+  if (!$entity_info || !isset($entity_info['bundles'][$default['bundle']])) {
     return;
   }
 

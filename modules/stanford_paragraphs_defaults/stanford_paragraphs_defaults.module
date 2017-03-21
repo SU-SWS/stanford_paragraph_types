@@ -6,6 +6,15 @@
  */
 
 /**
+ * Implements hook_form_alter().
+ */
+function stanford_paragraphs_defaults_form_alter(&$form, &$form_state, $form_id) {
+//  dpm($form_id);
+//  dpm($form);
+//  features_export_build_form_submit();
+}
+
+/**
  * Implements hook_features_api().
  */
 function stanford_paragraphs_defaults_features_api() {
@@ -352,7 +361,7 @@ function stanford_paragraphs_defaults_cron() {
   $defaults = stanford_paragraphs_defaults_load_multiple();
   foreach ($defaults as $default) {
     $entity_info = entity_get_info($default['entity_type']);
-    if (!$entity_info || !isset($entity_info[$default['bundle']])) {
+    if (!$entity_info || !isset($entity_info['bundles'][$default['bundle']])) {
       entity_delete('paragraphs_item', array_keys($default['item_ids']));
     }
   }

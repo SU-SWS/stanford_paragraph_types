@@ -207,12 +207,23 @@ function _stanford_paragraphs_defaults_machine_name($string, array $form, array 
  */
 function stanford_paragraphs_defaults_edit(array $form, array &$form_state, array $default = array()) {
   $form = stanford_paragraphs_defaults_add($form, $form_state, $default['entity_type'], $default['bundle'], $default['field_name']);
+
   drupal_set_title($default['label']);
   $form['name']['#default_value'] = $default['label'];
   $form['machine_name']['#default_value'] = $default['machine_name'];
   $form['machine_name']['#attributes'] = array('disabled' => TRUE);
 
   $host_entity = entity_create($default['entity_type'], array('type' => $default['bundle']));
+
+  $info = entity_get_info($default['entity_type']);
+  if (!empty($info['entity keys']['bundle'])) {
+    // If bundle key isn't set, set it here.
+    // @see entity_extract_ids().
+    if (!isset($host_entity->{$info['entity keys']['bundle']}) || $host_entity->{$info['entity keys']['bundle']} === '') {
+      $host_entity->{$info['entity keys']['bundle']} = $default['bundle'];
+    }
+  }
+
   $field = field_info_field($default['field_name']);
   $instance = field_info_instance($default['entity_type'], $default['field_name'], $default['bundle']);
 
@@ -221,8 +232,11 @@ function stanford_paragraphs_defaults_edit(array $form, array &$form_state, arra
     $items[]['entity'] = $paragraph_item;
   }
 
-//  unset($form[$default['field_name']]);
-//  unset($form_state['field'][$default['field_name']]);
+  unset($form[$default['field_name']]);
+  $field_state = &$form_state['field'][$default['field_name']][LANGUAGE_NONE];
+  if (!$field_state['items_count']) {
+    $field_state['items_count'] = count($items);
+  }
 
   $paragraphs_field = field_default_form($default['entity_type'], $host_entity, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
   $form += (array) $paragraphs_field;
