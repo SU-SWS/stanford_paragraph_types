@@ -96,7 +96,6 @@ function _stanford_paragraphs_defaults_prepare_entity($entity, $entity_type) {
 
     if (function_exists($prepare_function)) {
       $field_items = field_get_items($entity_type, $entity, $field_name);
-
       if ($field_items) {
         $field_items = $prepare_function($field_items);
         $entity->{$field_name}[LANGUAGE_NONE] = $field_items;
@@ -137,12 +136,16 @@ function _stanford_paragraphs_defaults_prepare_entity($entity, $entity_type) {
 function _stanford_paragraphs_defaults_prepare_image(array $field_items) {
   $files = &drupal_static('stanford_paragraphs_defaults_files');
   foreach ($field_items as &$item) {
-    $files[$item['uri']] = $item['uri'];
+
+    if (!isset($files[drupal_basename($item['uri'])])) {
+      $files[drupal_basename($item['uri'])] = $item['uri'];
+    }
+
     $item = array(
       'filemime' => $item['filemime'],
       'alt' => $item['alt'],
       'title' => $item['title'],
-      'uri' => drupal_basename($item['uri']),
+      'uri' => 'assets/' . drupal_basename($item['uri']),
       'filesize' => $item['filesize'],
     );
   }
@@ -161,12 +164,16 @@ function _stanford_paragraphs_defaults_prepare_image(array $field_items) {
 function _stanford_paragraphs_defaults_prepare_file(array $field_items) {
   $files = &drupal_static('stanford_paragraphs_defaults_files');
   foreach ($field_items as &$item) {
-    $files[$item['uri']] = $item['uri'];
+
+    if (!isset($files[drupal_basename($item['uri'])])) {
+      $files[drupal_basename($item['uri'])] = $item['uri'];
+    }
+
     $item = array(
       'filemime' => $item['filemime'],
       'display' => $item['display'],
       'description' => $item['description'],
-      'uri' => drupal_basename($item['uri']),
+      'uri' => 'assets/' . drupal_basename($item['uri']),
       'filesize' => $item['filesize'],
     );
   }
@@ -201,8 +208,10 @@ function _stanford_paragraphs_defaults_prepare_video_embed_field(array $field_it
  */
 function _stanford_paragraphs_defaults_features_prepare_paragraphs(array $field_items) {
   foreach ($field_items as &$item) {
-    $paragraph_item = paragraphs_item_load($item['value']);
-    $item = _stanford_paragraphs_defaults_prepare_entity($paragraph_item, 'paragraphs_item');
+    if (is_array($item) && isset($item['value'])) {
+      $item = paragraphs_item_load($item['value']);
+    }
+    $item = _stanford_paragraphs_defaults_prepare_entity($item, 'paragraphs_item');
   }
   return $field_items;
 }
@@ -218,7 +227,9 @@ function _stanford_paragraphs_defaults_features_prepare_paragraphs(array $field_
  */
 function _stanford_paragraphs_defaults_prepare_field_collection(array $field_items) {
   foreach ($field_items as &$item) {
-    $item = field_collection_item_load($item['value']);
+    if (is_array($item) && isset($item['value'])) {
+      $item = field_collection_item_load($item['value']);
+    }
     $item = _stanford_paragraphs_defaults_prepare_entity($item, 'field_collection_item');
   }
   return $field_items;
@@ -270,6 +281,13 @@ function paragraphs_defaults_save(array $default, $module_name) {
   // Clear out old default configuration.
   $uid = "{$default['entity_type']}-{$default['bundle']}-{$default['field_name']}-{$default['machine_name']}";
   stanford_paragraphs_defaults_delete_default($uid);
+
+  if (in_array($default['entity_type'], array(
+    'paragraphs_item',
+    'field_collection_item',
+  ))) {
+    return;
+  }
 
   // Check if entity type and bundle exist before saving.
   $entity_info = entity_get_info($default['entity_type']);
@@ -527,7 +545,7 @@ function _stanford_paragraphs_defaults_copy_file(array $file_data, $module_name)
   file_prepare_directory($dir, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS);
 
   $file_name = drupal_basename($file_data['uri']);
-  $file_path = drupal_get_path('module', $module_name) . '/assets/' . $file_name;
+  $file_path = drupal_get_path('module', $module_name) . '/' . $file_data['uri'];
   if (!file_exists($file_path)) {
     return FALSE;
   }
@@ -541,6 +559,4 @@ function _stanford_paragraphs_defaults_copy_file(array $file_data, $module_name)
 
   // Return the new file object or false if failed.
   return file_copy($old_file, "$dir/$file_name", FILE_EXISTS_REPLACE);
-
-//  entity_extract_ids();
 }

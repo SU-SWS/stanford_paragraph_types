@@ -11,7 +11,6 @@
 function stanford_paragraphs_defaults_overview() {
   drupal_set_title(t('Paragraphs Defaults'));
   $path = 'admin/structure/paragraphs/stanford-defaults';
-  $defaults = stanford_paragraphs_defaults_load_multiple();
   $output = array();
   foreach (field_read_fields(array('type' => 'paragraphs')) as $field_name => $field) {
     $rows = array();
@@ -19,6 +18,12 @@ function stanford_paragraphs_defaults_overview() {
     $field = field_info_field($field_name);
 
     foreach ($field['bundles'] as $type => $bundles) {
+      // Don't want paragraphs embeded in field collections or other paragraphs
+      // fields.
+      if (in_array($type, array('paragraphs_item', 'field_collection_item'))) {
+        continue;
+      }
+
       $entity_info = entity_get_info($type);
 
       foreach ($bundles as $bundle) {
@@ -26,17 +31,17 @@ function stanford_paragraphs_defaults_overview() {
         $table_caption .= $entity_info['bundles'][$bundle]['label'];
         $table_caption .= ' - ' . $field_name;
 
+        $defaults = stanford_paragraphs_defaults_load_multiple(NULL, $type, $bundle, $field_name);
+
         foreach ($defaults as $uid => $default) {
-          if ($default['entity_type'] == $type && $default['bundle'] == $bundle && $default['field_name'] == $field_name) {
-            $actions = l(t('Edit'), "$path/edit/$uid") . ' | ';
-            $actions .= l(t('Delete'), "$path/delete/$uid");
-            $rows[] = array(
-              $type,
-              $bundle,
-              $default['label'],
-              $actions,
-            );
-          }
+          $actions = l(t('Edit'), "$path/edit/$uid") . ' | ';
+          $actions .= l(t('Delete'), "$path/delete/$uid");
+          $rows[] = array(
+            $default['label'],
+            $entity_info['label'],
+            $entity_info['bundles'][$bundle]['label'],
+            $actions,
+          );
         }
 
         $add_link = l(t('Add New Default'), "$path/add/$type/$bundle/$field_name");
@@ -47,9 +52,9 @@ function stanford_paragraphs_defaults_overview() {
           '#theme' => 'table',
           '#caption' => $table_caption,
           '#header' => array(
+            t('Name'),
             t('Entity Type'),
             t('Entity Bundle'),
-            t('Name'),
             t('Operations'),
           ),
           '#rows' => $rows,
@@ -114,15 +119,15 @@ function stanford_paragraphs_defaults_add(array $form, array &$form_state, $enti
   // Add the paragraphs field.
   $field = field_info_field($field_name);
   $instance = field_info_instance($entity_type, $field_name, $bundle);
-  $host_entity = entity_create($entity_type, array('type' => $bundle));
+
   $info = entity_get_info($entity_type);
-  if (!empty($info['entity keys']['bundle'])) {
-    // If bundle key isn't set, set it here.
-    // @see entity_extract_ids().
-    if (!isset($host_entity->{$info['entity keys']['bundle']}) || $host_entity->{$info['entity keys']['bundle']} === '') {
-      $host_entity->{$info['entity keys']['bundle']} = $bundle;
+  $entity_vars = array('type' => $bundle);
+  foreach ($info['entity keys'] as $key) {
+    if ($key) {
+      $entity_vars += array($key => NULL);
     }
   }
+  $host_entity = entity_create($entity_type, $entity_vars);
 
   $items = array();
   $paragraphs_field = field_default_form($entity_type, $host_entity, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
@@ -214,16 +219,16 @@ function stanford_paragraphs_defaults_edit(array $form, array &$form_state, arra
   $form['machine_name']['#default_value'] = $default['machine_name'];
   $form['machine_name']['#attributes'] = array('disabled' => TRUE);
 
-  $host_entity = entity_create($default['entity_type'], array('type' => $default['bundle']));
-
   $info = entity_get_info($default['entity_type']);
-  if (!empty($info['entity keys']['bundle'])) {
-    // If bundle key isn't set, set it here.
-    // @see entity_extract_ids().
-    if (!isset($host_entity->{$info['entity keys']['bundle']}) || $host_entity->{$info['entity keys']['bundle']} === '') {
-      $host_entity->{$info['entity keys']['bundle']} = $default['bundle'];
+  $entity_vars = array('type' => $default['bundle']);
+
+  // Sets the various keys of the entity to null to prevent errors.
+  foreach ($info['entity keys'] as $key) {
+    if ($key) {
+      $entity_vars += array($key => NULL);
     }
   }
+  $host_entity = entity_create($default['entity_type'], $entity_vars);
 
   $field = field_info_field($default['field_name']);
   $instance = field_info_instance($default['entity_type'], $default['field_name'], $default['bundle']);

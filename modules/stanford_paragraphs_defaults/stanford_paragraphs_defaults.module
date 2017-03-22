@@ -69,14 +69,14 @@ function stanford_paragraphs_defaults_entity_delete($entity, $type) {
 function stanford_paragraphs_defaults_menu() {
   $items = array();
   $items['admin/structure/paragraphs/stanford-defaults'] = array(
-    'title' => 'Paragraph Defaults',
+    'title' => 'Defaults',
     'page callback' => 'stanford_paragraphs_defaults_overview',
     'file' => 'stanford_paragraphs_defaults.forms.inc',
     'access arguments' => array('administer stanford paragraph types defaults'),
     'type' => MENU_LOCAL_TASK | MENU_NORMAL_ITEM,
   );
   $items['admin/structure/paragraphs/stanford-defaults/overview'] = array(
-    'title' => 'Paragraph Defaults',
+    'title' => 'Defaults',
     'type' => MENU_DEFAULT_LOCAL_TASK,
   );
   $items['admin/structure/paragraphs/stanford-defaults/add/%/%/%'] = array(
@@ -262,10 +262,16 @@ function _stanford_paragraphs_defaults_attach_default(array &$form, array &$form
     }
   }
 
-  // Reset the paragraph field.
-  $field = $form_state['field'][$field_name][LANGUAGE_NONE]['field'];
-  $instance = $form_state['field'][$field_name][LANGUAGE_NONE]['instance'];
+  if (isset($form_state['field'][$field_name])) {
+    $field = $form_state['field'][$field_name][LANGUAGE_NONE]['field'];
+    $instance = $form_state['field'][$field_name][LANGUAGE_NONE]['instance'];
+  }
+  else {
+    $field = field_info_field($field_name);
+    $instance = field_info_instance($entity_type, $field_name, $default['bundle']);
+  }
 
+  // Reset the paragraph field.
   unset($form[$field_name]);
   unset($form_state['field'][$field_name]);
 
