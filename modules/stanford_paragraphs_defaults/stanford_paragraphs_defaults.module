@@ -6,12 +6,12 @@
  */
 
 /**
- * Implements hook_form_alter().
+ * Implements hook_init().
  */
-function stanford_paragraphs_defaults_form_alter(&$form, &$form_state, $form_id) {
-//  dpm($form_id);
-//  dpm($form);
-//  features_export_build_form_submit();
+function stanford_paragraphs_defaults_init() {
+  // todo: remove before finished.
+  variable_del('features_semaphore');
+//  stanford_paragraphs_defaults_delete_default('node-stanford_story_page-field_s_story_sections-hero_page');
 }
 
 /**
@@ -38,6 +38,19 @@ function stanford_paragraphs_defaults_permission() {
       'description' => t('Create and modify default paragraph items.'),
     ),
   );
+}
+
+/**
+ * Delete the desired default configuration.
+ *
+ * @param string $uid
+ *   The unique uid of the item to delete.
+ */
+function stanford_paragraphs_defaults_delete_default($uid) {
+  $default = stanford_paragraphs_defaults_load($uid);
+  if ($default) {
+    entity_delete('paragraphs_item', array_keys($default['item_ids']));
+  }
 }
 
 /**
@@ -257,32 +270,30 @@ function _stanford_paragraphs_defaults_attach_default(array &$form, array &$form
       $entity->{$info['entity keys']['bundle']} = $default['bundle'];
     }
   }
-  list($entity_id, ,) = entity_extract_ids($entity_type, $entity);
 
-  if (!isset($entity_id)) {
-    // Reset the paragraph field.
-    $field = $form_state['field'][$field_name][LANGUAGE_NONE]['field'];
-    $instance = $form_state['field'][$field_name][LANGUAGE_NONE]['instance'];
+  // Reset the paragraph field.
+  $field = $form_state['field'][$field_name][LANGUAGE_NONE]['field'];
+  $instance = $form_state['field'][$field_name][LANGUAGE_NONE]['instance'];
 
-    unset($form[$field_name]);
-    unset($form_state['field'][$field_name]);
+  unset($form[$field_name]);
+  unset($form_state['field'][$field_name]);
 
-    // Order any existing paragraphs in a form we can use to set the
-    // default value.
-    $items = array();
-    foreach ($default['paragraphs'] as $paragraphs_item) {
-      $cloned_item = replicate_clone_entity('paragraphs_item', $paragraphs_item);
-      $cloned_item->item_id = NULL;
-      $cloned_item->revision_id = NULL;
-      $items[]['entity'] = $cloned_item;
-    }
-    $paragraphs_field = field_default_form($entity_type, $entity, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
-    $form += (array) $paragraphs_field;
-
-    $field_form_state = &$form_state['field'][$field_name][LANGUAGE_NONE];
-    $field_form_state['items_count'] = $field_form_state['real_items_count'] = count($items);
-    $field_form_state['field'] = $field;
+  // Order any existing paragraphs in a form we can use to set the
+  // default value.
+  $items = array();
+  foreach ($default['paragraphs'] as $paragraphs_item) {
+    $cloned_item = replicate_clone_entity('paragraphs_item', $paragraphs_item);
+    $cloned_item->item_id = NULL;
+    $cloned_item->revision_id = NULL;
+    $items[]['entity'] = $cloned_item;
   }
+
+  $paragraphs_field = field_default_form($entity_type, $entity, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
+  $form += (array) $paragraphs_field;
+
+  $field_form_state = &$form_state['field'][$field_name][LANGUAGE_NONE];
+  $field_form_state['items_count'] = $field_form_state['real_items_count'] = count($items);
+  $field_form_state['field'] = $field;
 }
 
 /**

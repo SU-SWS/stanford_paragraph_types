@@ -5,6 +5,7 @@
  * Stanford_paragraphs_defaults.features.inc.
  */
 
+
 /**
  * Implements hook_features_export_files().
  */
@@ -163,7 +164,7 @@ function _stanford_paragraphs_defaults_prepare_file(array $field_items) {
   foreach ($field_items as &$item) {
     $files[$item['uri']] = $item['uri'];
     $item = array(
-      'filemime' => $item['filemmime'],
+      'filemime' => $item['filemime'],
       'display' => $item['display'],
       'description' => $item['description'],
       'uri' => drupal_basename($item['uri']),
@@ -256,14 +257,7 @@ function paragraphs_defaults_features_revert($module_name) {
 function paragraphs_defaults_save(array $default, $module_name) {
   // Clear out old default configuration.
   $uid = "{$default['entity_type']}-{$default['bundle']}-{$default['field_name']}-{$default['machine_name']}";
-
-  if ($original_default = stanford_paragraphs_defaults_load($uid)) {
-    $item_ids = array();
-    foreach ($original_default['paragraphs'] as $paragraph_item) {
-      $item_ids[] = $paragraph_item->item_id;
-    }
-    entity_delete_multiple('paragraphs_item', $item_ids);
-  }
+  stanford_paragraphs_defaults_delete_default($uid);
 
   // Check if entity type and bundle exist before saving.
   $entity_info = entity_get_info($default['entity_type']);
@@ -271,81 +265,164 @@ function paragraphs_defaults_save(array $default, $module_name) {
     return;
   }
 
+  _stanford_paragraphs_defaults_parse_default($default['paragraphs']);
+  _stanford_paragraphs_defaults_set_fields($default['paragraphs'], $module_name);
+  _stanford_paragraphs_defaults_resave($default['paragraphs']);
   $item_ids = array();
-  foreach ($default['paragraphs'] as $weight => $item) {
-    $item_id = _paragraphs_defaults_save_entity($item['entity_type'], $item['entity_bundle'], $item, $module_name);
+
+  foreach ($default['paragraphs'] as $weight => $paragraph) {
+    list($item_id, ,) = entity_extract_ids($paragraph['entity_type'], $paragraph['#entity']);
     $item_ids[$item_id] = $weight;
   }
 
-  $fields = array(
-    'label' => $default['label'],
-    'machine_name' => $default['machine_name'],
-    'entity_type' => $default['entity_type'],
-    'field_name' => $default['field_name'],
-    'bundle' => $default['bundle'],
-    'item_ids' => serialize($item_ids),
-  );
+  if ($item_ids) {
+    $fields = array(
+      'label' => $default['label'],
+      'machine_name' => $default['machine_name'],
+      'entity_type' => $default['entity_type'],
+      'field_name' => $default['field_name'],
+      'bundle' => $default['bundle'],
+      'item_ids' => serialize($item_ids),
+    );
 
-  db_merge('stanford_paragraphs_defaults')
-    ->insertFields($fields)
-    ->updateFields(array(
-      'item_ids' => $fields['item_ids'],
-    ))
-    ->key(array(
-      'uid' => $uid,
-    ))
-    ->execute();
+    db_merge('stanford_paragraphs_defaults')
+      ->insertFields($fields)
+      ->updateFields(array(
+        'item_ids' => $fields['item_ids'],
+      ))
+      ->key(array(
+        'uid' => $uid,
+      ))
+      ->execute();
+  }
 }
 
 /**
- * Create and save an entity with its field data.
+ * Recursive function to find the entities to create.
  *
- * @param string $entity_type
- *   Type of the entity.
- * @param string $bundle
- *   Bundle of the entity.
- * @param array $fields
- *   Fields and properties to set in the entity.
- * @param string $module_name
- *   Module that defines the default setting.
- *
- * @return int
- *   Entity id of the entity.
+ * @param array|mixed $data
+ *   The data to parse.
+ * @param null|object $host_entity
+ *   The host of the entity if one exists.
  */
-function _paragraphs_defaults_save_entity($entity_type, $bundle, array $fields, $module_name, $host_entity = NULL, $host_type = NULL) {
-  $entity_info = entity_get_info($entity_type);
-  $entity_options = array(
-    'bundle' => $bundle,
-    'field_name' => $fields['field_name'],
-  );
-  $entity = entity_create($entity_type, $entity_options);
-  $entity->{$entity_info['entity keys']['bundle']} = $bundle;
-  unset($fields['entity_type'], $fields['entity_bundle']);
-
-  foreach ($fields as $field_name => $values) {
-    $entity->{$field_name} = $values;
+function _stanford_paragraphs_defaults_parse_default(&$data, $host_entity = NULL) {
+  if (!is_array($data)) {
+    return;
   }
-  $entity->is_new = TRUE;
+  if (isset($data['entity_type'])) {
+    $host_entity = _stanford_paragraphs_defaults_create_entity($data, $host_entity);
+  }
 
-  $fields = field_info_instances($entity_type, $bundle);
+  foreach ($data as &$item) {
+    _stanford_paragraphs_defaults_parse_default($item, $host_entity);
+  }
+}
 
-  foreach (array_keys($fields) as $field_name) {
+/**
+ * Using the default data to create an entity.
+ *
+ * @param array $entity_data
+ *   The data from the feature.
+ * @param null|object $host_entity
+ *   The host entity if one exists.
+ *
+ * @return object
+ *   The created entity.
+ */
+function _stanford_paragraphs_defaults_create_entity(array &$entity_data, $host_entity = NULL) {
+  $entity_vars = array(
+    'bundle' => $entity_data['entity_bundle'],
+    'field_name' => $entity_data['field_name'],
+  );
+  $entity = entity_create($entity_data['entity_type'], $entity_vars);
+  _stanford_paragraphs_defaults_entity_save($entity_data['entity_type'], $entity, $host_entity);
+  list($eid, $vid,) = entity_extract_ids($entity_data['entity_type'], $entity);
 
-    if (!empty($entity->{$field_name})) {
-      $field_items = $entity->{$field_name}[LANGUAGE_NONE];
-      _paragraphs_defaults_save_field_values($field_items, $module_name, $entity, $entity_type);
-      $entity->{$field_name}[LANGUAGE_NONE] = $field_items;
+  foreach ($entity_data as $property => $value) {
+    $entity->{$property} = $value;
+  }
+
+  $entity_data['value'] = $eid;
+  $entity_data['revision_id'] = $vid;
+
+  $entity_data['#entity'] = $entity;
+  return $entity;
+}
+
+/**
+ * Recursive function to set the field data and properties of the entities.
+ *
+ * @param array|mixed $data
+ *   The data to find the entities and set fields.
+ * @param string $module_name
+ *   The feature name.
+ */
+function _stanford_paragraphs_defaults_set_fields(&$data, $module_name) {
+  if (!is_array($data)) {
+    return;
+  }
+  if (isset($data['#entity'])) {
+    foreach ($data as $field_name => $value) {
+      if (!is_object($value)) {
+        if (is_array($value)) {
+          $lang = key($value);
+          $items = $value[$lang];
+          _stanford_paragraphs_defaults_process_field_data($items, $module_name);
+          $value[$lang] = $items;
+        }
+
+
+        $data['#entity']->{$field_name} = $value;
+      }
     }
   }
-  // Save paragraph item without setting host entity.
-  switch ($entity_type) {
-    case 'paragraphs_item':
-      /* @param ParagraphsItemEntity $entity */
-      $entity->save(TRUE);
-      break;
+  foreach ($data as &$item) {
+    _stanford_paragraphs_defaults_set_fields($item, $module_name);
+  }
+}
 
+/**
+ * Make sure the entity has valid data and no embeded entities.
+ *
+ * @param mixed $entity
+ *   Normally the initial entity to clean.
+ */
+function _stanford_paragraphs_defaults_clean_entity(&$entity) {
+  if (!(is_array($entity) || is_object($entity))) {
+    return;
+  }
+
+  if (is_array($entity) && isset($entity['#entity'])) {
+    $entity_value = entity_load_single($entity['entity_type'], $entity['value']);
+    list($eid, $vid,) = entity_extract_ids($entity['entity_type'], $entity_value);
+    $entity['value'] = $eid;
+    $entity['revision_id'] = $vid;
+    unset($entity['#entity']);
+  }
+
+  foreach ($entity as &$value) {
+    _stanford_paragraphs_defaults_clean_entity($value);
+  }
+}
+
+/**
+ * Save the entity differently based on the entity.
+ *
+ * @param string $entity_type
+ *   The entity type to save.
+ * @param object $entity
+ *   The entity object.
+ * @param null|object $host_entity
+ *   The host entity if one exists.
+ */
+function _stanford_paragraphs_defaults_entity_save($entity_type, &$entity, $host_entity = NULL) {
+  _stanford_paragraphs_defaults_clean_entity($entity);
+  switch ($entity_type) {
     case 'field_collection_item':
-      $entity->setHostEntity($host_type, $host_entity);
+      if ($host_entity) {
+        $entity->setHostEntity($host_entity);
+      }
+    case 'paragraphs_item':
       $entity->save(TRUE);
       break;
 
@@ -353,44 +430,85 @@ function _paragraphs_defaults_save_entity($entity_type, $bundle, array $fields, 
       entity_save($entity_type, $entity);
       break;
   }
-
-  list($entity_id, ,) = entity_extract_ids($entity_type, $entity);
-  return $entity_id;
 }
 
 /**
- * Manipulate the field items before saving.
+ * Recursive function to resave the entities after the fields have been set.
  *
- * @param array $field_items
- *   Field data.
- * @param string $module_name
- *   Module name of the feature.
+ * @param mixed $entity_data
+ *   Normally an array to locate and call the save function.
  */
-function _paragraphs_defaults_save_field_values(array &$field_items, $module_name, $host_entity = NULL, $host_type = NULL) {
+function _stanford_paragraphs_defaults_resave(&$entity_data) {
+  if (!is_array($entity_data)) {
+    return;
+  }
+  foreach ($entity_data as &$item) {
+    _stanford_paragraphs_defaults_resave($item);
+  }
+
+  if (isset($entity_data['#entity'])) {
+    _stanford_paragraphs_defaults_entity_save($entity_data['entity_type'], $entity_data['#entity']);
+  }
+}
+
+/**
+ * Process entity field data to do any type of processing necessary.
+ *
+ * @param array $values
+ *   Field items.
+ * @param $module_name
+ *   Feature name.
+ */
+function _stanford_paragraphs_defaults_process_field_data(array &$values, $module_name) {
+  foreach ($values as &$value) {
+    if (is_array($value) && isset($value['uri'])) {
+      $file = _stanford_paragraphs_defaults_copy_file($value, $module_name);
+      if ($file) {
+        $value = (array) $file;
+      }
+      else {
+        $value = array();
+      }
+    }
+  }
+
+}
+
+/**
+ * Copy a module's asset file into the public directory.
+ *
+ * @param array $file_data
+ *   File meta data.
+ * @param string $module_name
+ *   Feature module name.
+ *
+ * @return bool|\stdClass
+ *   File object if successful, false if failed.
+ */
+function _stanford_paragraphs_defaults_copy_file(array $file_data, $module_name) {
   $dir = 'public://paragraphs_defaults';
   file_prepare_directory($dir, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS);
 
   $dir = "public://paragraphs_defaults/$module_name";
   file_prepare_directory($dir, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS);
 
-  foreach ($field_items as &$item) {
-    if (isset($item['entity_type'])) {
-      $entity_id = _paragraphs_defaults_save_entity($item['entity_type'], $item['entity_bundle'], $item, $module_name, $host_entity, $host_type);
-      $item = array('value' => $entity_id);
-    }
-
-    if (isset($item['uri'])) {
-      $old_file = new stdClass();
-      $old_file->uri = drupal_get_path('module', $module_name) . '/assets/' . $item['uri'];
-      $file = file_copy($old_file, "$dir/{$item['uri']}", FILE_EXISTS_REPLACE);
-      if ($file) {
-        unset($item['uri']);
-        foreach ($item as $key => $value) {
-          $file->{$key} = $value;
-        }
-        file_save($file);
-        $item = (array) $file;
-      }
-    }
+  $file_name = drupal_basename($file_data['uri']);
+  $file_path = drupal_get_path('module', $module_name) . '/assets/' . $file_name;
+  if (!file_exists($file_path)) {
+    return FALSE;
   }
+
+  $old_file = new stdClass();
+  $old_file->uri = $file_path;
+  $file = file_copy($old_file, "$dir/$file_name", FILE_EXISTS_REPLACE);
+
+  if ($file) {
+    unset($file_data['uri']);
+    foreach ($file_data as $key => $value) {
+      $file->{$key} = $value;
+    }
+    file_save($file);
+    return $file;
+  }
+  return FALSE;
 }

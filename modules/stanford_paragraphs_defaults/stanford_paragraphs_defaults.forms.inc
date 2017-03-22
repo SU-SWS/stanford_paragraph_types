@@ -9,6 +9,7 @@
  * Overview list page of existing defaults.
  */
 function stanford_paragraphs_defaults_overview() {
+  drupal_set_title(t('Paragraphs Defaults'));
   $path = 'admin/structure/paragraphs/stanford-defaults';
   $defaults = stanford_paragraphs_defaults_load_multiple();
   $output = array();
@@ -207,8 +208,8 @@ function _stanford_paragraphs_defaults_machine_name($string, array $form, array 
  */
 function stanford_paragraphs_defaults_edit(array $form, array &$form_state, array $default = array()) {
   $form = stanford_paragraphs_defaults_add($form, $form_state, $default['entity_type'], $default['bundle'], $default['field_name']);
-
   drupal_set_title($default['label']);
+
   $form['name']['#default_value'] = $default['label'];
   $form['machine_name']['#default_value'] = $default['machine_name'];
   $form['machine_name']['#attributes'] = array('disabled' => TRUE);
@@ -273,9 +274,7 @@ function stanford_paragraphs_defaults_delete($form, &$form_state, $default) {
  * Delete form submit.
  */
 function stanford_paragraphs_defaults_delete_submit($form, &$form_state) {
-  foreach ($form_state['#default']['paragraphs'] as $paragraph_item) {
-    entity_delete('paragraphs_item', $paragraph_item->item_id);
-  }
+  stanford_paragraphs_defaults_delete_default($form_state['#default']['uid']);
   drupal_set_message(t('Default Configuration deleted'));
   $form_state['redirect'] = 'admin/structure/paragraphs/stanford-defaults';
 }
