@@ -210,18 +210,20 @@ function stanford_paragraphs_defaults_field_attach_form($entity_type, $entity, &
       continue;
     }
 
-    $form[$field_name]['defaults'] = array(
+    $form[$field_name][LANGUAGE_NONE]['defaults'] = array(
       '#type' => 'fieldset',
-      '#title' => t('Load default layout'),
+      '#title' => t('Start with a default layout'),
       '#weight' => -99,
+      '#bundle' => NULL,
     );
     foreach ($defaults as $uid => $default) {
-      $form[$field_name]['defaults'][$uid] = array(
+      $form[$field_name][LANGUAGE_NONE]['defaults'][$uid] = array(
         '#type' => 'submit',
         '#value' => $default['label'],
         '#name' => $uid,
         '#submit' => array('stanford_paragraphs_defaults_build_default'),
         '#limit_validation_errors' => array(),
+        '#bundle' => NULL,
       );
     }
   }
