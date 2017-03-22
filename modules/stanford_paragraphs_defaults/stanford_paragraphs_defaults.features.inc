@@ -5,7 +5,6 @@
  * Stanford_paragraphs_defaults.features.inc.
  */
 
-
 /**
  * Implements hook_features_export_files().
  */
@@ -185,6 +184,7 @@ function _stanford_paragraphs_defaults_prepare_file(array $field_items) {
  */
 function _stanford_paragraphs_defaults_prepare_video_embed_field(array $field_items) {
   foreach ($field_items as &$item) {
+    // Dont want that part of the field data.
     unset($item['thumbnail_path']);
   }
   return $field_items;
@@ -228,28 +228,40 @@ function _stanford_paragraphs_defaults_prepare_field_collection(array $field_ite
  * Implements hook_features_rebuild().
  */
 function paragraphs_defaults_features_rebuild($module_name) {
-  $paragraphs_defaults = module_invoke($module_name, 'paragraphs_defaults');
-  if (!empty($paragraphs_defaults)) {
-    foreach ($paragraphs_defaults as $paragraph_default) {
-      paragraphs_defaults_save($paragraph_default, $module_name);
-    }
-  }
+  paragraphs_defaults_features_revert_save($module_name);
 }
 
 /**
  * Implements hook_features_revert().
  */
 function paragraphs_defaults_features_revert($module_name) {
+  paragraphs_defaults_features_revert_save($module_name);
+}
+
+/**
+ * Try to revert/rebuild the feature.
+ *
+ * @param string $module_name
+ *   Feature name.
+ */
+function paragraphs_defaults_features_revert_save($module_name) {
   $paragraphs_defaults = module_invoke($module_name, 'paragraphs_defaults');
   if (!empty($paragraphs_defaults)) {
     foreach ($paragraphs_defaults as $paragraph_default) {
-      paragraphs_defaults_save($paragraph_default, $module_name);
+      try {
+        paragraphs_defaults_save($paragraph_default, $module_name);
+      }
+      catch (Exception $e) {
+        drupal_set_message(t('Unable to rebuild %module_name. Please check the logs for more details.', array('%module_name' => $module_name)));
+      }
     }
   }
 }
 
 /**
  * Save the features exported default settings.
+ *
+ * This is where the beast of the save happens.
  *
  * @param array $default
  *   Paragraph default exported.
@@ -265,16 +277,21 @@ function paragraphs_defaults_save(array $default, $module_name) {
     return;
   }
 
+  // Create the empty entities so field collections can use the host data.
   _stanford_paragraphs_defaults_parse_default($default['paragraphs']);
+  // Sets all the field values.
   _stanford_paragraphs_defaults_set_fields($default['paragraphs'], $module_name);
+  // Resaves now that the field data has been saved.
   _stanford_paragraphs_defaults_resave($default['paragraphs']);
-  $item_ids = array();
 
+  // Grab the paragraphs item_id properties.
+  $item_ids = array();
   foreach ($default['paragraphs'] as $weight => $paragraph) {
-    list($item_id, ,) = entity_extract_ids($paragraph['entity_type'], $paragraph['#entity']);
+    list($item_id, ,) = entity_extract_ids('paragraphs_item', $paragraph['#entity']);
     $item_ids[$item_id] = $weight;
   }
 
+  // Write to the table to track the settings.
   if ($item_ids) {
     $fields = array(
       'label' => $default['label'],
@@ -305,16 +322,20 @@ function paragraphs_defaults_save(array $default, $module_name) {
  * @param null|object $host_entity
  *   The host of the entity if one exists.
  */
-function _stanford_paragraphs_defaults_parse_default(&$data, $host_entity = NULL) {
+function _stanford_paragraphs_defaults_parse_default(&$data, $host_entity_type = NULL, $host_entity = NULL) {
   if (!is_array($data)) {
     return;
   }
+
+  // Find the entities starting points and create a new entity.
   if (isset($data['entity_type'])) {
-    $host_entity = _stanford_paragraphs_defaults_create_entity($data, $host_entity);
+    $host_entity = _stanford_paragraphs_defaults_create_entity($data, $host_entity_type, $host_entity);
+    $host_entity_type = $data['entity_type'];
   }
 
+  // Continue through the array to get all entities.
   foreach ($data as &$item) {
-    _stanford_paragraphs_defaults_parse_default($item, $host_entity);
+    _stanford_paragraphs_defaults_parse_default($item, $host_entity_type, $host_entity);
   }
 }
 
@@ -329,19 +350,18 @@ function _stanford_paragraphs_defaults_parse_default(&$data, $host_entity = NULL
  * @return object
  *   The created entity.
  */
-function _stanford_paragraphs_defaults_create_entity(array &$entity_data, $host_entity = NULL) {
+function _stanford_paragraphs_defaults_create_entity(array &$entity_data, $host_entity_type = NULL, $host_entity = NULL) {
   $entity_vars = array(
     'bundle' => $entity_data['entity_bundle'],
     'field_name' => $entity_data['field_name'],
   );
+
+  // Create & save the entity.
   $entity = entity_create($entity_data['entity_type'], $entity_vars);
-  _stanford_paragraphs_defaults_entity_save($entity_data['entity_type'], $entity, $host_entity);
+  _stanford_paragraphs_defaults_entity_save($entity_data['entity_type'], $entity, $host_entity_type, $host_entity);
   list($eid, $vid,) = entity_extract_ids($entity_data['entity_type'], $entity);
 
-  foreach ($entity_data as $property => $value) {
-    $entity->{$property} = $value;
-  }
-
+  // Sets the value & revision_id for field collection entities.
   $entity_data['value'] = $eid;
   $entity_data['revision_id'] = $vid;
 
@@ -361,21 +381,22 @@ function _stanford_paragraphs_defaults_set_fields(&$data, $module_name) {
   if (!is_array($data)) {
     return;
   }
+
   if (isset($data['#entity'])) {
     foreach ($data as $field_name => $value) {
       if (!is_object($value)) {
+        // Check field values vs entity properties.
         if (is_array($value)) {
           $lang = key($value);
-          $items = $value[$lang];
-          _stanford_paragraphs_defaults_process_field_data($items, $module_name);
-          $value[$lang] = $items;
+          _stanford_paragraphs_defaults_process_field_data($value[$lang], $module_name);
         }
-
 
         $data['#entity']->{$field_name} = $value;
       }
     }
   }
+
+  // Continue through the array to find any other #entity elements.
   foreach ($data as &$item) {
     _stanford_paragraphs_defaults_set_fields($item, $module_name);
   }
@@ -393,13 +414,17 @@ function _stanford_paragraphs_defaults_clean_entity(&$entity) {
   }
 
   if (is_array($entity) && isset($entity['#entity'])) {
+    // Update the field data with the correct entity_id and revision id #s.
     $entity_value = entity_load_single($entity['entity_type'], $entity['value']);
     list($eid, $vid,) = entity_extract_ids($entity['entity_type'], $entity_value);
     $entity['value'] = $eid;
     $entity['revision_id'] = $vid;
+
+    // Make sure we dont have an entity in field data.
     unset($entity['#entity']);
   }
 
+  // Continue through the array to find any other field data to clean.
   foreach ($entity as &$value) {
     _stanford_paragraphs_defaults_clean_entity($value);
   }
@@ -415,13 +440,16 @@ function _stanford_paragraphs_defaults_clean_entity(&$entity) {
  * @param null|object $host_entity
  *   The host entity if one exists.
  */
-function _stanford_paragraphs_defaults_entity_save($entity_type, &$entity, $host_entity = NULL) {
+function _stanford_paragraphs_defaults_entity_save($entity_type, &$entity, $host_entity_type = NULL, $host_entity = NULL) {
   _stanford_paragraphs_defaults_clean_entity($entity);
   switch ($entity_type) {
     case 'field_collection_item':
       if ($host_entity) {
-        $entity->setHostEntity($host_entity);
+        $entity->setHostEntity($host_entity_type, $host_entity);
       }
+      $entity->save(TRUE);
+      break;
+
     case 'paragraphs_item':
       $entity->save(TRUE);
       break;
@@ -442,6 +470,10 @@ function _stanford_paragraphs_defaults_resave(&$entity_data) {
   if (!is_array($entity_data)) {
     return;
   }
+
+  // Dive deep into the array before saving. This allows the nested entities
+  // to be saved first, which then sets the version ids correct for the paret
+  // entities.
   foreach ($entity_data as &$item) {
     _stanford_paragraphs_defaults_resave($item);
   }
@@ -456,11 +488,13 @@ function _stanford_paragraphs_defaults_resave(&$entity_data) {
  *
  * @param array $values
  *   Field items.
- * @param $module_name
+ * @param string $module_name
  *   Feature name.
  */
 function _stanford_paragraphs_defaults_process_field_data(array &$values, $module_name) {
   foreach ($values as &$value) {
+
+    // If field data is a file, copy and set the field data with the file.
     if (is_array($value) && isset($value['uri'])) {
       $file = _stanford_paragraphs_defaults_copy_file($value, $module_name);
       if ($file) {
@@ -498,17 +532,15 @@ function _stanford_paragraphs_defaults_copy_file(array $file_data, $module_name)
     return FALSE;
   }
 
+  // Create a very basic object to be used to copy.
   $old_file = new stdClass();
-  $old_file->uri = $file_path;
-  $file = file_copy($old_file, "$dir/$file_name", FILE_EXISTS_REPLACE);
-
-  if ($file) {
-    unset($file_data['uri']);
-    foreach ($file_data as $key => $value) {
-      $file->{$key} = $value;
-    }
-    file_save($file);
-    return $file;
+  foreach ($file_data as $key => $value) {
+    $old_file->{$key} = $value;
   }
-  return FALSE;
+  $old_file->uri = $file_path;
+
+  // Return the new file object or false if failed.
+  return file_copy($old_file, "$dir/$file_name", FILE_EXISTS_REPLACE);
+
+//  entity_extract_ids();
 }
