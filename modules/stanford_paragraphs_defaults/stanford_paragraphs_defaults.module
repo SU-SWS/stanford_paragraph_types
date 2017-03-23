@@ -25,7 +25,7 @@ function stanford_paragraphs_defaults_features_api() {
 function stanford_paragraphs_defaults_permission() {
   return array(
     'administer stanford paragraph types defaults' => array(
-      'title' => t('Administer Stanford Paragraph Types Defaults'),
+      'title' => t('Administer Paragraph Types Defaults'),
       'description' => t('Create and modify default paragraph items.'),
     ),
   );
@@ -49,6 +49,7 @@ function stanford_paragraphs_defaults_entity_delete($entity, $type) {
       $default_items = unserialize($item_ids);
       unset($default_items[$item_id]);
 
+      // If only one of the paragraph items was deleted.
       if ($default_items) {
         db_update('stanford_paragraphs_defaults')
           ->fields(array('item_ids' => serialize($default_items)))
@@ -56,6 +57,7 @@ function stanford_paragraphs_defaults_entity_delete($entity, $type) {
           ->execute();
       }
       else {
+        // If all paragraph items were deleted.
         db_delete('stanford_paragraphs_defaults')
           ->condition('uid', $uid)->execute();
       }
@@ -153,6 +155,8 @@ function stanford_paragraphs_defaults_load($uid) {
 function stanford_paragraphs_defaults_load_multiple($uids = NULL, $entity_type = NULL, $bundle = NULL, $field_name = NULL) {
   $query = db_select('stanford_paragraphs_defaults', 's')
     ->fields('s');
+
+  // Add any conditions passed in.
   if ($uids) {
     $query->condition('uid', $uids, 'IN');
   }
@@ -171,6 +175,8 @@ function stanford_paragraphs_defaults_load_multiple($uids = NULL, $entity_type =
   while ($default_item = $results->fetchAssoc()) {
     $item_ids = unserialize($default_item['item_ids']);
     $default_item['item_ids'] = $item_ids;
+
+    // Sort paragraph items based on weight before loading.
     asort($item_ids);
     $paragraphs = paragraphs_item_load_multiple(array_keys($item_ids));
     $default_item['paragraphs'] = $paragraphs;
@@ -185,6 +191,8 @@ function stanford_paragraphs_defaults_load_multiple($uids = NULL, $entity_type =
  */
 function stanford_paragraphs_defaults_field_attach_form($entity_type, $entity, &$form, &$form_state, $langcode) {
   $uid = '';
+
+  // Load a desired default configuration.
   if (isset($form_state['load_default'])) {
     $uid = $form_state['load_default'];
     _stanford_paragraphs_defaults_attach_default($form, $form_state, $uid);
@@ -210,6 +218,7 @@ function stanford_paragraphs_defaults_field_attach_form($entity_type, $entity, &
       continue;
     }
 
+    // Attach the buttons.
     $form[$field_name][LANGUAGE_NONE]['defaults'] = array(
       '#type' => 'fieldset',
       '#title' => t('Start with a default layout'),
@@ -240,6 +249,7 @@ function stanford_paragraphs_defaults_field_attach_form($entity_type, $entity, &
  *   Uid of the default configuration to load.
  */
 function _stanford_paragraphs_defaults_attach_default(array &$form, array &$form_state, $uid) {
+  // Prevent loading the default over and over and over...
   $loaded = &drupal_static(__FUNCTION__);
   if ($loaded) {
     return;
@@ -250,6 +260,7 @@ function _stanford_paragraphs_defaults_attach_default(array &$form, array &$form
   $field_name = $default['field_name'];
   $entity_type = $default['entity_type'];
 
+  // Make sure the field exists on the form.
   if (!isset($form[$field_name])) {
     return;
   }
@@ -264,6 +275,8 @@ function _stanford_paragraphs_defaults_attach_default(array &$form, array &$form
     }
   }
 
+  // Get field and instance from form state if its there.
+  // This is mostly a tiny performance improvement.
   if (isset($form_state['field'][$field_name])) {
     $field = $form_state['field'][$field_name][LANGUAGE_NONE]['field'];
     $instance = $form_state['field'][$field_name][LANGUAGE_NONE]['instance'];
@@ -281,15 +294,17 @@ function _stanford_paragraphs_defaults_attach_default(array &$form, array &$form
   // default value.
   $items = array();
   foreach ($default['paragraphs'] as $paragraphs_item) {
-    $cloned_item = replicate_clone_entity('paragraphs_item', $paragraphs_item);
+    $cloned_item = stanford_pragraphs_defaults_replicate_entity('paragraphs_item', $paragraphs_item);
     $cloned_item->item_id = NULL;
     $cloned_item->revision_id = NULL;
     $items[]['entity'] = $cloned_item;
   }
 
+  // Add new field to the form.
   $paragraphs_field = field_default_form($entity_type, $entity, $field, $instance, LANGUAGE_NONE, $items, $form, $form_state);
   $form += (array) $paragraphs_field;
 
+  // Change form state with new item count.
   $field_form_state = &$form_state['field'][$field_name][LANGUAGE_NONE];
   $field_form_state['items_count'] = $field_form_state['real_items_count'] = count($items);
   $field_form_state['field'] = $field;
@@ -307,72 +322,80 @@ function stanford_paragraphs_defaults_build_default(&$form, &$form_state) {
 }
 
 /**
- * Save the paragraph entities and write to defaults table.
- *
- * @param string $entity_type
- *   Parent entity type.
- * @param string $bundle
- *   Parent entity bundle.
- * @param string $field_name
- *   Field of the paragraphs field.
- * @param string $label
- *   Display label.
- * @param string $machine_name
- *   Machine name of  the default setting.
- * @param array $value
- *   Form submitted values.
- */
-function stanford_paragraphs_defaults_save_defaults($entity_type, $bundle, $field_name, $label, $machine_name, array $value) {
-  if (isset($value[LANGUAGE_NONE]) && !empty($value[LANGUAGE_NONE])) {
-    $item_ids = array();
-
-    foreach ($value[LANGUAGE_NONE] as $item) {
-      if (isset($item['entity'])) {
-        if ($entity = paragraphs_field_get_entity($item)) {
-          if (isset($entity->removed) && $entity->removed) {
-            $entity->delete();
-          }
-          else {
-            // Save, but don't set the host entity.
-            $entity->save(TRUE);
-            $item_ids[$entity->item_id] = $item['_weight'];
-          }
-        }
-      }
-    }
-    if ($item_ids) {
-      // Keep track of the entity_id's in our own table.
-      $uid = "$entity_type-$bundle-$field_name-$machine_name";
-      $fields = array(
-        'label' => $label,
-        'machine_name' => $machine_name,
-        'entity_type' => $entity_type,
-        'field_name' => $field_name,
-        'bundle' => $bundle,
-        'item_ids' => serialize($item_ids),
-      );
-      db_merge('stanford_paragraphs_defaults')
-        ->insertFields($fields)
-        ->updateFields(array(
-          'item_ids' => serialize($item_ids),
-        ))
-        ->key(array(
-          'uid' => $uid,
-        ))
-        ->execute();
-    }
-  }
-}
-
-/**
  * Implements hook_cron().
  */
 function stanford_paragraphs_defaults_cron() {
+  // Periodically prune the defaults configuration if the entity type/bundle
+  // is removed.
   $defaults = stanford_paragraphs_defaults_load_multiple();
   foreach ($defaults as $default) {
     $entity_info = entity_get_info($default['entity_type']);
     if (!$entity_info || !isset($entity_info['bundles'][$default['bundle']])) {
       entity_delete('paragraphs_item', array_keys($default['item_ids']));
+    }
+  }
+}
+
+/**
+ * Replicate the entity passed in argument.
+ *
+ * This function does not save the replicated entity. Taken from replicate
+ * contrib module.
+ *
+ * @param string $entity_type
+ *   The entity type.
+ * @param object $entity
+ *   The entity to replicate.
+ *
+ * @return object
+ *   A new replicated entity.
+ *
+ * @see https://www.drupal.org/project/replicate
+ */
+function stanford_pragraphs_defaults_replicate_entity($entity_type, $entity) {
+  $clone = clone $entity;
+
+  if ($clone) {
+    // Let other modules manage the cleaning of the entity.
+    foreach (module_implements('replicate_entity_' . $entity_type) as $module) {
+      $function = $module . '_replicate_entity_' . $entity_type;
+      $function($clone);
+    }
+
+    // Set the entity as new entity.
+    $clone->is_new = TRUE;
+
+    // Let other modules do special actions on each field.
+    stanford_pragraphs_defaults_replicate_fields($clone, $entity_type);
+
+    // Let other modules do special actions on the global entity.
+    drupal_alter('replicate_entity', $clone, $entity_type, $entity);
+  }
+
+  return $clone;
+}
+
+/**
+ * Replicate the fields of an entity.
+ *
+ * Taken from replicate contrib module.
+ *
+ * @param object $entity
+ *   The entity for which to clone the fields.
+ * @param string $entity_type
+ *   The entity type.
+ *
+ * @see https://www.drupal.org/project/replicate
+ */
+function stanford_pragraphs_defaults_replicate_fields(&$entity, $entity_type) {
+  foreach (field_info_fields() as $field_name => $field) {
+    if (isset($entity->$field_name)) {
+      // Here call hook functions. Doesn't use module_invoke because we
+      // want to pass the clone by reference.
+      foreach (module_implements('replicate_field_' . $field['type']) as $module) {
+        $function = $module . '_replicate_field_' . $field['type'];
+        $function($entity, $entity_type, $field_name);
+      }
     }
   }
 }

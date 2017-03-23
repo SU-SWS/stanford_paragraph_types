@@ -5,4 +5,3 @@ package = Stanford
 version = 7.x-1.0
 
 dependencies[] = paragraphs
-dependencies[] = replicate

@@ -174,6 +174,67 @@ function stanford_paragraphs_defaults_add_submit($form, &$form_state) {
 }
 
 /**
+ * Save the paragraph entities and write to defaults table.
+ *
+ * @param string $entity_type
+ *   Parent entity type.
+ * @param string $bundle
+ *   Parent entity bundle.
+ * @param string $field_name
+ *   Field of the paragraphs field.
+ * @param string $label
+ *   Display label.
+ * @param string $machine_name
+ *   Machine name of  the default setting.
+ * @param array $value
+ *   Form submitted values.
+ */
+function stanford_paragraphs_defaults_save_defaults($entity_type, $bundle, $field_name, $label, $machine_name, array $value) {
+  if (isset($value[LANGUAGE_NONE]) && !empty($value[LANGUAGE_NONE])) {
+    $item_ids = array();
+
+    // Save the paragraphs items and get the item_id number.
+    foreach ($value[LANGUAGE_NONE] as $item) {
+      if (isset($item['entity'])) {
+        if ($entity = paragraphs_field_get_entity($item)) {
+          if (isset($entity->removed) && $entity->removed) {
+            $entity->delete();
+          }
+          else {
+            // Save, but don't set the host entity.
+            $entity->save(TRUE);
+            $item_ids[$entity->item_id] = $item['_weight'];
+          }
+        }
+      }
+    }
+
+    if ($item_ids) {
+      // Keep track of the entity_id's in our own table.
+      $uid = "$entity_type-$bundle-$field_name-$machine_name";
+      $fields = array(
+        'label' => $label,
+        'machine_name' => $machine_name,
+        'entity_type' => $entity_type,
+        'field_name' => $field_name,
+        'bundle' => $bundle,
+        'item_ids' => serialize($item_ids),
+      );
+      db_merge('stanford_paragraphs_defaults')
+        ->insertFields($fields)
+        ->updateFields(array(
+          'item_ids' => serialize($item_ids),
+        ))
+        ->key(array(
+          'uid' => $uid,
+        ))
+        ->execute();
+    }
+  }
+}
+
+
+/**
  * Machine name callback in add form.
  *
  * @param string $string

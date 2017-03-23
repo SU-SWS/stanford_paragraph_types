@@ -3,10 +3,14 @@
 /**
  * @file
  * Stanford_paragraphs_defaults.features.inc.
+ *
+ * @see http://www.drupalcontrib.org/api/drupal/contributions!features!features.api.php/7
  */
 
 /**
  * Implements hook_features_export_files().
+ *
+ * Include the default configuration files into the feature.
  */
 function stanford_paragraphs_defaults_features_export_files($module_name, $export) {
   $export_files = &drupal_static('stanford_paragraphs_defaults_files');
@@ -31,7 +35,11 @@ function paragraphs_defaults_features_export_options() {
   $defaults = stanford_paragraphs_defaults_load_multiple();
   $items = array();
   foreach ($defaults as $uid => $default) {
-    $items[$uid] = $default['label'];
+    $entity_info = entity_get_info($default['entity_type']);
+    $label = $entity_info['label'] . ' - ';
+    $label .= $entity_info['bundles'][$default['bundle']]['label'] . ' - ';
+    $label .= $default['label'];
+    $items[$uid] = $label;
   }
   return $items;
 }
@@ -92,6 +100,7 @@ function _stanford_paragraphs_defaults_prepare_entity($entity, $entity_type) {
 
   foreach ($fields as $field_name => $field) {
     // Prepare specific field data depending on the field type.
+    // Useful for images, files, field collections etc.
     $prepare_function = '_stanford_paragraphs_defaults_prepare_' . $field['type'];
 
     if (function_exists($prepare_function)) {
@@ -111,21 +120,22 @@ function _stanford_paragraphs_defaults_prepare_entity($entity, $entity_type) {
     }
   }
 
-  foreach ($entity_info['entity keys'] as $key) {
-    unset($new_object->{$key});
+  // Unset any unique identifiers.
+  foreach ($entity_info['entity keys'] as $key => $field_name) {
+    if (!($key == 'bundle' || $key == 'field_name')) {
+      unset($new_object->{$field_name});
+    }
   }
-  unset($new_object->uuid, $new_object->default_revision);
+  unset($new_object->default_revision);
 
-  $new_object->entity_type = $entity_type;
+  // Set consistent entity type and bundle for the revert function.
   $new_object->entity_bundle = $entity->{$bundle_key};
-  if ($entity_type = 'paragraphs') {
-    $new_object->field_name = $entity->field_name;
-  }
+  $new_object->entity_type = $entity_type;
   return $new_object;
 }
 
 /**
- * Prepare image field type items.
+ * Prepare image field type items to only use basic attributes of the image.
  *
  * @param array $field_items
  *   Field items provided by field_get_items().
@@ -153,7 +163,7 @@ function _stanford_paragraphs_defaults_prepare_image(array $field_items) {
 }
 
 /**
- * Prepare file field type items.
+ * Prepare file field type items to only use basic attributes of the file.
  *
  * @param array $field_items
  *   Field items provided by field_get_items().
@@ -181,7 +191,7 @@ function _stanford_paragraphs_defaults_prepare_file(array $field_items) {
 }
 
 /**
- * Prepare video embed field type items.
+ * Prepare video embed field type items to exclude some data.
  *
  * @param array $field_items
  *   Field items provided by field_get_items().
@@ -208,6 +218,7 @@ function _stanford_paragraphs_defaults_prepare_video_embed_field(array $field_it
  */
 function _stanford_paragraphs_defaults_features_prepare_paragraphs(array $field_items) {
   foreach ($field_items as &$item) {
+    // For some reason it seems drush fu acts differently than through the UI.
     if (is_array($item) && isset($item['value'])) {
       $item = paragraphs_item_load($item['value']);
     }
@@ -227,6 +238,7 @@ function _stanford_paragraphs_defaults_features_prepare_paragraphs(array $field_
  */
 function _stanford_paragraphs_defaults_prepare_field_collection(array $field_items) {
   foreach ($field_items as &$item) {
+    // For some reason it seems drush fu acts differently than through the UI.
     if (is_array($item) && isset($item['value'])) {
       $item = field_collection_item_load($item['value']);
     }
@@ -369,11 +381,12 @@ function _stanford_paragraphs_defaults_parse_default(&$data, $host_entity_type =
  *   The created entity.
  */
 function _stanford_paragraphs_defaults_create_entity(array &$entity_data, $host_entity_type = NULL, $host_entity = NULL) {
-  $entity_vars = array(
-    'bundle' => $entity_data['entity_bundle'],
-    'field_name' => $entity_data['field_name'],
-  );
-
+  $entity_vars = array();
+  foreach ($entity_data as $key => $value) {
+    if (!is_array($value)) {
+      $entity_vars[$key] = $value;
+    }
+  }
   // Create & save the entity.
   $entity = entity_create($entity_data['entity_type'], $entity_vars);
   _stanford_paragraphs_defaults_entity_save($entity_data['entity_type'], $entity, $host_entity_type, $host_entity);
