@@ -5,7 +5,6 @@ package = Stanford
 version = 7.x-1.0
 dependencies[] = better_formats
 dependencies[] = blockreference
-dependencies[] = chosen
 dependencies[] = ctools
 dependencies[] = features
 dependencies[] = field_collection

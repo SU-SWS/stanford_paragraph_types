@@ -190,13 +190,23 @@ function stanford_paragraphs_defaults_load_multiple($uids = NULL, $entity_type =
  * Implements hook_field_attach_form().
  */
 function stanford_paragraphs_defaults_field_attach_form($entity_type, $entity, &$form, &$form_state, $langcode) {
+  dpm($entity_type);
   $uid = '';
+  $get = drupal_get_query_parameters($_GET);
+  if (isset($get['layout'])) {
+    $layout = check_plain($get['layout']);
+    $uid = "$entity_type-{$form['#bundle']}-$layout";
+  }
 
   // Load a desired default configuration.
-  if (isset($form_state['load_default'])) {
-    $uid = $form_state['load_default'];
+  if ($uid || isset($form_state['load_default'])) {
+    if (isset($form_state['load_default'])) {
+      $uid = $form_state['load_default'];
+    }
+    dpm($uid);
     _stanford_paragraphs_defaults_attach_default($form, $form_state, $uid);
   }
+
 
   $paragraphs_fields = field_read_fields(array(
     'type' => 'paragraphs',
@@ -254,14 +264,13 @@ function _stanford_paragraphs_defaults_attach_default(array &$form, array &$form
   if ($loaded) {
     return;
   }
-  $loaded = TRUE;
 
   $default = stanford_paragraphs_defaults_load($uid);
   $field_name = $default['field_name'];
   $entity_type = $default['entity_type'];
 
   // Make sure the field exists on the form.
-  if (!isset($form[$field_name])) {
+  if (!$default || !isset($form[$field_name])) {
     return;
   }
 
@@ -308,6 +317,8 @@ function _stanford_paragraphs_defaults_attach_default(array &$form, array &$form
   $field_form_state = &$form_state['field'][$field_name][LANGUAGE_NONE];
   $field_form_state['items_count'] = $field_form_state['real_items_count'] = count($items);
   $field_form_state['field'] = $field;
+
+  $loaded = TRUE;
 }
 
 /**
