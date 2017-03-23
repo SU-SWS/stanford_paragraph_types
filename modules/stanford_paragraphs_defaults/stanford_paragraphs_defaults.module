@@ -190,23 +190,12 @@ function stanford_paragraphs_defaults_load_multiple($uids = NULL, $entity_type =
  * Implements hook_field_attach_form().
  */
 function stanford_paragraphs_defaults_field_attach_form($entity_type, $entity, &$form, &$form_state, $langcode) {
-  dpm($entity_type);
-  $uid = '';
-  $get = drupal_get_query_parameters($_GET);
-  if (isset($get['layout'])) {
-    $layout = check_plain($get['layout']);
-    $uid = "$entity_type-{$form['#bundle']}-$layout";
-  }
+  $uid = _stanford_paragraphs_defaults_get_form_uid($entity_type, $form['#bundle'], $form_state);
 
   // Load a desired default configuration.
-  if ($uid || isset($form_state['load_default'])) {
-    if (isset($form_state['load_default'])) {
-      $uid = $form_state['load_default'];
-    }
-    dpm($uid);
+  if ($uid) {
     _stanford_paragraphs_defaults_attach_default($form, $form_state, $uid);
   }
-
 
   $paragraphs_fields = field_read_fields(array(
     'type' => 'paragraphs',
@@ -249,6 +238,33 @@ function stanford_paragraphs_defaults_field_attach_form($entity_type, $entity, &
 }
 
 /**
+ * Obtain the defaults uid from either $_GET or the form_state value.
+ *
+ * @param string $entity_type
+ *   Entity type of the form.
+ * @param string $entity_bundle
+ *   Entity bundle of the form.
+ * @param array $form_state
+ *   Form values.
+ *
+ * @return string
+ *   The uid to load.
+ */
+function _stanford_paragraphs_defaults_get_form_uid($entity_type, $entity_bundle, array $form_state) {
+  $uid = '';
+  $get = drupal_get_query_parameters($_GET);
+  if (isset($get['layout'])) {
+    $layout = check_plain($get['layout']);
+    $uid = "$entity_type-$entity_bundle-$layout";
+  }
+
+  if (isset($form_state['load_default'])) {
+    $uid = $form_state['load_default'];
+  }
+  return $uid;
+}
+
+/**
  * Attach the default paragraph configuration.
  *
  * @param array $form
@@ -261,27 +277,22 @@ function stanford_paragraphs_defaults_field_attach_form($entity_type, $entity, &
 function _stanford_paragraphs_defaults_attach_default(array &$form, array &$form_state, $uid) {
   // Prevent loading the default over and over and over...
   $loaded = &drupal_static(__FUNCTION__);
-  if ($loaded) {
-    return;
-  }
 
   $default = stanford_paragraphs_defaults_load($uid);
   $field_name = $default['field_name'];
   $entity_type = $default['entity_type'];
 
   // Make sure the field exists on the form.
-  if (!$default || !isset($form[$field_name])) {
+  if ($loaded || !$default || !isset($form[$field_name])) {
     return;
   }
 
   $entity = isset($form['#node']) ? $form['#node'] : $form['#entity'];
   $info = entity_get_info($entity_type);
-  if (!empty($info['entity keys']['bundle'])) {
-    // If bundle key isn't set, set it here.
-    // @see entity_extract_ids().
-    if (!isset($entity->{$info['entity keys']['bundle']}) || $entity->{$info['entity keys']['bundle']} === '') {
-      $entity->{$info['entity keys']['bundle']} = $default['bundle'];
-    }
+  // Make sure the bundle key is set.
+  // @see entity_extract_ids().
+  if (!empty($info['entity keys']['bundle']) && !isset($entity->{$info['entity keys']['bundle']})) {
+    $entity->{$info['entity keys']['bundle']} = $default['bundle'];
   }
 
   // Get field and instance from form state if its there.

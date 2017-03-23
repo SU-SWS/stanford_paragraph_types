@@ -233,7 +233,6 @@ function stanford_paragraphs_defaults_save_defaults($entity_type, $bundle, $fiel
   }
 }
 
-
 /**
  * Machine name callback in add form.
  *
