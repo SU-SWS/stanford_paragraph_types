@@ -212,6 +212,9 @@ function stanford_paragraphs_defaults_save_defaults($entity_type, $bundle, $fiel
     if ($item_ids) {
       // Keep track of the entity_id's in our own table.
       $uid = "$entity_type-$bundle-$field_name-$machine_name";
+      if (strlen($uid) >= 255) {
+        $uid = substr($uid, 0, 254);
+      }
       $fields = array(
         'label' => $label,
         'machine_name' => $machine_name,
@@ -326,7 +329,7 @@ function stanford_paragraphs_defaults_edit(array $form, array &$form_state, arra
  * @return array
  *   Render form array.
  */
-function stanford_paragraphs_defaults_delete($form, &$form_state, $default) {
+function stanford_paragraphs_defaults_delete(array $form, array &$form_state, array $default) {
   $form_state['#default'] = $default;
   $path = 'admin/structure/paragraphs/stanford-defaults';
   $question = t('Delete default setting %label', array('%label' => $default['label']));

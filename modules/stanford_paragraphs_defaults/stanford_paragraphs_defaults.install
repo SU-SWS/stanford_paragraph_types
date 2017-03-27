@@ -16,7 +16,7 @@ function stanford_paragraphs_defaults_schema() {
       'uid' => array(
         'description' => 'Unique id of the config',
         'type' => 'varchar',
-        'length' => 500,
+        'length' => 255,
         'not null' => TRUE,
         'default' => '',
       ),
