@@ -117,7 +117,16 @@ function stanford_paragraphs_defaults_menu() {
 function stanford_paragraphs_defaults_delete_default($uid) {
   $default = stanford_paragraphs_defaults_load($uid);
   if ($default) {
-    entity_delete_multiple('paragraphs_item', array_keys($default['item_ids']));
+    // Queue up the paragraph items to prevent various errors from occuring
+    // during the feature revert process.
+    foreach (array_keys($default['item_ids']) as $item_id) {
+      $queue = DrupalQueue::get('stanford_paragraphs_defaults_cron_cleanup');
+      $queue->createItem(array('paragraphs_item' => $item_id));
+    }
+
+    db_delete('stanford_paragraphs_defaults')
+      ->condition('uid', $uid)
+      ->execute();
   }
 }
 
@@ -356,6 +365,29 @@ function stanford_paragraphs_defaults_cron() {
       entity_delete('paragraphs_item', array_keys($default['item_ids']));
     }
   }
+}
+
+/**
+ * Implements hook_cron_queue_info().
+ */
+function stanford_paragraphs_defaults_cron_queue_info() {
+  $queues['stanford_paragraphs_defaults_cron_cleanup'] = array(
+    'worker callback' => 'stanford_paragraphs_defaults_cron_cleanup',
+    'time' => 60,
+  );
+  return $queues;
+}
+
+/**
+ * Cron queue worker callback.
+ *
+ * @param array $item
+ *   Paragraph item to clean with the key as the entity type, value as the ID.
+ */
+function stanford_paragraphs_defaults_cron_cleanup(array $item) {
+  $type = key($item);
+  $entity_id = $item[$type];
+  entity_delete($type, $entity_id);
 }
 
 /**
