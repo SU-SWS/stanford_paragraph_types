@@ -3,3 +3,4 @@ status: true
 dependencies: {  }
 id: stanford_buttons
 label: Buttons
+behavior_plugins: {  }

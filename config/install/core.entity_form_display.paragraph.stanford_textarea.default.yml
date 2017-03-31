@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_textarea.field_p_textarea
+    - paragraphs.paragraphs_type.stanford_textarea
+id: paragraph.stanford_textarea.default
+targetEntityType: paragraph
+bundle: stanford_textarea
+mode: default
+content:
+  field_p_textarea:
+    weight: 0
+    settings:
+      rows: 5
+      placeholder: 'Enter plain text here.'
+    third_party_settings: {  }
+    type: string_textarea
+hidden:
+  created: true
+  status: true
+  uid: true

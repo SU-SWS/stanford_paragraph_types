@@ -1,6 +1,6 @@
 langcode: en
 status: true
 dependencies: {  }
-id: stanford_callout_text
-label: 'Callout Text'
+id: stanford_textarea
+label: 'Text Area'
 behavior_plugins: {  }

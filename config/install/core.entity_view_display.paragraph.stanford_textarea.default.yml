@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_textarea.field_p_textarea
+    - paragraphs.paragraphs_type.stanford_textarea
+id: paragraph.stanford_textarea.default
+targetEntityType: paragraph
+bundle: stanford_textarea
+mode: default
+content:
+  field_p_textarea:
+    type: basic_string
+    weight: 0
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }
