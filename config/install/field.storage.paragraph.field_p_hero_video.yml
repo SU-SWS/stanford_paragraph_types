@@ -1,9 +1,12 @@
+uuid: 71e1046d-d27b-44d3-97fb-d62d87abb8d4
 langcode: en
 status: true
 dependencies:
   module:
     - paragraphs
     - video_embed_field
+_core:
+  default_config_hash: T2NoFYI57bLdDLRptknlzx0MP_FKRCzLsRUK-47-pbA
 id: paragraph.field_p_hero_video
 field_name: field_p_hero_video
 entity_type: paragraph

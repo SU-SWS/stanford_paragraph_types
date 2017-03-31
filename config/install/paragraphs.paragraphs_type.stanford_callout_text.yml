@@ -1,6 +1,9 @@
+uuid: a4685910-cf43-4660-95f9-2123cba51bb8
 langcode: en
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: RoNzNul5TesbMPbX8QFTLQjOkQNEQw3WfgiMag0KjWY
 id: stanford_callout_text
 label: 'Callout Text'
 behavior_plugins: {  }

@@ -1,3 +1,4 @@
+uuid: 6d75b3ae-ccd9-4b44-ba12-663b13adc611
 langcode: en
 status: true
 dependencies:
@@ -15,6 +16,8 @@ third_party_settings:
     restricted_html: '0'
     full_html: '0'
     plain_text: '0'
+_core:
+  default_config_hash: 3Hn9poQzXlTSNZed1owGP5mfVT_njgJa49evPTo4wQA
 id: paragraph.stanford_wysiwyg.field_p_wysiwyg
 field_name: field_p_wysiwyg
 entity_type: paragraph

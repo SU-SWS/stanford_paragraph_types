@@ -1,3 +1,4 @@
+uuid: 7ec4598f-3be9-4ab0-8960-8bac54c0360f
 langcode: en
 status: true
 dependencies:
@@ -6,6 +7,8 @@ dependencies:
     - paragraphs.paragraphs_type.stanford_callout_text
   module:
     - link
+_core:
+  default_config_hash: 7LHyoKmbnjGJ87oxnn6yXjeaJ21DoEeT1zP35suD7QA
 id: paragraph.stanford_callout_text.field_p_callout_more_link
 field_name: field_p_callout_more_link
 entity_type: paragraph

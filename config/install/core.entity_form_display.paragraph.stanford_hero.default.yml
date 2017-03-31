@@ -1,3 +1,4 @@
+uuid: b98617c5-96fe-41ea-8105-c7a939ccedfb
 langcode: en
 status: true
 dependencies:
@@ -13,6 +14,8 @@ dependencies:
     - image
     - link
     - video_embed_field
+_core:
+  default_config_hash: ibypDjOO8Z0wdlRslJU4H8cpA_6ymGzKlnlvTc6IAfI
 id: paragraph.stanford_hero.default
 targetEntityType: paragraph
 bundle: stanford_hero

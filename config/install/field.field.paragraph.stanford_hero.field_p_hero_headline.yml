@@ -1,9 +1,12 @@
+uuid: 3e65f2d4-80ac-4b4a-b1f9-fefa50ccfeb2
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.paragraph.field_p_hero_headline
     - paragraphs.paragraphs_type.stanford_hero
+_core:
+  default_config_hash: xTRFJJMe8bvnX442p8i2N9taUCmYxz3fVtHyPj4Wojo
 id: paragraph.stanford_hero.field_p_hero_headline
 field_name: field_p_hero_headline
 entity_type: paragraph

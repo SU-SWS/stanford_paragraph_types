@@ -1,9 +1,12 @@
+uuid: 5809a127-ebd9-4079-a3f6-0bb29efc059a
 langcode: en
 status: true
 dependencies:
   module:
     - link
     - paragraphs
+_core:
+  default_config_hash: UwSuINcSxcpkY2hVVi5qSQlMuzfj8BFNSSwwSqlR1iw
 id: paragraph.field_p_buttons_button
 field_name: field_p_buttons_button
 entity_type: paragraph

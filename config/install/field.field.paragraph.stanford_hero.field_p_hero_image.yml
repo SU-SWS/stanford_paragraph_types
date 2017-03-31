@@ -1,3 +1,4 @@
+uuid: b4a45dd9-0dff-4af0-93b8-456000b4912f
 langcode: en
 status: true
 dependencies:
@@ -25,6 +26,8 @@ third_party_settings:
         slashes: true
         pathauto: false
         transliterate: true
+_core:
+  default_config_hash: 1GqkRriDb8kCucnrqMTN8Oi409Eg0qMQOwtNwmPcPsc
 id: paragraph.stanford_hero.field_p_hero_image
 field_name: field_p_hero_image
 entity_type: paragraph

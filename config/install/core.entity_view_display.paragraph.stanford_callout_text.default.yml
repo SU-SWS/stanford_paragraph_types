@@ -1,3 +1,4 @@
+uuid: 0a7dce10-f5c3-4f0b-a638-25295465a769
 langcode: en
 status: true
 dependencies:
@@ -8,6 +9,8 @@ dependencies:
   module:
     - link
     - text
+_core:
+  default_config_hash: '-FwuWKE4AlTNW5PVb43HAvXDYQ17k8TmEwG5hZyTlXY'
 id: paragraph.stanford_callout_text.default
 targetEntityType: paragraph
 bundle: stanford_callout_text

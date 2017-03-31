@@ -1,6 +1,9 @@
+uuid: 5b389651-1391-419a-8e4b-371b44160bf2
 langcode: en
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: 3-wdl4Gj74c8sIvPdjoOCQrQc_qKaodphTdZFiE9gGM
 id: stanford_wysiwyg
 label: WYSIWYG
 behavior_plugins: {  }
