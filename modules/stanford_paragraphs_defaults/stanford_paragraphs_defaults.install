@@ -80,10 +80,10 @@ function stanford_paragraphs_defaults_install() {
  * Implements hook_uninstall().
  */
 function stanford_paragraphs_defaults_uninstall() {
-  $defaults = stanford_paragraphs_defaults_load_multiple();
-  foreach ($defaults as $default) {
-    entity_delete('paragraphs_item', array_keys($default['item_ids']));
-  }
+  drupal_load('module', 'stanford_paragraphs_defaults');
 
-  file_unmanaged_delete_recursive('public://paragraph_defaults');
+  $defaults = stanford_paragraphs_defaults_load_multiple();
+  foreach (array_keys($defaults) as $uid) {
+    stanford_paragraphs_defaults_delete_default($uid);
+  }
 }

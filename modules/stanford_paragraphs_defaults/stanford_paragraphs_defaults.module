@@ -115,12 +115,6 @@ function stanford_paragraphs_defaults_menu() {
  *   The unique uid of the item to delete.
  */
 function stanford_paragraphs_defaults_delete_default($uid) {
-  $default = &drupal_static(__FUNCTION__);
-  // Prevent this from running multiple times.
-  if (!is_null($default)) {
-    return;
-  }
-
   $default = stanford_paragraphs_defaults_load($uid);
   if ($default) {
     entity_delete_multiple('paragraphs_item', array_keys($default['item_ids']));
