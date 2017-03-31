@@ -178,7 +178,7 @@ function stanford_paragraphs_defaults_load_multiple($uids = NULL, $entity_type =
 
     // Sort paragraph items based on weight before loading.
     asort($item_ids);
-    $paragraphs = paragraphs_item_load_multiple(array_keys($item_ids));
+    $paragraphs = paragraphs_item_load_multiple(array_keys($item_ids), array(), TRUE);
     $default_item['paragraphs'] = $paragraphs;
 
     $defaults[$default_item['uid']] = $default_item;
