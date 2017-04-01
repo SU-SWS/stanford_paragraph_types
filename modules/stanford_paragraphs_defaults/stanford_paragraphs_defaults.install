@@ -86,4 +86,10 @@ function stanford_paragraphs_defaults_uninstall() {
   foreach (array_keys($defaults) as $uid) {
     stanford_paragraphs_defaults_delete_default($uid);
   }
+
+  /** @var \SystemQueue $queue */
+  $queue = DrupalQueue::get('stanford_paragraphs_defaults_cron_cleanup');
+  while ($item = $queue->claimItem()) {
+    stanford_paragraphs_defaults_cron_cleanup($item->data);
+  }
 }

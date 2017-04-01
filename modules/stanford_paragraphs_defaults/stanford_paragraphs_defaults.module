@@ -356,12 +356,12 @@ function stanford_paragraphs_defaults_build_default(&$form, &$form_state) {
  * Implements hook_cron().
  */
 function stanford_paragraphs_defaults_cron() {
-  // Periodically prune the defaults configuration if the entity type/bundle
-  // is removed.
+  // Periodically prune the defaults configuration if the entity
+  // type/bundle/field is no longer available.
   $defaults = stanford_paragraphs_defaults_load_multiple();
   foreach ($defaults as $default) {
-    $entity_info = entity_get_info($default['entity_type']);
-    if (!$entity_info || !isset($entity_info['bundles'][$default['bundle']])) {
+    $field = field_info_instance($default['entity_type'], $default['field_name'], $default['bundle']);
+    if (!$field) {
       entity_delete('paragraphs_item', array_keys($default['item_ids']));
     }
   }
