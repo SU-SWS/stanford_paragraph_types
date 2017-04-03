@@ -497,6 +497,7 @@ function stanford_paragraph_types_field_group_info() {
     'children' => array(
       0 => 'field_p_callout_more_link',
       1 => 'field_p_callout_text',
+      2 => 'field_p_callout_color',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -740,7 +741,7 @@ function stanford_paragraph_types_field_group_info() {
   $field_group->mode = 'form';
   $field_group->parent_name = '';
   $field_group->data = array(
-    'label' => 'WYSIWYG',
+    'label' => 'Text Area',
     'weight' => '0',
     'children' => array(
       0 => 'field_p_wysiwyg_body',
@@ -750,7 +751,7 @@ function stanford_paragraph_types_field_group_info() {
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
-      'label' => 'WYSIWYG',
+      'label' => 'Text Area',
       'instance_settings' => array(
         'required_fields' => 1,
         'id' => '',
@@ -878,7 +879,7 @@ function stanford_paragraph_types_field_group_info() {
   t('Right Column');
   t('Sidebar Nav');
   t('Teaser Cards');
-  t('WYSIWYG');
+  t('Text Area');
   t('WYSIWYG Title');
   t('Wrapper');
 

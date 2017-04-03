@@ -518,6 +518,42 @@ function stanford_paragraph_types_field_default_field_instances() {
     ),
   );
 
+  // Exported field_instance: 'paragraphs_item-p_callout-field_p_callout_color'.
+  $field_instances['paragraphs_item-p_callout-field_p_callout_color'] = array(
+    'bundle' => 'p_callout',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'Optionally apply some color to the callout to make it stand out.',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 1,
+      ),
+      'paragraphs_editor_preview' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'paragraphs_item',
+    'field_name' => 'field_p_callout_color',
+    'label' => 'Color',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 3,
+    ),
+  );
+
   // Exported field_instance:
   // 'paragraphs_item-p_callout-field_p_callout_more_link'.
   $field_instances['paragraphs_item-p_callout-field_p_callout_more_link'] = array(
@@ -2042,6 +2078,7 @@ function stanford_paragraph_types_field_default_field_instances() {
   t('Cards');
   t('Check this to hide the link button, but still link the image in the teaser card.');
   t('Choose what you want type of link to display below the text and also what the image will link to.');
+  t('Color');
   t('Featured Image');
   t('File');
   t('File Insert');
@@ -2055,6 +2092,7 @@ function stanford_paragraph_types_field_default_field_instances() {
   t('Image insert');
   t('Menu');
   t('More Link');
+  t('Optionally apply some color to the callout to make it stand out.');
   t('Read More Link');
   t('Recommend 2 or 3 cards. Maximum allowed is 3.');
   t('Superhead');

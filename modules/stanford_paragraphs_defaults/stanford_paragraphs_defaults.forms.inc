@@ -211,10 +211,7 @@ function stanford_paragraphs_defaults_save_defaults($entity_type, $bundle, $fiel
 
     if ($item_ids) {
       // Keep track of the entity_id's in our own table.
-      $uid = "$entity_type-$bundle-$field_name-$machine_name";
-      if (strlen($uid) >= 255) {
-        $uid = substr($uid, 0, 254);
-      }
+      $uid = substr("$entity_type-$bundle-$field_name-$machine_name", 0, 254);
       $fields = array(
         'label' => $label,
         'machine_name' => $machine_name,

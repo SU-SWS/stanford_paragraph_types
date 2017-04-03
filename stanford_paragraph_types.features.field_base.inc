@@ -39,6 +39,36 @@ function stanford_paragraph_types_field_default_field_bases() {
     'type' => 'link_field',
   );
 
+  // Exported field_base: 'field_p_callout_color'.
+  $field_bases['field_p_callout_color'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_p_callout_color',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        '#ffffff' => 'White',
+        '#4D4F53' => 'Cool Gray',
+        '#d5d0c0' => 'Light Taupe',
+        '#009B76' => 'Bright Green',
+        '#0f6c91' => 'Bright Blue',
+        '#EAAB00' => 'Bright Yellow',
+        '#E98300' => 'Bright Orange',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
   // Exported field_base: 'field_p_callout_more_link'.
   $field_bases['field_p_callout_more_link'] = array(
     'active' => 1,
