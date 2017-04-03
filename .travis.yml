@@ -49,11 +49,11 @@
 env:
   global:
 #    - PRODUCT_NAME=""
-#    - ENABLE_MODULES=""
+    - ENABLE_MODULES="stanford_paragraphs_defaults"
     - DISABLE_MODULES="webauth"
 #    - DEPLOYER_BRANCH=""
 #    - DRUPAL_PROFILE_BRANCH=""
-    - CLICKY_BRANCH="page-3-paragraphs"
+#    - CLICKY_BRANCH=""
 #    - SCRIPTS_BRANCH=""
 
 language: php
