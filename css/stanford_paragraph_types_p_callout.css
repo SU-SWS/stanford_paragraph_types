@@ -1,8 +1,67 @@
 .paragraphs-item-p-callout {
   text-align: center;
 }
+.paragraphs-item-p-callout .center {
+  margin: 0 auto 3em;
+  float: none;
+}
+.paragraphs-item-p-callout.entity-paragraphs-item.entity {
+  margin-bottom: 0;
+  padding-top: 1.5em;
+}
 .paragraphs-item-p-callout p {
   font-size: 2em;
   line-height: 1.2em;
   font-weight: 600;
+}
+.paragraphs-item-p-callout a.more-link {
+  font-weight: 900;
+}
+.paragraphs-item-p-callout a.more-link:hover, .paragraphs-item-p-callout a.more-link:focus {
+  font-weight: 600;
+}
+.paragraphs-item-p-callout.color-background a {
+  text-decoration: underline;
+}
+.paragraphs-item-p-callout.cool-gray {
+  background-color: #4D4F53;
+  color: #ffffff;
+}
+.paragraphs-item-p-callout.cool-gray a, .paragraphs-item-p-callout.cool-gray a:hover, .paragraphs-item-p-callout.cool-gray a:focus {
+  color: #ffffff;
+}
+.paragraphs-item-p-callout.light-taupe {
+  background-color: #d5d0c0;
+  color: #333333;
+}
+.paragraphs-item-p-callout.light-taupe a, .paragraphs-item-p-callout.light-taupe a:hover, .paragraphs-item-p-callout.light-taupe a:focus {
+  color: #333333;
+}
+.paragraphs-item-p-callout.bright-green {
+  background-color: #009B76;
+  color: #ffffff;
+}
+.paragraphs-item-p-callout.bright-green a, .paragraphs-item-p-callout.bright-green a:hover, .paragraphs-item-p-callout.bright-green a:focus {
+  color: #ffffff;
+}
+.paragraphs-item-p-callout.bright-blue {
+  background-color: #0f6c91;
+  color: #ffffff;
+}
+.paragraphs-item-p-callout.bright-blue a, .paragraphs-item-p-callout.bright-blue a:hover, .paragraphs-item-p-callout.bright-blue a:focus {
+  color: #ffffff;
+}
+.paragraphs-item-p-callout.bright-yellow {
+  background-color: #EAAB00;
+  color: #333333;
+}
+.paragraphs-item-p-callout.bright-yellow a, .paragraphs-item-p-callout.bright-yellow a:hover, .paragraphs-item-p-callout.bright-yellow a:focus {
+  color: #333333;
+}
+.paragraphs-item-p-callout.bright-orange {
+  background-color: #E98300;
+  color: #333333;
+}
+.paragraphs-item-p-callout.bright-orange a, .paragraphs-item-p-callout.bright-orange a:hover, .paragraphs-item-p-callout.bright-orange a:focus {
+  color: #333333;
 }
