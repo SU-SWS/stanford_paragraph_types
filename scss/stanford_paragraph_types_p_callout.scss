@@ -1,5 +1,6 @@
 .paragraphs-item-p-callout {
   text-align: center;
+
   .center {
     margin: 0 auto 3em;
     float: none;
@@ -18,7 +19,9 @@
 
   a.more-link {
     font-weight: 900;
-    &:hover, &:focus {
+
+    &:hover,
+    &:focus {
       font-weight: 600;
     }
   }
@@ -30,9 +33,12 @@
   }
 
   &.cool-gray {
-    background-color: #4D4F53;
+    background-color: #4d4f53;
     color: #ffffff;
-    a, a:hover, a:focus {
+
+    a,
+    a:hover,
+    a:focus {
       color: #ffffff;
     }
   }
@@ -40,37 +46,55 @@
   &.light-taupe {
     background-color: #d5d0c0;
     color: #333333;
-    a, a:hover, a:focus {
-      color: #333333;
-    }
-  }
-  &.bright-green {
-    background-color: #009B76;
-    color: #ffffff;
-    a, a:hover, a:focus {
-      color: #ffffff;
-    }
-  }
-  &.bright-blue {
-    background-color: #0f6c91;
-    color: #ffffff;
-    a, a:hover, a:focus {
-      color: #ffffff;
-    }
-  }
-  &.bright-yellow {
-    background-color: #EAAB00;
-    color: #333333;
-    a, a:hover, a:focus {
-      color: #333333;
-    }
-  }
-  &.bright-orange {
-    background-color: #E98300;
-    color: #333333;
-    a, a:hover, a:focus {
+
+    a,
+    a:hover,
+    a:focus {
       color: #333333;
     }
   }
 
+  &.bright-green {
+    background-color: #009b76;
+    color: #ffffff;
+
+    a,
+    a:hover,
+    a:focus {
+      color: #ffffff;
+    }
+  }
+
+  &.bright-blue {
+    background-color: #0f6c91;
+    color: #ffffff;
+
+    a,
+    a:hover,
+    a:focus {
+      color: #ffffff;
+    }
+  }
+
+  &.bright-yellow {
+    background-color: #eaab00;
+    color: #333333;
+
+    a,
+    a:hover,
+    a:focus {
+      color: #333333;
+    }
+  }
+
+  &.bright-orange {
+    background-color: #e98300;
+    color: #333333;
+
+    a,
+    a:hover,
+    a:focus {
+      color: #333333;
+    }
+  }
 }
