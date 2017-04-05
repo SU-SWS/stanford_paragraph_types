@@ -17,19 +17,8 @@
     font-weight: 600;
   }
 
-  a.more-link {
-    font-weight: 900;
-
-    &:hover,
-    &:focus {
-      font-weight: 600;
-    }
-  }
-
-  &.color-background {
-    a {
-      text-decoration: underline;
-    }
+  a {
+    text-decoration: underline;
   }
 
   &.cool-gray {
@@ -39,7 +28,7 @@
     a,
     a:hover,
     a:focus {
-      color: #ffffff;
+      color: #d5d0c0;
     }
   }
 
@@ -50,7 +39,7 @@
     a,
     a:hover,
     a:focus {
-      color: #333333;
+      color: #4d4f53;
     }
   }
 
@@ -61,7 +50,7 @@
     a,
     a:hover,
     a:focus {
-      color: #ffffff;
+      color: #000000;
     }
   }
 
@@ -72,7 +61,7 @@
     a,
     a:hover,
     a:focus {
-      color: #ffffff;
+      color: #dad7cb;
     }
   }
 
@@ -83,7 +72,7 @@
     a,
     a:hover,
     a:focus {
-      color: #333333;
+      color: #53284f;
     }
   }
 
@@ -94,7 +83,7 @@
     a,
     a:hover,
     a:focus {
-      color: #333333;
+      color: #4d4f53;
     }
   }
 }
