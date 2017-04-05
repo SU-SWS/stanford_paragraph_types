@@ -78,10 +78,20 @@
   .field-name-field-p-hero-video:nth-child(2) {
     display: none;
   }
-
+  
   @media (max-width: 767px) {
     .group-overlay-text {
       position: static;
+    }
+  }
+}
+
+// DARK THEME STYLES
+
+.style-custom-styles-dark {
+  .paragraphs-item-p-hero {
+    .group-overlay-text {
+      background: #2e2d29;
     }
   }
 }
