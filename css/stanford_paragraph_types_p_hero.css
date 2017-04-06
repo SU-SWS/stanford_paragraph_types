@@ -67,3 +67,6 @@
     position: static;
   }
 }
+.style-custom-styles-dark .paragraphs-item-p-hero .group-overlay-text {
+  background: #2e2d29;
+}

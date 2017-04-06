@@ -84,4 +84,11 @@
       position: static;
     }
   }
+
+  // DARK THEME STYLES
+  .style-custom-styles-dark & {
+    .group-overlay-text {
+      background: #2e2d29;
+    }
+  }
 }
