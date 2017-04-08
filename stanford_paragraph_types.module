@@ -94,12 +94,22 @@ function _stanford_paragraph_types_preprocess_entity_paragraphs_item(&$vars) {
 
       break;
 
+    case 'p_callout':
+      $color_items = field_get_items('paragraphs_item', $vars['paragraphs_item'], 'field_p_callout_color');
+      if ($color_items) {
+        $color = $color_items[0]['value'];
+        $vars['classes_array'][] = 'color-background';
+        $vars['classes_array'][] = $color;
+      }
+      break;
+
     default:
       // Other paragraph types that should be centered and not full width.
       $vars['classes_array'][] = 'span12';
       $vars['classes_array'][] = 'center';
       break;
   }
+  $vars['attributes_array'] = array_filter($vars['attributes_array']);
 }
 
 /**
