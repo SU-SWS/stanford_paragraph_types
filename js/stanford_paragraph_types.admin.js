@@ -8,12 +8,7 @@
     attach: function (context, settings) {
 
       $('.field-name-field-p-icon-color option', context).each(function () {
-        var values = $(this).attr('value');
-        values = values.split(',');
-        $(this).css('background-color', values[0]);
-        if (values[1] !== undefined) {
-          $(this).css('color', values[1]);
-        }
+        $(this).addClass('color-'+ $(this).attr('value'));
       });
 
       $('.group-p-card-cta', context).each(function () {

@@ -2474,6 +2474,45 @@ function stanford_paragraph_types_field_default_field_instances() {
     ),
   );
 
+  // Translatables
+  // Included for use with string extractors like potx.
+  t('Background Color');
+  t('Body');
+  t('Button');
+  t('Call To Action Button');
+  t('Callout Text');
+  t('Caption');
+  t('Card Title');
+  t('Cards');
+  t('Check this to hide the link button, but still link the image in the teaser card.');
+  t('Choose what you want type of link to display below the text and also what the image will link to.');
+  t('Color');
+  t('Column Title');
+  t('Columns');
+  t('Featured Image');
+  t('File');
+  t('File Insert');
+  t('Font Awesome Icon');
+  t('Header');
+  t('Headline');
+  t('Hero Image');
+  t('Hero Style');
+  t('Hero Video');
+  t('Hide Call To Action Button');
+  t('Image');
+  t('Image insert');
+  t('Links');
+  t('Menu');
+  t('More Link');
+  t('Optionally apply some color to the callout to make it stand out.');
+  t('Read More Link');
+  t('Recommend 2 or 3 cards. Maximum allowed is 3.');
+  t('Superhead');
+  t('Text');
+  t('Text Alignment');
+  t('Title');
+  t('Upload Icon');
+  t('WYSIWYG');
 
   return $field_instances;
 }
