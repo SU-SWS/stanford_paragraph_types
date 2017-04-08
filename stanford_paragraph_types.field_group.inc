@@ -608,6 +608,35 @@ function stanford_paragraph_types_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_p_icons|paragraphs_item|p_icon|form';
+  $field_group->group_name = 'group_p_icons';
+  $field_group->entity_type = 'paragraphs_item';
+  $field_group->bundle = 'p_icon';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Icons',
+    'weight' => '1',
+    'children' => array(
+      0 => 'field_p_icon_columns',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'label' => 'Icons',
+      'instance_settings' => array(
+        'required_fields' => 1,
+        'id' => '',
+        'classes' => 'group-p-icons field-group-fieldset',
+        'description' => '',
+      ),
+      'formatter' => 'collapsible',
+    ),
+  );
+  $field_groups['group_p_icons|paragraphs_item|p_icon|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_p_menu|paragraphs_item|p_menu|form';
   $field_group->group_name = 'group_p_menu';
   $field_group->entity_type = 'paragraphs_item';
@@ -869,6 +898,7 @@ function stanford_paragraph_types_field_group_info() {
   t('Header H2');
   t('Headline H2');
   t('Hero');
+  t('Icons');
   t('Left Column');
   t('Main');
   t('Main Content');

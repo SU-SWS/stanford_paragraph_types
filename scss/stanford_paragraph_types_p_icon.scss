@@ -1,0 +1,51 @@
+
+.paragraphs-item-p-icon {
+  text-align: center;
+  line-height: 1em;
+
+  .field-collection-view.span4:nth-child(3n+1) {
+    clear: none;
+  }
+
+  i {
+    font-size: 80px;
+    height: 160px;
+    width: 160px;
+    border-radius: 80px;
+    position: relative;
+    margin-bottom: -2.5px;
+  }
+
+  i::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .field-name-field-p-icon-image {
+    height: 160px;
+    width: 160px;
+    border-radius: 80px;
+    display: table;
+    margin: 0 auto;
+
+    & > div {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    img {
+      height: 80px;
+      width: 80px;
+    }
+  }
+
+  .field-name-field-p-icon-title {
+    margin: 20px 0;
+  }
+
+  .field-name-field-p-icon-links {
+    margin-bottom: 20px;
+  }
+}

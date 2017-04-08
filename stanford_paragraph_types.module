@@ -207,18 +207,100 @@ function _stanford_paragraph_types_preprocess_field_field_p_hero_video(&$vars) {
 }
 
 /**
+ * Helper for stanford_paragraph_types_preprocess_field().
+ */
+function _stanford_paragraph_types_preprocess_field_field_p_icon_image(&$vars) {
+  $entity = $vars['element']['#object'];
+
+  switch ($entity->field_name) {
+    case 'field_p_icon_columns':
+      $colors = field_get_items('field_collection_item', $entity, 'field_p_icon_color');
+      $colors = $colors[0]['value'];
+      $style = "background: $colors;";
+      if (strpos($colors, ',') !== FALSE) {
+        list($background, $font) = explode(',', $colors);
+        $style = "background-color: $background; color: $font;";
+      }
+      $vars['style'] = $style;
+      $vars['attributes'] = array('something' => array('here'));
+      break;
+  }
+}
+
+/**
+ * Helper for stanford_paragraph_types_preprocess_field().
+ */
+function _stanford_paragraph_types_preprocess_field_field_p_icon_columns(&$vars) {
+  $offset = 0;
+  // If not a multiple of 3, set the offset to center the field item.
+  if (count($vars['items']) % 3) {
+    $offset = -2 * (count($vars['items']) % 3 - 3);
+  }
+
+  foreach ($vars['items'] as $delta => &$item) {
+    $item['#attributes']['class'][] = 'span4';
+
+    // Sets the offset to the first item of the last group of 3. Ex:
+    // 1 or 2 items - the very first will get the offset. 4 or 5 - the 4th
+    // item will get the offset and so on.
+    if ($offset && !($delta % 3) && count($vars['items']) - $delta < 3) {
+      $item['#attributes']['class'][] = "offset$offset";
+    }
+  }
+}
+
+/**
+ * Implements hook_entity_view().
+ */
+function stanford_paragraph_types_entity_view($entity, $type, $view_mode, $langcode) {
+  if ($type == 'field_collection_item') {
+    switch ($entity->field_name) {
+      case 'field_p_icon_columns':
+        $colors = field_get_items('field_collection_item', $entity, 'field_p_icon_color');
+        $colors = $colors[0]['value'];
+        $style = "background: $colors;";
+        if (strpos($colors, ',') !== FALSE) {
+          list($background, $font) = explode(',', $colors);
+          $style = "background-color: $background; color: $font;";
+        }
+
+        $entity->content['field_p_icon_icon'][0]['#attributes']['style'][] = $style;
+        break;
+    }
+  }
+}
+
+/**
  * Implements hook_entity_view_mode_alter().
  */
 function stanford_paragraph_types_entity_view_mode_alter(&$view_mode, $context) {
-  if ($context['entity_type'] == 'paragraphs_item') {
-    $entity = $context['entity'];
-    switch ($entity->bundle) {
-      case 'p_wysiwyg':
-        if (!empty($entity->field_p_wysiwyg_button) || !empty($entity->field_p_wysiwyg_image)) {
-          $view_mode = 'default';
-        }
-        break;
-    }
+  $entity = $context['entity'];
+  switch ($context['entity_type']) {
+    case 'paragraphs_item':
+
+      switch ($entity->bundle) {
+        case 'p_wysiwyg':
+
+          if (!empty($entity->field_p_wysiwyg_button) || !empty($entity->field_p_wysiwyg_image)) {
+            $view_mode = 'default';
+          }
+
+          break;
+      }
+      break;
+
+    case 'field_collection_item':
+
+      switch ($entity->field_name) {
+        case 'field_p_icon_columns':
+
+          if (empty($entity->field_p_icon_image)) {
+            $view_mode = 'default';
+          }
+
+          break;
+      }
+      break;
   }
 }
 
