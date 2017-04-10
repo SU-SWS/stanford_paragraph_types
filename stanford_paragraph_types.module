@@ -39,6 +39,8 @@ function stanford_paragraph_types_theme($existing, $type, $theme, $path) {
   // Adds templates for paragraph item entities but allow them to be overridden
   // in the theme.
   $paragraph = $existing['paragraphs_item'];
+  unset($paragraph['includes'], $paragraph['file']);
+
   foreach ($info['features']['paragraphs'] as $bundle) {
     $patterns = array("paragraphs_item__$bundle");
     foreach ($patterns as $pattern) {
