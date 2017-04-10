@@ -609,6 +609,130 @@ function stanford_paragraph_types_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_p_icon_readmore|field_collection_item|field_p_icon_columns|default';
+  $field_group->group_name = 'group_p_icon_readmore';
+  $field_group->entity_type = 'field_collection_item';
+  $field_group->bundle = 'field_p_icon_columns';
+  $field_group->mode = 'default';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Read More',
+    'weight' => '2',
+    'children' => array(
+      0 => 'field_p_icon_links',
+    ),
+    'format_type' => 'div',
+    'format_settings' => array(
+      'label' => 'Read More',
+      'instance_settings' => array(
+        'id' => '',
+        'classes' => 'more-link',
+        'description' => '',
+        'show_label' => '0',
+        'label_element' => 'h3',
+        'effect' => 'none',
+        'speed' => 'fast',
+      ),
+      'formatter' => 'open',
+    ),
+  );
+  $field_groups['group_p_icon_readmore|field_collection_item|field_p_icon_columns|default'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_p_icon_readmore|field_collection_item|field_p_icon_columns|full';
+  $field_group->group_name = 'group_p_icon_readmore';
+  $field_group->entity_type = 'field_collection_item';
+  $field_group->bundle = 'field_p_icon_columns';
+  $field_group->mode = 'full';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Read More',
+    'weight' => '2',
+    'children' => array(
+      0 => 'field_p_icon_links',
+    ),
+    'format_type' => 'div',
+    'format_settings' => array(
+      'label' => 'Read More',
+      'instance_settings' => array(
+        'id' => '',
+        'classes' => 'more-link',
+        'description' => '',
+        'show_label' => '0',
+        'label_element' => 'h3',
+        'effect' => 'none',
+        'speed' => 'fast',
+      ),
+      'formatter' => 'open',
+    ),
+  );
+  $field_groups['group_p_icon_readmore|field_collection_item|field_p_icon_columns|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_p_icon_title|field_collection_item|field_p_icon_columns|default';
+  $field_group->group_name = 'group_p_icon_title';
+  $field_group->entity_type = 'field_collection_item';
+  $field_group->bundle = 'field_p_icon_columns';
+  $field_group->mode = 'default';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Title',
+    'weight' => '1',
+    'children' => array(
+      0 => 'field_p_icon_title',
+    ),
+    'format_type' => 'html-element',
+    'format_settings' => array(
+      'label' => 'Title',
+      'instance_settings' => array(
+        'id' => '',
+        'classes' => 'group-p-icon-title field-group-html-element',
+        'element' => 'h2',
+        'show_label' => '0',
+        'label_element' => 'div',
+        'attributes' => '',
+      ),
+    ),
+  );
+  $field_groups['group_p_icon_title|field_collection_item|field_p_icon_columns|default'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_p_icon_title|field_collection_item|field_p_icon_columns|full';
+  $field_group->group_name = 'group_p_icon_title';
+  $field_group->entity_type = 'field_collection_item';
+  $field_group->bundle = 'field_p_icon_columns';
+  $field_group->mode = 'full';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Title',
+    'weight' => '1',
+    'children' => array(
+      0 => 'field_p_icon_title',
+    ),
+    'format_type' => 'html-element',
+    'format_settings' => array(
+      'label' => 'Title',
+      'instance_settings' => array(
+        'id' => '',
+        'classes' => 'group-p-icon-title field-group-html-element',
+        'element' => 'h2',
+        'show_label' => '0',
+        'label_element' => 'div',
+        'attributes' => '',
+      ),
+    ),
+  );
+  $field_groups['group_p_icon_title|field_collection_item|field_p_icon_columns|full'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_p_icons|paragraphs_item|p_icon|form';
   $field_group->group_name = 'group_p_icons';
   $field_group->entity_type = 'paragraphs_item';
@@ -906,10 +1030,12 @@ function stanford_paragraph_types_field_group_info() {
   t('Menu Column');
   t('Menu Group');
   t('Overlay Text');
+  t('Read More');
   t('Right Column');
   t('Sidebar Nav');
   t('Teaser Cards');
   t('Text Area');
+  t('Title');
   t('WYSIWYG Title');
   t('Wrapper');
 

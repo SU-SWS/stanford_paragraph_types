@@ -8,20 +8,53 @@
 include_once 'stanford_paragraph_types.features.inc';
 
 /**
- * Implements hook_theme_registry_alter().
- *
- * @see https://www.drupal.org/docs/7/creating-custom-modules/howtos/using-template-tplphp-files-in-your-own-module
+ * Implements hook_theme().
  */
-function stanford_paragraph_types_theme_registry_alter(&$theme_registry) {
+function stanford_paragraph_types_theme($existing, $type, $theme, $path) {
+  $theme = array();
   $module_path = drupal_get_path('module', 'stanford_paragraph_types');
-  $template_objects = drupal_find_theme_templates($theme_registry, '.tpl.php', $module_path);
-  foreach ($template_objects as $key => $template_object) {
-    if (!isset($theme_registry[$key]['theme path']) || !preg_match('#/themes/#', $theme_registry[$key]['theme path'])) {
-      $theme_registry[$key]['theme path'] = $module_path;
-      $theme_registry[$key] = array_merge($theme_registry[$key], $template_object);
-      $theme_registry[$key]['type'] = 'module';
+  $info = system_get_info('module', 'stanford_paragraph_types');
+
+  $field = $existing['field'];
+  $field['theme path'] = $module_path;
+  $field['path'] = "$module_path/theme";
+  unset($field['function']);
+
+  // Adds templates for fields but allow them to be overridden in the theme.
+  foreach ($info['features']['field_instance'] as $instance) {
+
+    list(, $bundle, $field_name) = explode('-', $instance);
+    // Various template patterns for the field.
+    $patterns = array("field__$field_name", "field__{$field_name}__{$bundle}");
+
+    foreach ($patterns as $pattern) {
+      $field['template'] = str_replace('_', '-', $pattern);
+      // Check if the file exists in this module.
+      if (file_exists($field['path'] . "/{$field['template']}.tpl.php")) {
+        $theme[$pattern] = $field;
+      }
     }
   }
+
+  // Adds templates for paragraph item entities but allow them to be overridden
+  // in the theme.
+  $paragraph = $existing['paragraphs_item'];
+  foreach ($info['features']['paragraphs'] as $bundle) {
+    $patterns = array("paragraphs_item__$bundle");
+    foreach ($patterns as $pattern) {
+      $my_paragraph = array(
+        'template' => str_replace('_', '-', $pattern),
+        'theme path' => $module_path,
+        'path' => "$module_path/theme",
+      );
+
+      if (file_exists("{$my_paragraph['path']}/{$my_paragraph['template']}.tpl.php")) {
+        $theme[$pattern] = array_merge($paragraph, $my_paragraph);
+      }
+    }
+  }
+
+  return $theme;
 }
 
 /**
@@ -353,15 +386,13 @@ function _stanford_paragraph_types_field_group_pre_render_p_menu(&$element, $gro
  */
 function stanford_paragraph_types_field_attach_form($entity_type, $entity, &$form, &$form_state, $langcode) {
   if ($entity_type == 'paragraphs_item') {
-    $form['#attached']['css'][] =  drupal_get_path('module', 'stanford_paragraph_types') . '/css/stanford_paragraph_types.admin.css';
+    $form['#attached']['css'][] = drupal_get_path('module', 'stanford_paragraph_types') . '/css/stanford_paragraph_types.admin.css';
     $form['#attached']['js'][] = drupal_get_path('module', 'stanford_paragraph_types') . '/js/stanford_paragraph_types.admin.js';
 
     $function = '_stanford_paragraph_types_field_attach_form_' . $form['#bundle'];
     if (function_exists($function)) {
       $function($entity_type, $entity, $form, $form_state, $langcode);
     }
-
-
   }
 }
 

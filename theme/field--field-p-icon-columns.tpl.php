@@ -15,7 +15,7 @@
     <?php if(!($delta % 3)): ?>
       <div class="field-items row-fluid clearfix"<?php print $content_attributes; ?>>
     <?php endif; ?>
-        <div class="field-item <?php print $delta % 2 ? 'odd' : 'even'; ?>"<?php print $item_attributes[$delta]; ?>><?php print render($item); ?></div>
+        <?php print render($item); ?>
     <?php if($delta % 3 == 2 || $delta == count($items) - 1): ?>
       </div>
     <?php endif; ?>
