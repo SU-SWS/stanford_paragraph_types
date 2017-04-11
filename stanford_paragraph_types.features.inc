@@ -41,6 +41,11 @@ function stanford_paragraph_types_paragraphs_info() {
       'bundle' => 'p_hero',
       'locked' => '1',
     ),
+    'p_icon' => array(
+      'name' => 'Icon Grid',
+      'bundle' => 'p_icon',
+      'locked' => '1',
+    ),
     'p_menu' => array(
       'name' => 'Menu with Text Area',
       'bundle' => 'p_menu',

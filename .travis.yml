@@ -49,7 +49,7 @@
 env:
   global:
 #    - PRODUCT_NAME=""
-    - ENABLE_MODULES="stanford_paragraphs_defaults"
+    - ENABLE_MODULES="stanford_paragraphs_defaults stanford_field_formatters-font-awesome-field"
     - DISABLE_MODULES="webauth"
 #    - DEPLOYER_BRANCH=""
 #    - DRUPAL_PROFILE_BRANCH=""
