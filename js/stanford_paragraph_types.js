@@ -28,6 +28,7 @@
             $(iframe).attr('onload', 'this.contentWindow.focus()');
             $(video).show();
 
+            return false;
           });
 
           $(this).prepend(play);
