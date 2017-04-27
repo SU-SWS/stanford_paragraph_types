@@ -16,22 +16,21 @@
             class: 'play-video',
             href: videoUrl,
             html: $('<i>', {class: 'fa fa-youtube-play icon-youtube-play', html: 'Play Video'})
-          }).mouseup(function (e) {
-            e.preventDefault();
+          }).click(function (e) {
 
-            $dad = $(this).parent();
-            $dad.hide();
-            $dad.siblings('.group-overlay-text').hide();
-            var iframe = $(video).find('iframe')[0];
+            // Mouse has eventPhase 3, keyboard has 2.
+            if (e.eventPhase == 3) {
+              e.preventDefault();
+              $dad = $(this).parent();
+              $dad.hide();
+              $dad.siblings('.group-overlay-text').hide();
+              var iframe = $(video).find('iframe')[0];
 
-            iframe.src += "&autoplay=1";
-            $(iframe).attr('onload', 'this.contentWindow.focus()');
-            $(video).show();
+              iframe.src += "&autoplay=1";
+              $(iframe).attr('onload', 'this.contentWindow.focus()');
+              $(video).show();
+            }
 
-            return false;
-          }).click(function(e){
-            e.preventDefault();
-            return false;
           });
 
           $(this).prepend(play);
