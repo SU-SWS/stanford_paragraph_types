@@ -29,6 +29,9 @@
             $(video).show();
 
             return false;
+          }).click(function(e){
+            e.preventDefault();
+            return false;
           });
 
           $(this).prepend(play);
