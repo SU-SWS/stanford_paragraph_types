@@ -51,7 +51,7 @@
   display: block;
   position: absolute;
   font-size: 0;
-  right: calc(50% - 70px);
+  left: calc(50% - 70px);
   top: calc(50% - 70px);
   color: #ffffff;
 }
