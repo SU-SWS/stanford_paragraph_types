@@ -1,4 +1,3 @@
-uuid: 557c40a0-041d-456e-bbbb-acc34e64472c
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - paragraphs.paragraphs_type.stanford_buttons
   module:
     - link
-_core:
-  default_config_hash: GNqYPsbvOt0o4sPp33UHZgyiSVexEtFceevTPhpxv50
 id: paragraph.stanford_buttons.field_p_buttons_button
 field_name: field_p_buttons_button
 entity_type: paragraph

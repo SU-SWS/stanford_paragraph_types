@@ -1,11 +1,8 @@
-uuid: 3392501b-120f-443d-9b0c-69565de0ec78
 langcode: en
 status: true
 dependencies:
   module:
     - paragraphs
-_core:
-  default_config_hash: xdTGjMB8FDidZ_y2Z62QrPA8f7QZYB0okdQJoDTdvPc
 id: paragraph.field_p_hero_superhead
 field_name: field_p_hero_superhead
 entity_type: paragraph

@@ -1,4 +1,3 @@
-uuid: 53f749bb-0738-40b2-89c7-56dfea271d41
 langcode: en
 status: true
 dependencies:
@@ -9,8 +8,6 @@ dependencies:
   module:
     - link
     - text
-_core:
-  default_config_hash: fs55PzkdepbhV3rSsPIZoAHW__LX-MPEog1TrijQ3kA
 id: paragraph.stanford_callout_text.default
 targetEntityType: paragraph
 bundle: stanford_callout_text
@@ -23,6 +20,7 @@ content:
       placeholder_title: ''
     third_party_settings: {  }
     type: link_default
+    region: content
   field_p_wysiwyg:
     weight: 0
     settings:
@@ -31,6 +29,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: text_textarea_with_summary
+    region: content
 hidden:
   created: true
   status: true

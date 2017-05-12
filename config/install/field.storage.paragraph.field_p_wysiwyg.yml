@@ -1,12 +1,9 @@
-uuid: 5b10f89d-3093-4cda-bf7c-80080cfade7b
 langcode: en
 status: true
 dependencies:
   module:
     - paragraphs
     - text
-_core:
-  default_config_hash: GxrlVgQYqLhzIBQT56X0VytIisBHNrakxM8vKFljuDY
 id: paragraph.field_p_wysiwyg
 field_name: field_p_wysiwyg
 entity_type: paragraph

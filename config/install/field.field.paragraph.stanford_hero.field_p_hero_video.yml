@@ -1,4 +1,3 @@
-uuid: da3423c3-cf83-43dc-a6a5-bc89b8af5123
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - paragraphs.paragraphs_type.stanford_hero
   module:
     - video_embed_field
-_core:
-  default_config_hash: K_7_E4Fe2beLhG1HfjsZV01FssD_4tOsq3KHOmgG55k
 id: paragraph.stanford_hero.field_p_hero_video
 field_name: field_p_hero_video
 entity_type: paragraph

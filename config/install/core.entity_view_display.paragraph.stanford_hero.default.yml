@@ -1,4 +1,3 @@
-uuid: a72054a8-2ca2-41ad-978b-bc17419892ca
 langcode: en
 status: true
 dependencies:
@@ -34,8 +33,6 @@ third_party_settings:
         - field_p_hero_superhead
       subhead:
         - field_p_hero_headline
-_core:
-  default_config_hash: CgLdUuZ4VXWBgSm0bPdQasA941rbPUPn6LnCJHTSzb0
 id: paragraph.stanford_hero.default
 targetEntityType: paragraph
 bundle: stanford_hero
@@ -78,6 +75,7 @@ content:
       field_formatter_class:
         class: ''
     type: string
+    region: content
   field_p_hero_image:
     weight: 0
     label: hidden
@@ -95,6 +93,7 @@ content:
       field_formatter_class:
         class: ''
     type: responsive_image
+    region: content
   field_p_hero_superhead:
     weight: 2
     label: hidden
@@ -132,6 +131,7 @@ content:
       field_formatter_class:
         class: ''
     type: string
+    region: content
   field_p_hero_video:
     weight: 1
     label: hidden
@@ -142,6 +142,7 @@ content:
       autoplay: true
     third_party_settings: {  }
     type: video_embed_field_video
+    region: content
 hidden:
   created: true
   field_p_hero_more_link: true

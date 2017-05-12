@@ -1,9 +1,6 @@
-uuid: 69b7bac6-5e75-43a5-905f-7c9f82e81a84
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: 7dWHDU9kVPdvgXx9iHSuFw0Tk0BGIGkmxXm7FiQUewI
 id: stanford_buttons
 label: Buttons
 behavior_plugins: {  }

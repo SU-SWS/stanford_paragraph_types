@@ -1,9 +1,6 @@
-uuid: 8ba88d65-cabe-435b-aa7a-e491e0a27ea6
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: q_7mnOCjGmnfe8kivUfPdOUFvNwc4t-Iiet-hmvPBxk
 id: stanford_hero
 label: Hero
 behavior_plugins: {  }

@@ -1,12 +1,9 @@
-uuid: e334b273-3856-4e74-aea0-0ff814b86c51
 langcode: en
 status: true
 dependencies:
   module:
     - link
     - paragraphs
-_core:
-  default_config_hash: iJSboVjUA2W-_aj49jOS7ZGfMkrc82YOv1-TUnrRQgA
 id: paragraph.field_p_callout_more_link
 field_name: field_p_callout_more_link
 entity_type: paragraph

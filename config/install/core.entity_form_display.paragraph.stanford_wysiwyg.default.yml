@@ -1,4 +1,3 @@
-uuid: 22b95e26-79d5-416e-aa51-6b4ddfe0e902
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - paragraphs.paragraphs_type.stanford_wysiwyg
   module:
     - text
-_core:
-  default_config_hash: zzssta-398SyEtckTn-T2Up2GGj1byuNE0Z6szl5D2k
 id: paragraph.stanford_wysiwyg.default
 targetEntityType: paragraph
 bundle: stanford_wysiwyg
@@ -22,6 +19,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: text_textarea_with_summary
+    region: content
 hidden:
   created: true
   status: true

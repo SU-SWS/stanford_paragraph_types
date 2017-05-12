@@ -1,4 +1,3 @@
-uuid: 0feaa003-d51a-4dc9-b6ce-cc7a9367e761
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - paragraphs.paragraphs_type.stanford_hero
   module:
     - link
-_core:
-  default_config_hash: YGfWtUZyoKevmNbpZl_vM5i-WxOlE8_73wzTpuhTg6s
 id: paragraph.stanford_hero.field_p_hero_more_link
 field_name: field_p_hero_more_link
 entity_type: paragraph
