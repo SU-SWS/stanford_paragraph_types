@@ -10,12 +10,17 @@
         var video = $(this).siblings('.field-name-field-p-hero-video');
 
         if (video.length) {
+          $(video).find('iframe').attr('title', Drupal.t('Video Player'));
           var videoUrl = $(video).find('div[data-video-embed-url]').attr('data-video-embed-url');
 
           var play = $('<a>', {
             class: 'play-video',
             href: videoUrl,
-            html: $('<i>', {class: 'fa fa-youtube-play icon-youtube-play', html: 'Play Video'})
+            html: $('<i>', {
+              class: 'fa fa-youtube-play icon-youtube-play',
+              html: 'Play Video',
+              'aria-label': Drupal.t('Play Video - Opens to the video website')
+            })
           }).click(function (e) {
 
             // Mouse has eventPhase 3, keyboard has 2.

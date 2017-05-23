@@ -107,17 +107,25 @@ function _stanford_paragraph_types_preprocess_entity_field_collection_item(&$var
 }
 
 /**
+ * Implements hook_entity_view().
+ */
+function stanford_paragraph_types_entity_view($entity, $type, $view_mode, $langcode) {
+  if($type == 'paragraphs_item'){
+    // Add specific style sheet if it exists.
+    $css_file = drupal_get_path('module', 'stanford_paragraph_types') . '/css/stanford_paragraph_types_' . $entity->bundle . '.css';
+    if (file_exists($css_file)) {
+      $entity->content['#attached']['css'][] = $css_file;
+    }
+  }
+}
+
+/**
  * Helper for stanford_paragraph_types_preprocess_entity().
  *
  * Paragraph items.
  */
 function _stanford_paragraph_types_preprocess_entity_paragraphs_item(&$vars) {
   $entity = $vars['elements']['#entity'];
-  $css_file = drupal_get_path('module', 'stanford_paragraph_types') . '/css/stanford_paragraph_types_' . $entity->bundle . '.css';
-  if (file_exists($css_file)) {
-    drupal_add_css($css_file);
-  }
-  drupal_add_css(drupal_get_path('module', 'stanford_paragraph_types') . '/css/stanford_paragraph_types.css');
 
   // Adds to push following Paragraph Items down.
   $vars['classes_array'][] = 'clearfix';
