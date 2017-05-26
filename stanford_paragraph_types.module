@@ -111,6 +111,7 @@ function _stanford_paragraph_types_preprocess_entity_field_collection_item(&$var
  */
 function stanford_paragraph_types_entity_view($entity, $type, $view_mode, $langcode) {
   if($type == 'paragraphs_item'){
+    $entity->content['#attached']['css'][] = drupal_get_path('module', 'stanford_paragraph_types') . '/css/stanford_paragraph_types.css';
     // Add specific style sheet if it exists.
     $css_file = drupal_get_path('module', 'stanford_paragraph_types') . '/css/stanford_paragraph_types_' . $entity->bundle . '.css';
     if (file_exists($css_file)) {
