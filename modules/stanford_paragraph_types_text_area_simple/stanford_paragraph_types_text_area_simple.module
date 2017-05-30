@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Stanford Paragraph Types Text Area Simple feature.
+ */
+
+include_once 'stanford_paragraph_types_text_area_simple.features.inc';
