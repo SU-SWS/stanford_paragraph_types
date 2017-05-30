@@ -1,0 +1,98 @@
+<?php
+
+/**
+ * @file
+ * Code for the Stanford Paragraph Types Dynamic feature.
+ */
+
+include_once 'stanford_paragraph_types_dynamic.features.inc';
+
+/**
+ * Implements hook_theme().
+ */
+function stanford_paragraph_types_dynamic_theme($existing, $type, $theme, $path) {
+  $theme = array();
+  $module_path = drupal_get_path('module', 'stanford_paragraph_types_dynamic');
+  $info = system_get_info('module', 'stanford_paragraph_types_dynamic');
+
+  $field = $existing['field'];
+  $field['theme path'] = $module_path;
+  $field['path'] = "$module_path/theme";
+  unset($field['function']);
+
+  // Adds templates for fields but allow them to be overridden in the theme.
+  foreach ($info['features']['field_instance'] as $instance) {
+
+    list(, $bundle, $field_name) = explode('-', $instance);
+    // Various template patterns for the field.
+    $patterns = array("field__$field_name", "field__{$field_name}__{$bundle}");
+
+    foreach ($patterns as $pattern) {
+      $field['template'] = str_replace('_', '-', $pattern);
+      // Check if the file exists in this module.
+      if (file_exists($field['path'] . "/{$field['template']}.tpl.php")) {
+        $theme[$pattern] = $field;
+      }
+    }
+  }
+
+  return $theme;
+}
+
+/**
+ * Implements hook_preprocess_field().
+ */
+function stanford_paragraph_types_dynamic_preprocess_field(&$vars) {
+  if ($vars['element']['#field_name'] == 'field_p_views_view') {
+    $items = count($vars['items']);
+    if ($items <= 6) {
+      $class = 'span' . floor(12 / $items);
+    }
+    else {
+      $class = 'span2';
+    }
+    $vars['item_class'] = $class;
+  }
+}
+
+/**
+ * Implements hook_field_attach_form().
+ */
+function stanford_paragraph_types_dynamic_field_attach_form($entity_type, $entity, &$form, &$form_state, $langcode) {
+  foreach (element_children($form) as $field_name) {
+    if ($instance = field_info_instance($entity_type, $field_name, $form['#bundle'])) {
+      // Add remove button to multiple selects widget.
+      if ($instance['widget']['type'] == 'multiple_selects') {
+        foreach (element_children($form[$field_name][LANGUAGE_NONE]) as $delta) {
+
+          $element = &$form[$field_name][LANGUAGE_NONE][$delta];
+          if (isset($element['#type']) && $element['#type'] == 'submit') {
+            continue;
+          }
+
+          $parents = $element['#field_parents'];
+          $parents[] = $field_name;
+          $parents[] = LANGUAGE_NONE;
+          $parents[] = $delta;
+
+          $parents = implode('_', $parents);
+          $element['remove_button'] = array(
+            '#delta' => $delta,
+            '#name' => $parents . '_remove_button',
+            '#type' => 'submit',
+            '#value' => t('Remove'),
+            '#validate' => array(),
+            '#submit' => array('stanford_paragraph_types_link_remove_submit'),
+            '#limit_validation_errors' => array(),
+            '#weight' => 1000,
+            '#ajax' => array(
+              'effect' => 'fade',
+              'callback' => 'stanford_paragraph_types_link_remove_callback',
+              'wrapper' => $form[$field_name][LANGUAGE_NONE]['add_more']['#ajax']['wrapper'],
+            ),
+          );
+        }
+      }
+    }
+  }
+}
