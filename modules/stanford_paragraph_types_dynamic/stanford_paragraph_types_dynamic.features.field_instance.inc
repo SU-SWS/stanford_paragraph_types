@@ -26,12 +26,6 @@ function stanford_paragraph_types_dynamic_field_default_field_instances() {
         'type' => 'blockreference_without_title',
         'weight' => 0,
       ),
-      'paragraphs_editor_preview' => array(
-        'label' => 'above',
-        'settings' => array(),
-        'type' => 'hidden',
-        'weight' => 0,
-      ),
     ),
     'entity_type' => 'paragraphs_item',
     'field_name' => 'field_p_views_view',
