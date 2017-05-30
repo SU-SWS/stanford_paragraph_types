@@ -11,32 +11,7 @@ include_once 'stanford_paragraph_types_dynamic.features.inc';
  * Implements hook_theme().
  */
 function stanford_paragraph_types_dynamic_theme($existing, $type, $theme, $path) {
-  $theme = array();
-  $module_path = drupal_get_path('module', 'stanford_paragraph_types_dynamic');
-  $info = system_get_info('module', 'stanford_paragraph_types_dynamic');
-
-  $field = $existing['field'];
-  $field['theme path'] = $module_path;
-  $field['path'] = "$module_path/theme";
-  unset($field['function']);
-
-  // Adds templates for fields but allow them to be overridden in the theme.
-  foreach ($info['features']['field_instance'] as $instance) {
-
-    list(, $bundle, $field_name) = explode('-', $instance);
-    // Various template patterns for the field.
-    $patterns = array("field__$field_name", "field__{$field_name}__{$bundle}");
-
-    foreach ($patterns as $pattern) {
-      $field['template'] = str_replace('_', '-', $pattern);
-      // Check if the file exists in this module.
-      if (file_exists($field['path'] . "/{$field['template']}.tpl.php")) {
-        $theme[$pattern] = $field;
-      }
-    }
-  }
-
-  return $theme;
+  return stanford_paragraph_types_theme_templates($existing, 'stanford_paragraph_types_dynamic');
 }
 
 /**

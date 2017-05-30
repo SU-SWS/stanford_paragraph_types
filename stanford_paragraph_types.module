@@ -11,9 +11,24 @@ include_once 'stanford_paragraph_types.features.inc';
  * Implements hook_theme().
  */
 function stanford_paragraph_types_theme($existing, $type, $theme, $path) {
+  return stanford_paragraph_types_theme_templates($existing, 'stanford_paragraph_types');
+}
+
+/**
+ * Add template options for fields and paragraph bundles for specified module.
+ *
+ * @param mixed $existing
+ *   Array of existing theme items.
+ * @param string $module_name
+ *   Name of the module to collect templates from.
+ *
+ * @return array
+ *  New template options for fields and paragraph bundles.
+ */
+function stanford_paragraph_types_theme_templates($existing, $module_name) {
   $theme = array();
-  $module_path = drupal_get_path('module', 'stanford_paragraph_types');
-  $info = system_get_info('module', 'stanford_paragraph_types');
+  $module_path = drupal_get_path('module', $module_name);
+  $info = system_get_info('module', $module_name);
 
   $field = $existing['field'];
   $field['theme path'] = $module_path;
