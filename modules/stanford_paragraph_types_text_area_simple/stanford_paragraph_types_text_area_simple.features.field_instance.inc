@@ -19,7 +19,7 @@ function stanford_paragraph_types_text_area_simple_field_default_field_instances
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
+        'label' => 'hidden',
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
@@ -89,13 +89,9 @@ function stanford_paragraph_types_text_area_simple_field_default_field_instances
     'description' => '',
     'display' => array(
       'default' => array(
-        'label' => 'above',
-        'module' => 'image',
-        'settings' => array(
-          'image_link' => '',
-          'image_style' => '',
-        ),
-        'type' => 'image',
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
         'weight' => 1,
       ),
       'paragraphs_editor_preview' => array(
@@ -110,7 +106,7 @@ function stanford_paragraph_types_text_area_simple_field_default_field_instances
     'label' => 'Image',
     'required' => 0,
     'settings' => array(
-      'alt_field' => 0,
+      'alt_field' => 1,
       'default_image' => 0,
       'file_directory' => '',
       'file_extensions' => 'png gif jpg jpeg',
@@ -129,7 +125,7 @@ function stanford_paragraph_types_text_area_simple_field_default_field_instances
         'insert_class' => '',
         'insert_default' => 'auto',
         'insert_styles' => array(
-          'auto' => 'auto',
+          'auto' => 0,
           'colorbox__3-col-header' => 0,
           'colorbox__4-col-header' => 0,
           'colorbox__6-col-banner' => 0,
