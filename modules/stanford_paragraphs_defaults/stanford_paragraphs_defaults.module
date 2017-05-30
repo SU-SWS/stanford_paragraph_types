@@ -284,17 +284,14 @@ function _stanford_paragraphs_defaults_get_form_uid($entity_type, $entity_bundle
  *   Uid of the default configuration to load.
  */
 function _stanford_paragraphs_defaults_attach_default(array &$form, array &$form_state, $uid) {
-  // Prevent loading the default over and over and over...
-  $loaded = &drupal_static(__FUNCTION__);
-
-  $default = stanford_paragraphs_defaults_load($uid);
-  $field_name = $default['field_name'];
-  $entity_type = $default['entity_type'];
-
-  // Make sure the field exists on the form.
-  if ($loaded || !$default || !isset($form[$field_name])) {
+  $default = _stanford_paragraphs_defaults_attach_default_load($form, $form_state, $uid);
+  // Already loaded default or no default exits.
+  if (!$default) {
     return;
   }
+
+  $field_name = $default['field_name'];
+  $entity_type = $default['entity_type'];
 
   $entity = isset($form['#node']) ? $form['#node'] : $form['#entity'];
   $info = entity_get_info($entity_type);
@@ -337,8 +334,44 @@ function _stanford_paragraphs_defaults_attach_default(array &$form, array &$form
   $field_form_state = &$form_state['field'][$field_name][LANGUAGE_NONE];
   $field_form_state['items_count'] = $field_form_state['real_items_count'] = count($items);
   $field_form_state['field'] = $field;
+}
 
+/**
+ * Get the default configuration if valid.
+ *
+ * @param array $form
+ *   Drupal_get_form form array.
+ * @param array $form_state
+ *   Drupal_get_form form_state array.
+ * @param string $uid
+ *   Uid of the default configuration to load.
+ *
+ * @return array|bool
+ *   Default configuration or false if already loaded or should not be loaded.
+ */
+function _stanford_paragraphs_defaults_attach_default_load(&$form, &$form_state, $uid) {
+  // Prevent loading the default over and over and over...
+  $loaded = &drupal_static(__FUNCTION__ . ':' . $uid);
+  if ($loaded) {
+    return FALSE;
+  }
   $loaded = TRUE;
+
+  // Make sure the default setting exits.
+  $default = stanford_paragraphs_defaults_load($uid);
+  if (!$default) {
+    return FALSE;
+  }
+
+  $field_name = $default['field_name'];
+  $field_state = field_form_get_state(array(), $field_name, LANGUAGE_NONE, $form_state);
+
+  // Make sure the field exists on the form & defaults can be loaded.
+  if (!isset($form[$field_name]) || $field_state['items_count']) {
+    return FALSE;
+  }
+
+  return $default;
 }
 
 /**
