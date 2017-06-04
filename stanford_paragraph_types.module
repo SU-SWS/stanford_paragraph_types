@@ -11,9 +11,24 @@ include_once 'stanford_paragraph_types.features.inc';
  * Implements hook_theme().
  */
 function stanford_paragraph_types_theme($existing, $type, $theme, $path) {
+  return stanford_paragraph_types_theme_templates($existing, 'stanford_paragraph_types');
+}
+
+/**
+ * Add template options for fields and paragraph bundles for specified module.
+ *
+ * @param mixed $existing
+ *   Array of existing theme items.
+ * @param string $module_name
+ *   Name of the module to collect templates from.
+ *
+ * @return array
+ *  New template options for fields and paragraph bundles.
+ */
+function stanford_paragraph_types_theme_templates($existing, $module_name) {
   $theme = array();
-  $module_path = drupal_get_path('module', 'stanford_paragraph_types');
-  $info = system_get_info('module', 'stanford_paragraph_types');
+  $module_path = drupal_get_path('module', $module_name);
+  $info = system_get_info('module', $module_name);
 
   $field = $existing['field'];
   $field['theme path'] = $module_path;
@@ -110,7 +125,7 @@ function _stanford_paragraph_types_preprocess_entity_field_collection_item(&$var
  * Implements hook_entity_view().
  */
 function stanford_paragraph_types_entity_view($entity, $type, $view_mode, $langcode) {
-  if($type == 'paragraphs_item'){
+  if ($type == 'paragraphs_item') {
     $entity->content['#attached']['css'][] = drupal_get_path('module', 'stanford_paragraph_types') . '/css/stanford_paragraph_types.css';
     // Add specific style sheet if it exists.
     $css_file = drupal_get_path('module', 'stanford_paragraph_types') . '/css/stanford_paragraph_types_' . $entity->bundle . '.css';
@@ -126,6 +141,7 @@ function stanford_paragraph_types_entity_view($entity, $type, $view_mode, $langc
  * Paragraph items.
  */
 function _stanford_paragraph_types_preprocess_entity_paragraphs_item(&$vars) {
+  $info = system_get_info('module', 'stanford_paragraph_types');
   $entity = $vars['elements']['#entity'];
 
   // Adds to push following Paragraph Items down.
@@ -161,8 +177,10 @@ function _stanford_paragraph_types_preprocess_entity_paragraphs_item(&$vars) {
 
     default:
       // Other paragraph types that should be centered and not full width.
-      $vars['classes_array'][] = 'span12';
-      $vars['classes_array'][] = 'center';
+      if (in_array($entity->bundle, $info['features']['paragraphs'])) {
+        $vars['classes_array'][] = 'span12';
+        $vars['classes_array'][] = 'center';
+      }
       break;
   }
   $vars['attributes_array'] = array_filter($vars['attributes_array']);
