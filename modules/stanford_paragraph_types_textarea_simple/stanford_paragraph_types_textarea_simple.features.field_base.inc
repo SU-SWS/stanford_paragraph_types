@@ -1,22 +1,22 @@
 <?php
 /**
  * @file
- * stanford_paragraph_types_text_area_simple.features.field_base.inc
+ * stanford_paragraph_types_textarea_simple.features.field_base.inc
  */
 
 /**
  * Implements hook_field_default_field_bases().
  */
-function stanford_paragraph_types_text_area_simple_field_default_field_bases() {
+function stanford_paragraph_types_textarea_simple_field_default_field_bases() {
   $field_bases = array();
 
-  // Exported field_base: 'field_p_wnt_body'.
-  $field_bases['field_p_wnt_body'] = array(
+  // Exported field_base: 'field_p_ws_body'.
+  $field_bases['field_p_ws_body'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_p_wnt_body',
+    'field_name' => 'field_p_ws_body',
     'indexes' => array(
       'format' => array(
         0 => 'format',
@@ -29,13 +29,13 @@ function stanford_paragraph_types_text_area_simple_field_default_field_bases() {
     'type' => 'text_long',
   );
 
-  // Exported field_base: 'field_p_wnt_image'.
-  $field_bases['field_p_wnt_image'] = array(
+  // Exported field_base: 'field_p_ws_image'.
+  $field_bases['field_p_ws_image'] = array(
     'active' => 1,
     'cardinality' => 1,
     'deleted' => 0,
     'entity_types' => array(),
-    'field_name' => 'field_p_wnt_image',
+    'field_name' => 'field_p_ws_image',
     'indexes' => array(
       'fid' => array(
         0 => 'fid',

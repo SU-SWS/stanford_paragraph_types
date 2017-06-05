@@ -1,19 +1,19 @@
 <?php
 /**
  * @file
- * stanford_paragraph_types_text_area_simple.features.field_instance.inc
+ * stanford_paragraph_types_textarea_simple.features.field_instance.inc
  */
 
 /**
  * Implements hook_field_default_field_instances().
  */
-function stanford_paragraph_types_text_area_simple_field_default_field_instances() {
+function stanford_paragraph_types_textarea_simple_field_default_field_instances() {
   $field_instances = array();
 
   // Exported field_instance:
-  // 'paragraphs_item-p_wysiwyg_no_title-field_p_wnt_body'.
-  $field_instances['paragraphs_item-p_wysiwyg_no_title-field_p_wnt_body'] = array(
-    'bundle' => 'p_wysiwyg_no_title',
+  // 'paragraphs_item-p_wysiwyg_simple-field_p_ws_body'.
+  $field_instances['paragraphs_item-p_wysiwyg_simple-field_p_ws_body'] = array(
+    'bundle' => 'p_wysiwyg_simple',
     'default_value' => NULL,
     'deleted' => 0,
     'description' => '',
@@ -23,17 +23,18 @@ function stanford_paragraph_types_text_area_simple_field_default_field_instances
         'module' => 'text',
         'settings' => array(),
         'type' => 'text_default',
-        'weight' => 0,
+        'weight' => 1,
       ),
       'paragraphs_editor_preview' => array(
-        'label' => 'above',
+        'label' => 'hidden',
+        'module' => 'text',
         'settings' => array(),
-        'type' => 'hidden',
+        'type' => 'text_default',
         'weight' => 0,
       ),
     ),
     'entity_type' => 'paragraphs_item',
-    'field_name' => 'field_p_wnt_body',
+    'field_name' => 'field_p_ws_body',
     'label' => 'Body',
     'required' => 0,
     'settings' => array(
@@ -82,27 +83,38 @@ function stanford_paragraph_types_text_area_simple_field_default_field_instances
   );
 
   // Exported field_instance:
-  // 'paragraphs_item-p_wysiwyg_no_title-field_p_wnt_image'.
-  $field_instances['paragraphs_item-p_wysiwyg_no_title-field_p_wnt_image'] = array(
-    'bundle' => 'p_wysiwyg_no_title',
+  // 'paragraphs_item-p_wysiwyg_simple-field_p_ws_image'.
+  $field_instances['paragraphs_item-p_wysiwyg_simple-field_p_ws_image'] = array(
+    'bundle' => 'p_wysiwyg_simple',
     'deleted' => 0,
-    'description' => '',
+    'description' => 'To insert an image:
+<ol>
+<li>Select an image size from the <strong>Image</strong>\'s <strong>Style</strong> dropdown menu, e.g. <strong>large-scaled</strong></li>
+<li>Place the cursor in the body field where you would like the image to appear </li>
+<li>Click on the <strong>Insert</strong> button. This will place the image into the body field at the cursor</li>
+</ol>
+To adjust the placement of the image on the page:
+<ol>
+<li>Select the image</li>
+<li>Click on the  <strong>Styles</strong> dropdown menu in the WYSIWYG Toolbar</li>
+<li>Scroll down the menu and select a style, e.g. <strong>Image Right</strong></li>
+</ol>',
     'display' => array(
       'default' => array(
-        'label' => 'hidden',
+        'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 1,
+        'weight' => 2,
       ),
       'paragraphs_editor_preview' => array(
         'label' => 'above',
         'settings' => array(),
         'type' => 'hidden',
-        'weight' => 0,
+        'weight' => 1,
       ),
     ),
     'entity_type' => 'paragraphs_item',
-    'field_name' => 'field_p_wnt_image',
+    'field_name' => 'field_p_ws_image',
     'label' => 'Image',
     'required' => 0,
     'settings' => array(
@@ -111,8 +123,8 @@ function stanford_paragraph_types_text_area_simple_field_default_field_instances
       'file_directory' => '',
       'file_extensions' => 'png gif jpg jpeg',
       'max_filesize' => '',
-      'max_resolution' => '3200x3200',
-      'min_resolution' => '',
+      'max_resolution' => '',
+      'min_resolution' => '3200x3200',
       'title_field' => 0,
       'user_register_form' => FALSE,
     ),
@@ -123,7 +135,7 @@ function stanford_paragraph_types_text_area_simple_field_default_field_instances
         'insert' => 1,
         'insert_absolute' => 0,
         'insert_class' => '',
-        'insert_default' => 'auto',
+        'insert_default' => 'image_large-scaled',
         'insert_styles' => array(
           'auto' => 0,
           'colorbox__3-col-header' => 0,
@@ -237,6 +249,18 @@ function stanford_paragraph_types_text_area_simple_field_default_field_instances
   // Included for use with string extractors like potx.
   t('Body');
   t('Image');
+  t('To insert an image:
+<ol>
+<li>Select an image size from the <strong>Image</strong>\'s <strong>Style</strong> dropdown menu, e.g. <strong>large-scaled</strong></li>
+<li>Place the cursor in the body field where you would like the image to appear </li>
+<li>Click on the <strong>Insert</strong> button. This will place the image into the body field at the cursor</li>
+</ol>
+To adjust the placement of the image on the page:
+<ol>
+<li>Select the image</li>
+<li>Click on the  <strong>Styles</strong> dropdown menu in the WYSIWYG Toolbar</li>
+<li>Scroll down the menu and select a style, e.g. <strong>Image Right</strong></li>
+</ol>');
 
   return $field_instances;
 }
