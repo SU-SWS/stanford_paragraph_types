@@ -19,12 +19,19 @@ function stanford_paragraphs_defaults_features_export_files($module_name, $expor
   }
 
   $files = array();
-  foreach ($export_files as $file) {
-    $file_name = drupal_basename($file);
-    $files["assets/$file_name"] = array(
-      'file_path' => $file,
-    );
+  foreach ($export_files as $feature_name => $feature_files) {
+    if ($feature_name != $module_name) {
+      continue;
+    }
+
+    foreach ($feature_files as $file) {
+      $file_name = drupal_basename($file);
+      $files["assets/$file_name"] = array(
+        'file_path' => $file,
+      );
+    }
   }
+
   return $files;
 }
 
@@ -66,7 +73,7 @@ function paragraphs_defaults_features_export_render($module_name, $data, $export
     unset($item['uid'], $item['item_ids']);
 
     foreach ($item['paragraphs'] as &$paragraph_item) {
-      $paragraph_item = _stanford_paragraphs_defaults_prepare_entity($paragraph_item, 'paragraphs_item');
+      $paragraph_item = _stanford_paragraphs_defaults_prepare_entity($paragraph_item, 'paragraphs_item', $module_name);
     }
     $item['paragraphs'] = array_values($item['paragraphs']);
 
@@ -85,11 +92,13 @@ function paragraphs_defaults_features_export_render($module_name, $data, $export
  *   The entity to process.
  * @param string $entity_type
  *   The type of the entity.
+ * @param string $module_name
+ *   Feature machine name.
  *
  * @return \stdClass
  *   The prepared and processed entity as a standard object for easy export.
  */
-function _stanford_paragraphs_defaults_prepare_entity($entity, $entity_type) {
+function _stanford_paragraphs_defaults_prepare_entity($entity, $entity_type, $module_name) {
   $entity_info = entity_get_info($entity_type);
   $bundle_key = $entity_info['entity keys']['bundle'];
 
@@ -106,7 +115,7 @@ function _stanford_paragraphs_defaults_prepare_entity($entity, $entity_type) {
     if (function_exists($prepare_function)) {
       $field_items = field_get_items($entity_type, $entity, $field_name);
       if ($field_items) {
-        $field_items = $prepare_function($field_items);
+        $field_items = $prepare_function($field_items, $module_name);
         $entity->{$field_name}[LANGUAGE_NONE] = $field_items;
       }
     }
@@ -139,16 +148,20 @@ function _stanford_paragraphs_defaults_prepare_entity($entity, $entity_type) {
  *
  * @param array $field_items
  *   Field items provided by field_get_items().
+ * @param string $module_name
+ *   Feature machine name.
  *
  * @return array
  *   Prepared field_items.
  */
-function _stanford_paragraphs_defaults_prepare_image(array $field_items) {
+function _stanford_paragraphs_defaults_prepare_image(array $field_items, $module_name) {
   $files = &drupal_static('stanford_paragraphs_defaults_files');
   foreach ($field_items as &$item) {
-
-    if (!isset($files[drupal_basename($item['uri'])])) {
-      $files[drupal_basename($item['uri'])] = $item['uri'];
+    if (!isset($files[$module_name])) {
+      $files[$module_name] = array();
+    }
+    if (!isset($files[$module_name][drupal_basename($item['uri'])])) {
+      $files[$module_name][drupal_basename($item['uri'])] = $item['uri'];
     }
 
     $item = array(
@@ -167,15 +180,19 @@ function _stanford_paragraphs_defaults_prepare_image(array $field_items) {
  *
  * @param array $field_items
  *   Field items provided by field_get_items().
+ * @param string $module_name
+ *   Feature machine name.
  *
  * @return array
  *   Prepared field_items.
  */
-function _stanford_paragraphs_defaults_prepare_file(array $field_items) {
+function _stanford_paragraphs_defaults_prepare_file(array $field_items, $module_name) {
   $files = &drupal_static('stanford_paragraphs_defaults_files');
   foreach ($field_items as &$item) {
-
-    if (!isset($files[drupal_basename($item['uri'])])) {
+    if (!isset($files[$module_name])) {
+      $files[$module_name] = array();
+    }
+    if (!isset($files[$module_name][drupal_basename($item['uri'])])) {
       $files[drupal_basename($item['uri'])] = $item['uri'];
     }
 
@@ -195,11 +212,13 @@ function _stanford_paragraphs_defaults_prepare_file(array $field_items) {
  *
  * @param array $field_items
  *   Field items provided by field_get_items().
+ * @param string $module_name
+ *   Feature machine name.
  *
  * @return array
  *   Prepared field_items.
  */
-function _stanford_paragraphs_defaults_prepare_video_embed_field(array $field_items) {
+function _stanford_paragraphs_defaults_prepare_video_embed_field(array $field_items, $module_name = NULL) {
   foreach ($field_items as &$item) {
     // Dont want that part of the field data.
     unset($item['thumbnail_path']);
@@ -212,17 +231,19 @@ function _stanford_paragraphs_defaults_prepare_video_embed_field(array $field_it
  *
  * @param array $field_items
  *   Field items provided by field_get_items().
+ * @param string $module_name
+ *   Feature machine name.
  *
  * @return array
  *   Prepared field_items.
  */
-function _stanford_paragraphs_defaults_features_prepare_paragraphs(array $field_items) {
+function _stanford_paragraphs_defaults_features_prepare_paragraphs(array $field_items, $module_name) {
   foreach ($field_items as &$item) {
     // For some reason it seems drush fu acts differently than through the UI.
     if (is_array($item) && isset($item['value'])) {
       $item = paragraphs_item_load($item['value']);
     }
-    $item = _stanford_paragraphs_defaults_prepare_entity($item, 'paragraphs_item');
+    $item = _stanford_paragraphs_defaults_prepare_entity($item, 'paragraphs_item', $module_name);
   }
   return $field_items;
 }
@@ -232,17 +253,19 @@ function _stanford_paragraphs_defaults_features_prepare_paragraphs(array $field_
  *
  * @param array $field_items
  *   Field items provided by field_get_items().
+ * @param string $module_name
+ *   Feature machine name.
  *
  * @return array
  *   Prepared field_items.
  */
-function _stanford_paragraphs_defaults_prepare_field_collection(array $field_items) {
+function _stanford_paragraphs_defaults_prepare_field_collection(array $field_items, $module_name) {
   foreach ($field_items as &$item) {
     // For some reason it seems drush fu acts differently than through the UI.
     if (is_array($item) && isset($item['value'])) {
       $item = field_collection_item_load($item['value']);
     }
-    $item = _stanford_paragraphs_defaults_prepare_entity($item, 'field_collection_item');
+    $item = _stanford_paragraphs_defaults_prepare_entity($item, 'field_collection_item', $module_name);
   }
   return $field_items;
 }

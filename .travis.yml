@@ -49,11 +49,11 @@
 env:
   global:
 #    - PRODUCT_NAME=""
-#    - ENABLE_MODULES=""
+    - ENABLE_MODULES="multiple_selects stanford_field_formatters stanford_paragraphs_defaults stanford_paragraph_types_dynamic"
     - DISABLE_MODULES="webauth"
 #    - DEPLOYER_BRANCH=""
 #    - DRUPAL_PROFILE_BRANCH=""
-    - CLICKY_BRANCH="page-3-paragraphs"
+    - CLICKY_BRANCH="HSDO-876-dynamic-tests"
 #    - SCRIPTS_BRANCH=""
 
 language: php

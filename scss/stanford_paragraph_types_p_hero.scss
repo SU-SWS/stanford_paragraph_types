@@ -17,8 +17,12 @@
       height: 100%;
     }
 
-    .field-name-field-p-hero-image img {
-      width: 100%;
+    .field-name-field-p-hero-image {
+      position: relative;
+
+      img {
+        width: 100%;
+      }
     }
   }
 
@@ -60,7 +64,7 @@
     display: block;
     position: absolute;
     font-size: 0;
-    right: calc(50% - 70px);
+    left: calc(50% - 70px);
     top: calc(50% - 70px);
     color: #ffffff;
 
@@ -82,6 +86,13 @@
   @media (max-width: 767px) {
     .group-overlay-text {
       position: static;
+    }
+  }
+
+  // DARK THEME STYLES
+  .style-custom-styles-dark & {
+    .group-overlay-text {
+      background: #2e2d29;
     }
   }
 }

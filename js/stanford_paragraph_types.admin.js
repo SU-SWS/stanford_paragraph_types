@@ -7,6 +7,10 @@
   Drupal.behaviors.stanfordParagraphTypesAdmin = {
     attach: function (context, settings) {
 
+      $('.field-name-field-p-icon-color option', context).each(function () {
+        $(this).addClass('color-'+ $(this).attr('value'));
+      });
+
       $('.group-p-card-cta', context).each(function () {
         $group = this;
         $(this).find('.form-radio').each(function () {
