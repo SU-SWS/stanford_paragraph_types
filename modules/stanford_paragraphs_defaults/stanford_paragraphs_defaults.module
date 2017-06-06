@@ -26,13 +26,30 @@ function stanford_paragraphs_defaults_permission() {
   return array(
     'administer stanford paragraph types defaults' => array(
       'title' => t('Administer Paragraph Types Defaults'),
-      'description' => t('Create and modify default paragraph items.'),
+      'description' => t('Create, modify, & delete default paragraph items.'),
     ),
     'create stanford paragraph types defaults' => array(
       'title' => t('Create Paragraph Types Defaults'),
-      'description' => t('Create new default layouts from existing content.'),
+      'description' => t('Create new default layouts.'),
     ),
   );
+}
+
+function stanford_paragraph_defaults_administer($operation) {
+  switch ($operation) {
+    case 'administer':
+      if (user_access('administer stanford paragraph types defaults')) {
+        return TRUE;
+      }
+      break;
+
+    case 'create':
+      if (user_access('administer stanford paragraph types defaults') || user_access('create stanford paragraph types defaults')) {
+        return TRUE;
+      }
+      break;
+  }
+  return FALSE;
 }
 
 /**
@@ -78,7 +95,8 @@ function stanford_paragraphs_defaults_menu() {
     'title' => 'Defaults',
     'page callback' => 'stanford_paragraphs_defaults_overview',
     'file' => 'stanford_paragraphs_defaults.forms.inc',
-    'access arguments' => array('administer stanford paragraph types defaults'),
+    'access callback' => 'stanford_paragraph_defaults_administer',
+    'access arguments' => array('create'),
     'type' => MENU_LOCAL_TASK | MENU_NORMAL_ITEM,
   );
   $items['admin/structure/paragraphs/stanford-defaults/overview'] = array(
@@ -90,7 +108,8 @@ function stanford_paragraphs_defaults_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('stanford_paragraphs_defaults_add', 5, 6, 7),
     'file' => 'stanford_paragraphs_defaults.forms.inc',
-    'access arguments' => array('administer stanford paragraph types defaults'),
+    'access callback' => 'stanford_paragraph_defaults_administer',
+    'access arguments' => array('create'),
     'type' => MENU_NORMAL_ITEM,
   );
   $items['admin/structure/paragraphs/stanford-defaults/edit/%stanford_paragraphs_defaults'] = array(
@@ -98,7 +117,8 @@ function stanford_paragraphs_defaults_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('stanford_paragraphs_defaults_edit', 5),
     'file' => 'stanford_paragraphs_defaults.forms.inc',
-    'access arguments' => array('administer stanford paragraph types defaults'),
+    'access callback' => 'stanford_paragraph_defaults_administer',
+    'access arguments' => array('administer'),
     'type' => MENU_NORMAL_ITEM,
   );
   $items['admin/structure/paragraphs/stanford-defaults/delete/%stanford_paragraphs_defaults'] = array(
@@ -106,7 +126,8 @@ function stanford_paragraphs_defaults_menu() {
     'page callback' => 'drupal_get_form',
     'page arguments' => array('stanford_paragraphs_defaults_delete', 5),
     'file' => 'stanford_paragraphs_defaults.forms.inc',
-    'access arguments' => array('administer stanford paragraph types defaults'),
+    'access callback' => 'stanford_paragraph_defaults_administer',
+    'access arguments' => array('administer'),
     'type' => MENU_NORMAL_ITEM,
   );
   return $items;
@@ -228,7 +249,7 @@ function stanford_paragraphs_defaults_field_attach_form($entity_type, $entity, &
         '#value' => t('Create new default from current content'),
         '#name' => 'stanford_paragraphs_defaults_create_default_existing',
         '#submit' => array('stanford_paragraphs_defaults_create_default_existing'),
-        '#access' => user_access('create stanford paragraph types defaults'),
+        '#access' => stanford_paragraph_defaults_administer('create'),
         '#entity_type' => $form_state['field'][$field_name][LANGUAGE_NONE]['instance']['entity_type'],
         '#bundle' => $form_state['field'][$field_name][LANGUAGE_NONE]['instance']['bundle'],
       );
@@ -273,6 +294,8 @@ function stanford_paragraphs_defaults_create_default_existing($form, &$form_stat
   $entity_type = $form_state['triggering_element']['#entity_type'];
   $bundle = $form_state['triggering_element']['#bundle'];
   $paragraphs = $form_state['values'][$field_name];
+
+  // Clone paragraph items.
   foreach ($paragraphs[LANGUAGE_NONE] as $key => &$paragraph) {
     if (!isset($paragraph['entity'])) {
       unset($paragraphs[LANGUAGE_NONE][$key]);
@@ -280,7 +303,33 @@ function stanford_paragraphs_defaults_create_default_existing($form, &$form_stat
     }
     $paragraph['entity'] = stanford_pragraphs_defaults_replicate_entity('paragraphs_item', $paragraph['entity']);
   }
-  stanford_paragraphs_defaults_save_defaults($entity_type, $bundle, $field_name, $form_state['node']->title, 'testing', $paragraphs);
+
+  // Create fake form_state to pass to
+  // _stanford_paragraphs_defaults_machine_name().
+  $state = array(
+    'entity_info' => array(
+      'entity_type' => $entity_type,
+      'bundle' => $bundle,
+      'field_name' => $field_name,
+    ),
+  );
+
+  $machine_name = preg_replace("/[^A-Za-z0-9_]/", '_', $form_state['values']['title']);
+  $machine_name = strtolower($machine_name);
+  $increment = '';
+
+  // Get unique machine name & label from the entity label.
+  while (_stanford_paragraphs_defaults_machine_name(trim("{$machine_name}_$increment", '_'), $form, $state)) {
+    if (!$increment) {
+      $increment = 0;
+    }
+    $increment++;
+  }
+
+  // Save new paragraph default setting.
+  $label = trim($form_state['values']['title'] . ' ' . $increment);
+  $machine_name = trim("{$machine_name}_$increment", '_');
+  stanford_paragraphs_defaults_save_defaults($entity_type, $bundle, $field_name, $label, $machine_name, $paragraphs);
   drupal_set_message(t('New default layout saved'));
 }
 
