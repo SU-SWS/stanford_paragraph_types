@@ -75,12 +75,14 @@ function stanford_paragraph_types_dynamic_field_attach_form($entity_type, $entit
 /**
  * Implements hook_preprocess_entity_paragraphs_item().
  */
-function stanford_paragraph_types_dynamice_preprocess_entity_paragraphs_item(&$vars) {
-  $entity = $vars['elements']['#entity'];
-  switch ($entity->bundle) {
-    case 'p_views':
-      $vars['classes_array'][] = 'span12';
-      $vars['classes_array'][] = 'center';
-      break;
+function stanford_paragraph_types_dynamic_preprocess_entity(&$vars) {
+  if ($vars['elements']['#entity_type'] == 'paragraphs_item') {
+    $entity = $vars['elements']['#entity'];
+    switch ($entity->bundle) {
+      case 'p_views':
+        $vars['classes_array'][] = 'span12';
+        $vars['classes_array'][] = 'center';
+        break;
+    }
   }
 }
