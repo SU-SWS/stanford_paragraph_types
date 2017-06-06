@@ -28,6 +28,10 @@ function stanford_paragraphs_defaults_permission() {
       'title' => t('Administer Paragraph Types Defaults'),
       'description' => t('Create and modify default paragraph items.'),
     ),
+    'create stanford paragraph types defaults' => array(
+      'title' => t('Create Paragraph Types Defaults'),
+      'description' => t('Create new default layouts from existing content.'),
+    ),
   );
 }
 
@@ -218,8 +222,19 @@ function stanford_paragraphs_defaults_field_attach_form($entity_type, $entity, &
 
     // Skip this field if its already populated, if the default config was
     // already loaded, or if no defaults are configured.
-    if ($state['items_count'] ||
-      !$defaults ||
+    if ($state['items_count']) {
+      $form[$field_name][LANGUAGE_NONE]['add_more']['new_default'] = array(
+        '#type' => 'submit',
+        '#value' => t('Create new default from current content'),
+        '#name' => 'stanford_paragraphs_defaults_create_default_existing',
+        '#submit' => array('stanford_paragraphs_defaults_create_default_existing'),
+        '#access' => user_access('create stanford paragraph types defaults'),
+        '#entity_type' => $form_state['field'][$field_name][LANGUAGE_NONE]['instance']['entity_type'],
+        '#bundle' => $form_state['field'][$field_name][LANGUAGE_NONE]['instance']['bundle'],
+      );
+      continue;
+    }
+    elseif (!$defaults ||
       !isset($form[$field_name]) ||
       (strpos($uid, $field_name) !== FALSE)
     ) {
@@ -244,6 +259,29 @@ function stanford_paragraphs_defaults_field_attach_form($entity_type, $entity, &
       );
     }
   }
+}
+
+/**
+ * Create a new default layout from existing content.
+ *
+ * @param array $form
+ * @param array $form_state
+ */
+function stanford_paragraphs_defaults_create_default_existing($form, &$form_state) {
+  module_load_include('inc', 'stanford_paragraphs_defaults', 'stanford_paragraphs_defaults.forms');
+  $field_name = reset($form_state['triggering_element']['#parents']);
+  $entity_type = $form_state['triggering_element']['#entity_type'];
+  $bundle = $form_state['triggering_element']['#bundle'];
+  $paragraphs = $form_state['values'][$field_name];
+  foreach ($paragraphs[LANGUAGE_NONE] as $key => &$paragraph) {
+    if (!isset($paragraph['entity'])) {
+      unset($paragraphs[LANGUAGE_NONE][$key]);
+      continue;
+    }
+    $paragraph['entity'] = stanford_pragraphs_defaults_replicate_entity('paragraphs_item', $paragraph['entity']);
+  }
+  stanford_paragraphs_defaults_save_defaults($entity_type, $bundle, $field_name, $form_state['node']->title, 'testing', $paragraphs);
+  drupal_set_message(t('New default layout saved'));
 }
 
 /**
@@ -321,8 +359,6 @@ function _stanford_paragraphs_defaults_attach_default(array &$form, array &$form
   $items = array();
   foreach ($default['paragraphs'] as $paragraphs_item) {
     $cloned_item = stanford_pragraphs_defaults_replicate_entity('paragraphs_item', $paragraphs_item);
-    $cloned_item->item_id = NULL;
-    $cloned_item->revision_id = NULL;
     $items[]['entity'] = $cloned_item;
   }
 
@@ -448,9 +484,16 @@ function stanford_pragraphs_defaults_replicate_entity($entity_type, $entity) {
       $function = $module . '_replicate_entity_' . $entity_type;
       $function($clone);
     }
+    $entity_info = entity_get_info($entity_type);
 
     // Set the entity as new entity.
     $clone->is_new = TRUE;
+
+    // Clear the primary keys.
+    $id_key = $entity_info['entity keys']['id'];
+    $revision_key = $entity_info['entity keys']['revision'];
+    $clone->{$id_key} = NULL;
+    $clone->{$revision_key} = NULL;
 
     // Let other modules do special actions on each field.
     stanford_pragraphs_defaults_replicate_fields($clone, $entity_type);
