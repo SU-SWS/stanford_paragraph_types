@@ -331,6 +331,8 @@ function stanford_paragraphs_defaults_create_default_existing($form, &$form_stat
   $machine_name = trim("{$machine_name}_$increment", '_');
   stanford_paragraphs_defaults_save_defaults($entity_type, $bundle, $field_name, $label, $machine_name, $paragraphs);
   drupal_set_message(t('New default layout saved'));
+
+  $form_state['rebuild'] = TRUE;
 }
 
 /**
