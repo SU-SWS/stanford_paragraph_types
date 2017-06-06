@@ -330,7 +330,12 @@ function stanford_paragraphs_defaults_create_default_existing($form, &$form_stat
   $label = trim($form_state['values']['title'] . ' ' . $increment);
   $machine_name = trim("{$machine_name}_$increment", '_');
   stanford_paragraphs_defaults_save_defaults($entity_type, $bundle, $field_name, $label, $machine_name, $paragraphs);
-  drupal_set_message(t('New default layout saved'));
+
+  $url = "admin/structure/paragraphs/stanford-defaults/edit/$entity_type-$bundle-$field_name-$machine_name";
+  drupal_set_message(t('New default layout %label saved. Edit new layout at !url', array(
+    '%label' => $label,
+    '!url' => l($url, $url),
+  )));
 
   $form_state['rebuild'] = TRUE;
 }
