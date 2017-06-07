@@ -53,7 +53,7 @@ env:
     - DISABLE_MODULES="webauth"
 #    - DEPLOYER_BRANCH=""
 #    - DRUPAL_PROFILE_BRANCH=""
-    - CLICKY_BRANCH="HSDO-876-dynamic-tests"
+#    - CLICKY_BRANCH=""
 #    - SCRIPTS_BRANCH=""
 
 language: php

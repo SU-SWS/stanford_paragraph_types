@@ -1,3 +1,4 @@
+
 .paragraphs-item-p-callout {
   text-align: center;
 }
@@ -8,6 +9,12 @@
 .paragraphs-item-p-callout.entity-paragraphs-item.entity {
   margin-bottom: 0;
   padding-top: 1.5em;
+}
+.paragraphs-item-p-callout.entity-paragraphs-item.entity.color-background {
+  margin-bottom: 3em;
+}
+.paragraphs-item-p-callout.entity-paragraphs-item.entity.color-background .field-name-field-p-callout-text {
+  margin-bottom: 0;
 }
 .paragraphs-item-p-callout p {
   font-size: 2em;
@@ -22,8 +29,8 @@
   color: #ffffff;
 }
 .paragraphs-item-p-callout.cool-gray a,
-.paragraphs-item-p-callout.cool-gray a:hover,
-.paragraphs-item-p-callout.cool-gray a:focus {
+.paragraphs-item-p-callout.cool-gray a:focus,
+.paragraphs-item-p-callout.cool-gray a:hover {
   color: #d5d0c0;
 }
 .paragraphs-item-p-callout.light-taupe {
@@ -31,8 +38,8 @@
   color: #333333;
 }
 .paragraphs-item-p-callout.light-taupe a,
-.paragraphs-item-p-callout.light-taupe a:hover,
-.paragraphs-item-p-callout.light-taupe a:focus {
+.paragraphs-item-p-callout.light-taupe a:focus,
+.paragraphs-item-p-callout.light-taupe a:hover {
   color: #4d4f53;
 }
 .paragraphs-item-p-callout.bright-green {
@@ -40,8 +47,8 @@
   color: #ffffff;
 }
 .paragraphs-item-p-callout.bright-green a,
-.paragraphs-item-p-callout.bright-green a:hover,
-.paragraphs-item-p-callout.bright-green a:focus {
+.paragraphs-item-p-callout.bright-green a:focus,
+.paragraphs-item-p-callout.bright-green a:hover {
   color: #000000;
 }
 .paragraphs-item-p-callout.bright-blue {
@@ -49,8 +56,8 @@
   color: #ffffff;
 }
 .paragraphs-item-p-callout.bright-blue a,
-.paragraphs-item-p-callout.bright-blue a:hover,
-.paragraphs-item-p-callout.bright-blue a:focus {
+.paragraphs-item-p-callout.bright-blue a:focus,
+.paragraphs-item-p-callout.bright-blue a:hover {
   color: #dad7cb;
 }
 .paragraphs-item-p-callout.bright-yellow {
@@ -58,8 +65,8 @@
   color: #333333;
 }
 .paragraphs-item-p-callout.bright-yellow a,
-.paragraphs-item-p-callout.bright-yellow a:hover,
-.paragraphs-item-p-callout.bright-yellow a:focus {
+.paragraphs-item-p-callout.bright-yellow a:focus,
+.paragraphs-item-p-callout.bright-yellow a:hover {
   color: #53284f;
 }
 .paragraphs-item-p-callout.bright-orange {
@@ -67,7 +74,7 @@
   color: #333333;
 }
 .paragraphs-item-p-callout.bright-orange a,
-.paragraphs-item-p-callout.bright-orange a:hover,
-.paragraphs-item-p-callout.bright-orange a:focus {
+.paragraphs-item-p-callout.bright-orange a:focus,
+.paragraphs-item-p-callout.bright-orange a:hover {
   color: #4d4f53;
 }
