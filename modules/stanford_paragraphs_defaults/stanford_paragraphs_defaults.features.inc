@@ -340,8 +340,11 @@ function paragraphs_defaults_save(array $default, $module_name) {
   // Grab the paragraphs item_id properties.
   $item_ids = array();
   foreach ($default['paragraphs'] as $weight => $paragraph) {
-    list($item_id, ,) = entity_extract_ids('paragraphs_item', $paragraph['#entity']);
-    $item_ids[$item_id] = $weight;
+    // If the entity_type or bundle doesn't exist, skip that item.
+    if (isset($paragraph['#entity'])) {
+      list($item_id, ,) = entity_extract_ids('paragraphs_item', $paragraph['#entity']);
+      $item_ids[$item_id] = $weight;
+    }
   }
 
   // Write to the table to track the settings.
@@ -382,6 +385,13 @@ function _stanford_paragraphs_defaults_parse_default(&$data, $host_entity_type =
 
   // Find the entities starting points and create a new entity.
   if (isset($data['entity_type'])) {
+
+    // Make sure the bundle exists that its trying to make.
+    $entity_info = entity_get_info($data['entity_type']);
+    if (!$entity_info || !isset($entity_info['bundles'][$data['entity_bundle']])) {
+      return;
+    }
+
     $host_entity = _stanford_paragraphs_defaults_create_entity($data, $host_entity_type, $host_entity);
     $host_entity_type = $data['entity_type'];
   }
@@ -526,7 +536,7 @@ function _stanford_paragraphs_defaults_resave(&$entity_data) {
   }
 
   // Dive deep into the array before saving. This allows the nested entities
-  // to be saved first, which then sets the version ids correct for the paret
+  // to be saved first, which then sets the version ids correct for the parent
   // entities.
   foreach ($entity_data as &$item) {
     _stanford_paragraphs_defaults_resave($item);
@@ -546,20 +556,26 @@ function _stanford_paragraphs_defaults_resave(&$entity_data) {
  *   Feature name.
  */
 function _stanford_paragraphs_defaults_process_field_data(array &$values, $module_name) {
-  foreach ($values as &$value) {
+  foreach ($values as &$file_data) {
 
     // If field data is a file, copy and set the field data with the file.
-    if (is_array($value) && isset($value['uri'])) {
-      $file = _stanford_paragraphs_defaults_copy_file($value, $module_name);
+    if (is_array($file_data) && isset($file_data['uri'])) {
+      $file = _stanford_paragraphs_defaults_copy_file($file_data, $module_name);
       if ($file) {
-        $value = (array) $file;
+        foreach ($file_data as $key => $value) {
+          if ($key != 'uri') {
+            $file->{$key} = $value;
+          }
+        }
+
+        $file_data = (array) $file;
+
       }
       else {
-        $value = array();
+        $file_data = array();
       }
     }
   }
-
 }
 
 /**
@@ -574,13 +590,24 @@ function _stanford_paragraphs_defaults_process_field_data(array &$values, $modul
  *   File object if successful, false if failed.
  */
 function _stanford_paragraphs_defaults_copy_file(array $file_data, $module_name) {
-  $dir = 'public://paragraphs_defaults';
+  $dir = file_default_scheme() . '://paragraphs_defaults';
   file_prepare_directory($dir, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS);
 
-  $dir = "public://paragraphs_defaults/$module_name";
+  $dir .= "/$module_name";
   file_prepare_directory($dir, FILE_CREATE_DIRECTORY | FILE_MODIFY_PERMISSIONS);
 
   $file_name = drupal_basename($file_data['uri']);
+
+  $fid = db_select('file_managed', 'f')
+    ->fields('f', array('fid'))
+    ->condition('uri', "$dir/$file_name")
+    ->execute()->fetchField();
+
+  // File already exists.
+  if ($fid) {
+    return file_load($fid);
+  }
+
   $file_path = drupal_get_path('module', $module_name) . '/' . $file_data['uri'];
   if (!file_exists($file_path)) {
     return FALSE;
