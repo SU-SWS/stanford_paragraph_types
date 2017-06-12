@@ -62,6 +62,9 @@ function stanford_paragraphs_defaults_overview() {
       }
     }
   }
+  if (!$output) {
+    $output['message']['#markup'] = t('No paragraph fields configured. Add a paragraph field to content to allow configuration of default settings.');
+  }
   return $output;
 }
 
