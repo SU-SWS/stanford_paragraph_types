@@ -1,0 +1,11 @@
+name: 'Buttons Paragraph'
+description: 'A list of buttons'
+type: module
+core: 8.x
+package: Stanford
+dependencies:
+  - ds
+  - field
+  - paragraphs
+  - text
+version: 8.x-1.0-dev

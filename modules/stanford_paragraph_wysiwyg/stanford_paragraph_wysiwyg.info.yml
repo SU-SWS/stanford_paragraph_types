@@ -1,0 +1,11 @@
+name: 'WYSIWYG Paragraph'
+description: 'A simple wysiwyg paragraph type'
+type: module
+core: 8.x
+package: Stanford
+dependencies:
+  - ds
+  - field
+  - paragraphs
+  - text
+version: 8.x-1.0-dev

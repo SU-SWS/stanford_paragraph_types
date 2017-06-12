@@ -1,0 +1,11 @@
+name: 'Callout Text Paragraph'
+description: 'A simple textarea with big font paragraph type'
+type: module
+core: 8.x
+package: Stanford
+dependencies:
+  - ds
+  - field
+  - paragraphs
+  - text
+version: 8.x-1.0-dev

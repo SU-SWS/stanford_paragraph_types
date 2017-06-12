@@ -2,18 +2,7 @@ name: 'Stanford Paragraph Types'
 description: 'A common set of re-usable paragraph types. This module is usually bundled with the Stanford Page content type.'
 type: module
 core: 8.x
+package: Stanford
 dependencies:
-  - allowed_formats
-  - ds
-  - field
-  - field_formatter_class
-  - file
-  - filefield_paths
-  - image
-  - link
   - paragraphs
-  - responsive_image
-  - stanford_image_styles
-  - text
-  - video_embed_field
 version: 8.x-1.0-dev
