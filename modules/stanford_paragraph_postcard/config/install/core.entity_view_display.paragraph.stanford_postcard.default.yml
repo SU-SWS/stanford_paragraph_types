@@ -1,0 +1,80 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_postcard.field_p_postcard_body
+    - field.field.paragraph.stanford_postcard.field_p_postcard_image
+    - field.field.paragraph.stanford_postcard.field_p_postcard_more
+    - field.field.paragraph.stanford_postcard.field_p_postcard_orientation
+    - field.field.paragraph.stanford_postcard.field_p_postcard_title
+    - image.style.breakpoint_xl_2x
+    - paragraphs.paragraphs_type.stanford_postcard
+  module:
+    - ds
+    - field_formatter_class
+    - image
+    - link
+    - text
+third_party_settings:
+  ds:
+    layout:
+      id: pattern_postcard
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        pattern:
+          field_templates: default
+    regions:
+      image:
+        - field_p_postcard_image
+      title:
+        - field_p_postcard_title
+      text:
+        - field_p_postcard_body
+      linkurl:
+        - field_p_postcard_more
+id: paragraph.stanford_postcard.default
+targetEntityType: paragraph
+bundle: stanford_postcard
+mode: default
+content:
+  field_p_postcard_body:
+    type: text_default
+    weight: 2
+    region: text
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_p_postcard_image:
+    weight: 0
+    label: hidden
+    settings:
+      image_style: breakpoint_xl_2x
+    third_party_settings:
+      field_formatter_class:
+        class: ''
+    type: image_url
+    region: image
+  field_p_postcard_more:
+    type: link_separate
+    weight: 3
+    region: linkurl
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+  field_p_postcard_title:
+    type: string
+    weight: 1
+    region: title
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  field_p_postcard_orientation: true
