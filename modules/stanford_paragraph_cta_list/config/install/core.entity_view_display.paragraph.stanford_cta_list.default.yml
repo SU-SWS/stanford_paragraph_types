@@ -1,0 +1,50 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_cta_list.field_p_cta_list_cta
+    - field.field.paragraph.stanford_cta_list.field_p_cta_list_descriptor
+    - field.field.paragraph.stanford_cta_list.field_p_cta_list_title
+    - paragraphs.paragraphs_type.stanford_cta_list
+  module:
+    - ds
+    - entity_reference_revisions
+third_party_settings:
+  ds:
+    layout:
+      id: pattern_filmstrip
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        pattern:
+          field_templates: default
+    regions:
+      title:
+        - field_p_cta_list_title
+      content:
+        - field_p_cta_list_cta
+id: paragraph.stanford_cta_list.default
+targetEntityType: paragraph
+bundle: stanford_cta_list
+mode: default
+content:
+  field_p_cta_list_cta:
+    type: entity_reference_revisions_entity_view
+    weight: 1
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
+  field_p_cta_list_title:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: title
+hidden:
+  field_p_cta_list_descriptor: true

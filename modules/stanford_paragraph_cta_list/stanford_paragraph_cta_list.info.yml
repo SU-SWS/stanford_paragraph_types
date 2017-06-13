@@ -1,0 +1,12 @@
+name: 'CTA List'
+description: 'A CTA list feature'
+type: module
+core: 8.x
+dependencies:
+  - ds
+  - entity_reference_revisions
+  - field
+  - paragraphs
+  - stanford_paragraph_cta
+  - text
+version: 8.x-1.0-dev

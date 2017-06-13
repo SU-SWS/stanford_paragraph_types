@@ -1,0 +1,13 @@
+name: CTA
+description: 'Simple single CTA paragraph type.'
+type: module
+core: 8.x
+dependencies:
+  - ds
+  - field
+  - field_formatter_class
+  - file
+  - image
+  - link
+  - paragraphs
+version: 8.x-1.0-dev

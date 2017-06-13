@@ -1,0 +1,63 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_cta.field_p_cta_image
+    - field.field.paragraph.stanford_cta.field_p_cta_link
+    - field.field.paragraph.stanford_cta.field_p_cta_secondary_text
+    - field.field.paragraph.stanford_cta.field_p_cta_tertiary_text
+    - field.field.paragraph.stanford_cta.field_p_cta_title
+    - image.style.thumbnail
+    - paragraphs.paragraphs_type.stanford_cta
+  module:
+    - image
+    - link
+id: paragraph.stanford_cta.default
+targetEntityType: paragraph
+bundle: stanford_cta
+mode: default
+content:
+  field_p_cta_image:
+    weight: 4
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_p_cta_link:
+    weight: 5
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  field_p_cta_secondary_text:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_p_cta_tertiary_text:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_p_cta_title:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true
