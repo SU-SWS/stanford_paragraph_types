@@ -1,6 +1,6 @@
 langcode: en
 status: true
 dependencies: {  }
-id: stanford_hero
-label: Hero
+id: stanford_paragraph_hero_banner
+label: 'Hero Banner'
 behavior_plugins: {  }

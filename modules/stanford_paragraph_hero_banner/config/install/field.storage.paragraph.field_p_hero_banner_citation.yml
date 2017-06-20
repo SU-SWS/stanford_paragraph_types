@@ -3,8 +3,8 @@ status: true
 dependencies:
   module:
     - paragraphs
-id: paragraph.field_p_hero_headline
-field_name: field_p_hero_headline
+id: paragraph.field_p_hero_banner_citation
+field_name: field_p_hero_banner_citation
 entity_type: paragraph
 type: string
 settings:

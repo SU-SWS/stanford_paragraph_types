@@ -2,14 +2,16 @@ langcode: en
 status: true
 dependencies:
   module:
-    - link
     - paragraphs
-id: paragraph.field_p_hero_more_link
-field_name: field_p_hero_more_link
+id: paragraph.field_p_hero_banner_sub_head
+field_name: field_p_hero_banner_sub_head
 entity_type: paragraph
-type: link
-settings: {  }
-module: link
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
 locked: false
 cardinality: 1
 translatable: true

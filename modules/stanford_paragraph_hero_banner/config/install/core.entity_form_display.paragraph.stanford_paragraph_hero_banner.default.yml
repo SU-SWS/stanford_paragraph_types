@@ -1,0 +1,53 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_citation
+    - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_image
+    - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_sub_head
+    - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_super_head
+    - image.style.breakpoint_sm_2x
+    - paragraphs.paragraphs_type.stanford_paragraph_hero_banner
+  module:
+    - image
+id: paragraph.stanford_paragraph_hero_banner.default
+targetEntityType: paragraph
+bundle: stanford_paragraph_hero_banner
+mode: default
+content:
+  field_p_hero_banner_citation:
+    weight: 3
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_p_hero_banner_image:
+    weight: 0
+    settings:
+      preview_image_style: thumbnail
+      progress_indicator: throbber
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_p_hero_banner_sub_head:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_p_hero_banner_super_head:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

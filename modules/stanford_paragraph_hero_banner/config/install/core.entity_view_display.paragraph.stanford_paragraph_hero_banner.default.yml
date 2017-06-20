@@ -1,0 +1,73 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_citation
+    - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_image
+    - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_sub_head
+    - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_super_head
+    - image.style.breakpoint_xl_2x
+    - paragraphs.paragraphs_type.stanford_paragraph_hero_banner
+  module:
+    - ds
+    - field_formatter_class
+    - image
+third_party_settings:
+  ds:
+    layout:
+      id: pattern_hero_banner
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        pattern:
+          field_templates: only_content
+    regions:
+      image:
+        - field_p_hero_banner_image
+      superhead:
+        - field_p_hero_banner_super_head
+      subhead:
+        - field_p_hero_banner_sub_head
+      cite:
+        - field_p_hero_banner_citation
+id: paragraph.stanford_paragraph_hero_banner.default
+targetEntityType: paragraph
+bundle: stanford_paragraph_hero_banner
+mode: default
+content:
+  field_p_hero_banner_citation:
+    weight: 3
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: cite
+  field_p_hero_banner_image:
+    weight: 0
+    label: hidden
+    settings:
+      image_style: breakpoint_xl_2x
+    third_party_settings:
+      field_formatter_class:
+        class: ''
+    type: image_url
+    region: image
+  field_p_hero_banner_sub_head:
+    weight: 2
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: subhead
+  field_p_hero_banner_super_head:
+    weight: 1
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: superhead
+hidden: {  }

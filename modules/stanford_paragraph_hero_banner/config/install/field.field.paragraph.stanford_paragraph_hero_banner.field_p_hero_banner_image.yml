@@ -2,8 +2,8 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_p_hero_image
-    - paragraphs.paragraphs_type.stanford_hero
+    - field.storage.paragraph.field_p_hero_banner_image
+    - paragraphs.paragraphs_type.stanford_paragraph_hero_banner
   module:
     - filefield_paths
     - image
@@ -11,7 +11,7 @@ third_party_settings:
   filefield_paths:
     enabled: true
     file_path:
-      value: 'field-p-hero-image/[date:custom:Y]-[date:custom:m]'
+      value: paragraph/hero-banner
       options:
         slashes: true
         pathauto: false
@@ -22,16 +22,16 @@ third_party_settings:
     file_name:
       value: '[file:ffp-name-only-original].[file:ffp-extension-original]'
       options:
-        slashes: true
+        slashes: false
         pathauto: false
-        transliterate: true
-id: paragraph.stanford_hero.field_p_hero_image
-field_name: field_p_hero_image
+        transliterate: false
+id: paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_image
+field_name: field_p_hero_banner_image
 entity_type: paragraph
-bundle: stanford_hero
-label: Image
-description: ''
-required: false
+bundle: stanford_paragraph_hero_banner
+label: 'Hero Image'
+description: 'Please upload a high resolution image. The higher the better.'
+required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
@@ -40,8 +40,8 @@ settings:
   file_extensions: 'png gif jpg jpeg'
   max_filesize: ''
   max_resolution: ''
-  min_resolution: ''
-  alt_field: true
+  min_resolution: 640x480
+  alt_field: false
   alt_field_required: true
   title_field: false
   title_field_required: false
