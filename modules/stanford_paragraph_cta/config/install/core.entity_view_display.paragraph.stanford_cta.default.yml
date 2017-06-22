@@ -7,7 +7,7 @@ dependencies:
     - field.field.paragraph.stanford_cta.field_p_cta_secondary_text
     - field.field.paragraph.stanford_cta.field_p_cta_tertiary_text
     - field.field.paragraph.stanford_cta.field_p_cta_title
-    - image.style.medium
+    - image.style.component_film_card
     - paragraphs.paragraphs_type.stanford_cta
   module:
     - ds
@@ -40,7 +40,7 @@ content:
     weight: 0
     label: hidden
     settings:
-      image_style: medium
+      image_style: component_film_card
       image_link: ''
     third_party_settings:
       field_formatter_class:
