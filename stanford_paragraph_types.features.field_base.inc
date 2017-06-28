@@ -141,6 +141,35 @@ function stanford_paragraph_types_field_default_field_bases() {
     'type' => 'list_text',
   );
 
+  // Exported field_base: 'field_p_card_color'.
+  $field_bases['field_p_card_color'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_p_card_color',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'cool-gray' => 'Cool Gray',
+        'light-taupe' => 'Light Taupe',
+        'bright-green' => 'Bright Green',
+        'bright-blue' => 'Bright Blue',
+        'bright-yellow' => 'Bright Yellow',
+        'bright-orange' => 'Bright Orange',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
   // Exported field_base: 'field_p_card_cta'.
   $field_bases['field_p_card_cta'] = array(
     'active' => 1,
@@ -238,6 +267,37 @@ function stanford_paragraph_types_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'image',
+  );
+
+  // Exported field_base: 'field_p_card_pattern'.
+  $field_bases['field_p_card_pattern'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_p_card_pattern',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'argyle' => 'Argyle',
+        'basketball' => 'Basketball',
+        'brick-wall' => 'Brick Wall',
+        'bright-squares' => 'Bright Squares',
+        'brushed-alum' => 'Brushed Aluminium',
+        'crisp-paper-ruffles' => 'Crisp Paper Ruffles',
+        'diagmonds-light' => 'Diagmonds',
+        'purty-wood' => 'Wood',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
   );
 
   // Exported field_base: 'field_p_card_text'.
@@ -540,7 +600,9 @@ function stanford_paragraph_types_field_default_field_bases() {
     'indexes' => array(),
     'locked' => 0,
     'module' => 'stanford_field_formatters',
-    'settings' => array(),
+    'settings' => array(
+      'subset' => array(),
+    ),
     'translatable' => 0,
     'type' => 'fontawesome_icon',
   );

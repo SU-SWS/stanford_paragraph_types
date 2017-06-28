@@ -1,3 +1,63 @@
+.paragraphs-item-p-cards .color-cool-gray .group-card-title {
+  background-color: #4d4f53;
+  color: #ffffff;
+}
+.paragraphs-item-p-cards .color-cool-gray .group-card-title a,
+.paragraphs-item-p-cards .color-cool-gray .group-card-title a:focus,
+.paragraphs-item-p-cards .color-cool-gray .group-card-title a:hover {
+  color: #d5d0c0;
+}
+
+.paragraphs-item-p-cards .color-light-taupe .group-card-title {
+  background-color: #d5d0c0;
+  color: #333333;
+}
+.paragraphs-item-p-cards .color-light-taupe .group-card-title a,
+.paragraphs-item-p-cards .color-light-taupe .group-card-title a:focus,
+.paragraphs-item-p-cards .color-light-taupe .group-card-title a:hover {
+  color: #4d4f53;
+}
+
+.paragraphs-item-p-cards .color-bright-green .group-card-title {
+  background-color: #009b76;
+  color: #ffffff;
+}
+.paragraphs-item-p-cards .color-bright-green .group-card-title a,
+.paragraphs-item-p-cards .color-bright-green .group-card-title a:focus,
+.paragraphs-item-p-cards .color-bright-green .group-card-title a:hover {
+  color: #000000;
+}
+
+.paragraphs-item-p-cards .color-bright-blue .group-card-title {
+  background-color: #0f6c91;
+  color: #ffffff;
+}
+.paragraphs-item-p-cards .color-bright-blue .group-card-title a,
+.paragraphs-item-p-cards .color-bright-blue .group-card-title a:focus,
+.paragraphs-item-p-cards .color-bright-blue .group-card-title a:hover {
+  color: #dad7cb;
+}
+
+.paragraphs-item-p-cards .color-bright-yellow .group-card-title {
+  background-color: #eaab00;
+  color: #333333;
+}
+.paragraphs-item-p-cards .color-bright-yellow .group-card-title a,
+.paragraphs-item-p-cards .color-bright-yellow .group-card-title a:focus,
+.paragraphs-item-p-cards .color-bright-yellow .group-card-title a:hover {
+  color: #53284f;
+}
+
+.paragraphs-item-p-cards .color-bright-orange .group-card-title {
+  background-color: #e98300;
+  color: #333333;
+}
+.paragraphs-item-p-cards .color-bright-orange .group-card-title a,
+.paragraphs-item-p-cards .color-bright-orange .group-card-title a:focus,
+.paragraphs-item-p-cards .color-bright-orange .group-card-title a:hover {
+  color: #4d4f53;
+}
+
 .paragraphs-item-p-cards .field-item .field-collection-view {
   padding: 0 10px;
 }
@@ -25,4 +85,39 @@
   .paragraphs-item-p-cards .group-card-title {
     padding: 0 0.6em;
   }
+}
+.paragraphs-item-p-cards div[class*="color-"] .field-name-field-p-card-image {
+  margin-bottom: 0;
+}
+.paragraphs-item-p-cards div[class*="color-"] .group-card-title {
+  margin-top: 0;
+  padding: 20px 30px 40px;
+}
+.paragraphs-item-p-cards [class*="pattern-"] .group-card-title {
+  background-repeat: repeat-x;
+  background-position: 0 70px;
+}
+.paragraphs-item-p-cards .pattern-argyle .group-card-title {
+  background-image: url("../img/argyle.png");
+}
+.paragraphs-item-p-cards .pattern-basketball .group-card-title {
+  background-image: url("../img/basketball.png");
+}
+.paragraphs-item-p-cards .pattern-brick-wall .group-card-title {
+  background-image: url("../img/brick-wall.png");
+}
+.paragraphs-item-p-cards .pattern-bright-squares .group-card-title {
+  background-image: url("../img/bright-squares.png");
+}
+.paragraphs-item-p-cards .pattern-brushed-alum .group-card-title {
+  background-image: url("../img/brushed-alum.png");
+}
+.paragraphs-item-p-cards .pattern-crisp-paper-ruffles .group-card-title {
+  background-image: url("../img/crisp-paper-ruffles.png");
+}
+.paragraphs-item-p-cards .pattern-diagmonds-light .group-card-title {
+  background-image: url("../img/diagmonds-light.png");
+}
+.paragraphs-item-p-cards .pattern-purty-wood .group-card-title {
+  background-image: url("../img/purty-wood.png");
 }

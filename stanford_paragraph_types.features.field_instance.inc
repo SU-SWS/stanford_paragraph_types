@@ -46,6 +46,37 @@ function stanford_paragraph_types_field_default_field_instances() {
   );
 
   // Exported field_instance:
+  // 'field_collection_item-field_p_cards_card-field_p_card_color'.
+  $field_instances['field_collection_item-field_p_cards_card-field_p_card_color'] = array(
+    'bundle' => 'field_p_cards_card',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 5,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_p_card_color',
+    'label' => 'Color',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 4,
+    ),
+  );
+
+  // Exported field_instance:
   // 'field_collection_item-field_p_cards_card-field_p_card_cta'.
   $field_instances['field_collection_item-field_p_cards_card-field_p_card_cta'] = array(
     'bundle' => 'field_p_cards_card',
@@ -229,6 +260,37 @@ function stanford_paragraph_types_field_default_field_instances() {
       ),
       'type' => 'image_image',
       'weight' => 0,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'field_collection_item-field_p_cards_card-field_p_card_pattern'.
+  $field_instances['field_collection_item-field_p_cards_card-field_p_card_pattern'] = array(
+    'bundle' => 'field_p_cards_card',
+    'default_value' => NULL,
+    'deleted' => 0,
+    'description' => 'View a demo of the pattens <a href="https://www.transparenttextures.com/">here</a>',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 6,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_p_card_pattern',
+    'label' => 'Pattern',
+    'required' => 0,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 5,
     ),
   );
 
@@ -2072,6 +2134,7 @@ function stanford_paragraph_types_field_default_field_instances() {
   t('Menu');
   t('More Link');
   t('Optionally apply some color to the callout to make it stand out.');
+  t('Pattern');
   t('Read More Link');
   t('Recommend 2 or 3 cards. Maximum allowed is 3.');
   t('Superhead');
@@ -2079,6 +2142,7 @@ function stanford_paragraph_types_field_default_field_instances() {
   t('Text Alignment');
   t('Title');
   t('Upload Icon');
+  t('View a demo of the pattens <a href="https://www.transparenttextures.com/">here</a>');
   t('WYSIWYG');
 
   return $field_instances;

@@ -1,3 +1,5 @@
+@import "colors";
+
 .paragraphs-item-p-cards {
   .field-item .field-collection-view {
     padding: 0 10px;
@@ -32,5 +34,84 @@
     .group-card-title {
       padding: 0 0.6em;
     }
+  }
+
+  div[class*="color-"] {
+    .field-name-field-p-card-image {
+      margin-bottom: 0;
+    }
+
+    .group-card-title {
+      margin-top: 0;
+      padding: 20px 30px 40px;
+    }
+  }
+
+  .color-cool-gray {
+    .group-card-title {
+      @include paragraph-colors('cool-gray');
+    }
+  }
+  .color-light-taupe {
+    .group-card-title {
+      @include paragraph-colors('light-taupe');
+    }
+  }
+  .color-bright-green {
+    .group-card-title {
+      @include paragraph-colors('bright-green');
+    }
+  }
+  .color-bright-blue {
+    .group-card-title {
+      @include paragraph-colors('bright-blue');
+    }
+  }
+  .color-bright-yellow {
+    .group-card-title {
+      @include paragraph-colors('bright-yellow');
+    }
+  }
+  .color-bright-orange {
+    .group-card-title {
+      @include paragraph-colors('bright-orange');
+    }
+  }
+
+  [class*="pattern-"] .group-card-title {
+    background-repeat: repeat-x;
+    background-position: 0 70px;
+  }
+
+  .pattern-argyle .group-card-title {
+    background-image: url("../img/argyle.png");
+  }
+
+  .pattern-basketball .group-card-title {
+    background-image: url("../img/basketball.png");
+  }
+
+  .pattern-brick-wall .group-card-title {
+    background-image: url("../img/brick-wall.png");
+  }
+
+  .pattern-bright-squares .group-card-title {
+    background-image: url("../img/bright-squares.png");
+  }
+
+  .pattern-brushed-alum .group-card-title {
+    background-image: url("../img/brushed-alum.png");
+  }
+
+  .pattern-crisp-paper-ruffles .group-card-title {
+    background-image: url("../img/crisp-paper-ruffles.png");
+  }
+
+  .pattern-diagmonds-light .group-card-title {
+    background-image: url("../img/diagmonds-light.png");
+  }
+
+  .pattern-purty-wood .group-card-title {
+    background-image: url("../img/purty-wood.png");
   }
 }
