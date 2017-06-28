@@ -11,10 +11,10 @@ type: list_string
 settings:
   allowed_values:
     -
-      value: is-left
+      value: has-image-left
       label: 'Left Image'
     -
-      value: is-right
+      value: has-image-right
       label: 'Right Image'
   allowed_values_function: ''
 module: options
