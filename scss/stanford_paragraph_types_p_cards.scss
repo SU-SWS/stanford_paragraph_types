@@ -43,44 +43,63 @@
 
     .group-card-title {
       margin-top: 0;
-      padding: 20px 30px 40px;
+      display: inline-block;
+      width: 100%;
+
+      .field-item {
+        padding: 20px;
+        margin-bottom: 60px;
+      }
     }
   }
 
   .color-cool-gray {
     .group-card-title {
-      @include paragraph-colors('cool-gray');
+      &,
+      & .field-item {
+        @include paragraph-colors('cool-gray');
+      }
     }
   }
   .color-light-taupe {
     .group-card-title {
-      @include paragraph-colors('light-taupe');
+      &,
+      & .field-item {
+        @include paragraph-colors('light-taupe');
+      }
     }
   }
   .color-bright-green {
     .group-card-title {
-      @include paragraph-colors('bright-green');
+      &,
+      & .field-item {
+        @include paragraph-colors('bright-green');
+      }
     }
   }
   .color-bright-blue {
     .group-card-title {
-      @include paragraph-colors('bright-blue');
+      &,
+      & .field-item {
+        @include paragraph-colors('bright-blue');
+      }
     }
   }
   .color-bright-yellow {
     .group-card-title {
-      @include paragraph-colors('bright-yellow');
+      &,
+      & .field-item {
+        @include paragraph-colors('bright-yellow');
+      }
     }
   }
   .color-bright-orange {
     .group-card-title {
-      @include paragraph-colors('bright-orange');
+      &,
+      & .field-item {
+        @include paragraph-colors('bright-orange');
+      }
     }
-  }
-
-  [class*="pattern-"] .group-card-title {
-    background-repeat: repeat-x;
-    background-position: 0 70px;
   }
 
   .pattern-argyle .group-card-title {
