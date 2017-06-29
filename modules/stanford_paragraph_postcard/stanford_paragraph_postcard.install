@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * @file
+ * stanford_paragraph_postcard.install
+ */
+
+use Drupal\Core\Database\Query\Condition;
+
+/**
+ * Removes data from field_p_postcard_orientation so it can update.
+ */
+function stanford_paragraph_postcard_update_8101() {
+
+  $condition_cid = (new Condition('OR'))
+    ->condition('cid', 'field.storage.paragraph.field_p_postcard_orientation')
+    ->condition('cid', 'field.field.paragraph.stanford_postcard.field_p_postcard_orientation');
+
+  $condition_name = (new Condition('OR'))
+    ->condition('name', 'field.storage.paragraph.field_p_postcard_orientation')
+    ->condition('name', 'field.field.paragraph.stanford_postcard.field_p_postcard_orientation');
+
+  $query = \Drupal::database()->delete('cache_config');
+  $query->condition($condition_cid);
+  $query->execute();
+
+  $query = \Drupal::database()->delete('config_snapshot');
+  $query->condition($condition_name);
+  $query->execute();
+
+  $query = \Drupal::database()->delete('config');
+  $query->condition($condition_name);
+  $query->execute();
+
+  $query = \Drupal::database()->update('paragraph__field_p_postcard_orientation')
+    ->condition('field_p_postcard_orientation_value', 'is-left')
+    ->fields(['field_p_postcard_orientation_value' => 'has-image-left'])
+    ->execute();
+
+  $query = \Drupal::database()->update('paragraph__field_p_postcard_orientation')
+    ->condition('field_p_postcard_orientation_value', 'is-right')
+    ->fields(['field_p_postcard_orientation_value' => 'has-image-right'])
+    ->execute();
+
+  $query = \Drupal::database()->update('paragraph_revision__field_p_postcard_orientation')
+    ->condition('field_p_postcard_orientation_value', 'is-left')
+    ->fields(['field_p_postcard_orientation_value' => 'has-image-left'])
+    ->execute();
+
+  $query = \Drupal::database()->update('paragraph_revision__field_p_postcard_orientation')
+    ->condition('field_p_postcard_orientation_value', 'is-right')
+    ->fields(['field_p_postcard_orientation_value' => 'has-image-right'])
+    ->execute();
+}
