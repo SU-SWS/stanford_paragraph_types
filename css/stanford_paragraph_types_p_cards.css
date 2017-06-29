@@ -86,15 +86,15 @@
     padding: 0 0.6em;
   }
 }
-.paragraphs-item-p-cards div[class*="color-"] .field-name-field-p-card-image {
+.paragraphs-item-p-cards div[class*='color-'] .field-name-field-p-card-image {
   margin-bottom: 0;
 }
-.paragraphs-item-p-cards div[class*="color-"] .group-card-title {
+.paragraphs-item-p-cards div[class*='color-'] .group-card-title {
   margin-top: 0;
   display: inline-block;
   width: 100%;
 }
-.paragraphs-item-p-cards div[class*="color-"] .group-card-title .field-item {
+.paragraphs-item-p-cards div[class*='color-'] .group-card-title .field-item {
   padding: 20px;
   margin-bottom: 60px;
 }

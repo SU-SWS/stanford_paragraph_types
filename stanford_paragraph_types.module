@@ -23,7 +23,7 @@ function stanford_paragraph_types_theme($existing, $type, $theme, $path) {
  *   Name of the module to collect templates from.
  *
  * @return array
- *  New template options for fields and paragraph bundles.
+ *   New template options for fields and paragraph bundles.
  */
 function stanford_paragraph_types_theme_templates($existing, $module_name) {
   $theme = array();

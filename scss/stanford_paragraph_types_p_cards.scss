@@ -1,4 +1,4 @@
-@import "colors";
+@import 'colors';
 
 .paragraphs-item-p-cards {
   .field-item .field-collection-view {
@@ -36,7 +36,7 @@
     }
   }
 
-  div[class*="color-"] {
+  div[class*='color-'] {
     .field-name-field-p-card-image {
       margin-bottom: 0;
     }
@@ -61,6 +61,7 @@
       }
     }
   }
+
   .color-light-taupe {
     .group-card-title {
       &,
@@ -69,6 +70,7 @@
       }
     }
   }
+
   .color-bright-green {
     .group-card-title {
       &,
@@ -77,6 +79,7 @@
       }
     }
   }
+
   .color-bright-blue {
     .group-card-title {
       &,
@@ -85,6 +88,7 @@
       }
     }
   }
+
   .color-bright-yellow {
     .group-card-title {
       &,
@@ -93,6 +97,7 @@
       }
     }
   }
+
   .color-bright-orange {
     .group-card-title {
       &,
@@ -103,34 +108,34 @@
   }
 
   .pattern-argyle .group-card-title {
-    background-image: url("../img/argyle.png");
+    background-image: url('../img/argyle.png');
   }
 
   .pattern-basketball .group-card-title {
-    background-image: url("../img/basketball.png");
+    background-image: url('../img/basketball.png');
   }
 
   .pattern-brick-wall .group-card-title {
-    background-image: url("../img/brick-wall.png");
+    background-image: url('../img/brick-wall.png');
   }
 
   .pattern-bright-squares .group-card-title {
-    background-image: url("../img/bright-squares.png");
+    background-image: url('../img/bright-squares.png');
   }
 
   .pattern-brushed-alum .group-card-title {
-    background-image: url("../img/brushed-alum.png");
+    background-image: url('../img/brushed-alum.png');
   }
 
   .pattern-crisp-paper-ruffles .group-card-title {
-    background-image: url("../img/crisp-paper-ruffles.png");
+    background-image: url('../img/crisp-paper-ruffles.png');
   }
 
   .pattern-diagmonds-light .group-card-title {
-    background-image: url("../img/diagmonds-light.png");
+    background-image: url('../img/diagmonds-light.png');
   }
 
   .pattern-purty-wood .group-card-title {
-    background-image: url("../img/purty-wood.png");
+    background-image: url('../img/purty-wood.png');
   }
 }
