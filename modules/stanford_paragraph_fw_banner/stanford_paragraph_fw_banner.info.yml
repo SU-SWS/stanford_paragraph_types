@@ -1,0 +1,12 @@
+name: 'Full Width Banner Paragraph'
+description: 'Full Width banner paragraph type.'
+type: module
+core: 8.x
+dependencies:
+  - field
+  - field_group
+  - file
+  - filefield_paths
+  - image
+  - link
+  - paragraphs

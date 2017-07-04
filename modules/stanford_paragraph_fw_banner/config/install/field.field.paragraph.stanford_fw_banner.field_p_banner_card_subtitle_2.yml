@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_p_banner_card_subtitle_2
+    - paragraphs.paragraphs_type.stanford_fw_banner
+id: paragraph.stanford_fw_banner.field_p_banner_card_subtitle_2
+field_name: field_p_banner_card_subtitle_2
+entity_type: paragraph
+bundle: stanford_fw_banner
+label: 'Card 2 Sub Title'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
