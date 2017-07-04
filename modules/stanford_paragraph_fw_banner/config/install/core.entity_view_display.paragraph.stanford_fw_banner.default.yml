@@ -31,19 +31,19 @@ third_party_settings:
         pattern:
           field_templates: default
     regions:
-      image:
-        - field_p_banner_image
       items:
         - group_p_banner_card_1
         - group_p_banner_card_2
         - field_p_banner_card_title_1
-        - field_p_banner_card_subtitle_1
         - field_p_banner_card_title_2
-        - field_p_banner_card_body_1
+        - field_p_banner_card_subtitle_1
         - field_p_banner_card_subtitle_2
-        - field_p_banner_card_link_1
+        - field_p_banner_card_body_1
         - field_p_banner_card_body_2
+        - field_p_banner_card_link_1
         - field_p_banner_card_link_2
+      image:
+        - field_p_banner_image
       superhead:
         - field_p_banner_title
   field_group:
@@ -144,7 +144,7 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    type: link
+    type: link_separate
     region: items
   field_p_banner_card_link_2:
     weight: 6
@@ -156,7 +156,7 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    type: link
+    type: link_separate
     region: items
   field_p_banner_card_subtitle_1:
     weight: 3
@@ -208,3 +208,4 @@ content:
     third_party_settings: {  }
     type: string
     region: superhead
+hidden: {  }
