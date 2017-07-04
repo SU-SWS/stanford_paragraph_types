@@ -7,6 +7,7 @@ dependencies:
     - field.field.paragraph.stanford_postcard.field_p_postcard_more
     - field.field.paragraph.stanford_postcard.field_p_postcard_orientation
     - field.field.paragraph.stanford_postcard.field_p_postcard_title
+    - field.field.paragraph.stanford_postcard.field_p_postcard_txt_orientation
     - image.style.breakpoint_xl_2x
     - paragraphs.paragraphs_type.stanford_postcard
   module:
@@ -25,15 +26,22 @@ third_party_settings:
       settings:
         pattern:
           field_templates: default
+          variants:
+            image_orientation:
+              constant_value: has-image-left
+              dynamic_value: field_p_postcard_orientation
+            text_orientation:
+              constant_value: ''
+              dynamic_value: field_p_postcard_txt_orientation
     regions:
       image:
         - field_p_postcard_image
-      title:
-        - field_p_postcard_title
-      text:
-        - field_p_postcard_body
       linkurl:
         - field_p_postcard_more
+      text:
+        - field_p_postcard_body
+      title:
+        - field_p_postcard_title
 id: paragraph.stanford_postcard.default
 targetEntityType: paragraph
 bundle: stanford_postcard
@@ -58,7 +66,7 @@ content:
     region: image
   field_p_postcard_more:
     type: link_separate
-    weight: 3
+    weight: 1
     region: linkurl
     label: hidden
     settings:
@@ -70,7 +78,7 @@ content:
     third_party_settings: {  }
   field_p_postcard_title:
     type: string
-    weight: 1
+    weight: 3
     region: title
     label: hidden
     settings:
@@ -78,3 +86,4 @@ content:
     third_party_settings: {  }
 hidden:
   field_p_postcard_orientation: true
+  field_p_postcard_txt_orientation: true

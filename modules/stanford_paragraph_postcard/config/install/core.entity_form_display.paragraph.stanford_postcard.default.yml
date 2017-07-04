@@ -7,19 +7,37 @@ dependencies:
     - field.field.paragraph.stanford_postcard.field_p_postcard_more
     - field.field.paragraph.stanford_postcard.field_p_postcard_orientation
     - field.field.paragraph.stanford_postcard.field_p_postcard_title
+    - field.field.paragraph.stanford_postcard.field_p_postcard_txt_orientation
     - image.style.thumbnail
     - paragraphs.paragraphs_type.stanford_postcard
   module:
+    - field_group
     - image
     - link
     - text
+third_party_settings:
+  field_group:
+    group_display_variants:
+      children:
+        - field_p_postcard_orientation
+        - field_p_postcard_txt_orientation
+      parent_name: ''
+      weight: 20
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: 'Display Variants'
 id: paragraph.stanford_postcard.default
 targetEntityType: paragraph
 bundle: stanford_postcard
 mode: default
 content:
   field_p_postcard_body:
-    weight: 3
+    weight: 2
     settings:
       rows: 5
       placeholder: ''
@@ -27,7 +45,7 @@ content:
     type: text_textarea
     region: content
   field_p_postcard_image:
-    weight: 2
+    weight: 1
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail
@@ -35,7 +53,7 @@ content:
     type: image_image
     region: content
   field_p_postcard_more:
-    weight: 4
+    weight: 3
     settings:
       placeholder_url: ''
       placeholder_title: ''
@@ -44,7 +62,7 @@ content:
     region: content
   field_p_postcard_orientation:
     type: options_select
-    weight: 1
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -55,6 +73,12 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_p_postcard_txt_orientation:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
 hidden:
   created: true

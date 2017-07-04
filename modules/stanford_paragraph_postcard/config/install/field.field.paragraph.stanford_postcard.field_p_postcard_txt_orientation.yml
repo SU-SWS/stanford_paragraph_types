@@ -2,21 +2,19 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_p_postcard_orientation
+    - field.storage.paragraph.field_p_postcard_txt_orientation
     - paragraphs.paragraphs_type.stanford_postcard
   module:
     - options
-id: paragraph.stanford_postcard.field_p_postcard_orientation
-field_name: field_p_postcard_orientation
+id: paragraph.stanford_postcard.field_p_postcard_txt_orientation
+field_name: field_p_postcard_txt_orientation
 entity_type: paragraph
 bundle: stanford_postcard
-label: 'Image Orientation'
+label: 'Text Orientation'
 description: ''
-required: true
+required: false
 translatable: false
-default_value:
-  -
-    value: has-image-left
+default_value: {  }
 default_value_callback: ''
 settings: {  }
 field_type: list_string

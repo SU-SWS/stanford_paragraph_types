@@ -8,6 +8,7 @@ dependencies:
   - ds
   - field
   - field_formatter_class
+  - field_group
   - file
   - filefield_paths
   - image
@@ -16,4 +17,6 @@ dependencies:
   - paragraphs
   - stanford_image_styles
   - text
+  - ui_patterns
+  - ui_patterns_variants
 version: 8.x-1.0-dev
