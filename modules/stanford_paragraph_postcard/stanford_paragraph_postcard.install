@@ -7,10 +7,15 @@
 
 use Drupal\Core\Database\Query\Condition;
 
+
+function stanford_paragraph_postcard_update_8101() {
+  // No longer needed.
+}
+
 /**
  * Removes data from field_p_postcard_orientation so it can update.
  */
-function stanford_paragraph_postcard_update_8101() {
+function stanford_paragraph_postcard_update_8102() {
 
   $condition_cid = (new Condition('OR'))
     ->condition('cid', 'field.storage.paragraph.field_p_postcard_orientation')
@@ -31,6 +36,10 @@ function stanford_paragraph_postcard_update_8101() {
   $query = \Drupal::database()->delete('config');
   $query->condition($condition_name);
   $query->execute();
+
+  // Drop existing tables.
+  $query = \Drupal::database()->schema()->dropTable('field_deleted_data_6d2ef1056f');
+  $query = \Drupal::database()->schema()->dropTable('field_deleted_revision_6d2ef1056f');
 
   $query = \Drupal::database()->update('paragraph__field_p_postcard_orientation')
     ->condition('field_p_postcard_orientation_value', 'is-left')
