@@ -1,0 +1,11 @@
+name: 'Icon Link Paragraph'
+type: module
+core: 8.x
+dependencies:
+  - ds
+  - field
+  - file
+  - filefield_paths
+  - image
+  - link
+  - paragraphs

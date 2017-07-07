@@ -1,0 +1,53 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_icon_link.field_p_icon_link_icon
+    - field.field.paragraph.stanford_icon_link.field_p_icon_link_url
+    - paragraphs.paragraphs_type.stanford_icon_link
+  module:
+    - ds
+    - image
+    - link
+third_party_settings:
+  ds:
+    layout:
+      id: pattern_icon_item
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        pattern:
+          field_templates: default
+    regions:
+      image:
+        - field_p_icon_link_icon
+      link:
+        - field_p_icon_link_url
+id: paragraph.stanford_icon_link.default
+targetEntityType: paragraph
+bundle: stanford_icon_link
+mode: default
+content:
+  field_p_icon_link_icon:
+    weight: 0
+    label: hidden
+    settings:
+      image_style: ''
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    region: image
+  field_p_icon_link_url:
+    weight: 1
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: link
+hidden: {  }

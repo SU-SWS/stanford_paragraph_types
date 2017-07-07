@@ -1,0 +1,6 @@
+langcode: en
+status: true
+dependencies: {  }
+id: stanford_deep_link_banner
+label: 'Deep linking hero banner'
+behavior_plugins: {  }

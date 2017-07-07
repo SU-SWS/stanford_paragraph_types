@@ -1,0 +1,16 @@
+name: 'Deep Linking Banner Paragraph'
+type: module
+core: 8.x
+dependencies:
+  - ds
+  - entity_reference_revisions
+  - field
+  - field_formatter_class
+  - field_group
+  - file
+  - filefield_paths
+  - image
+  - paragraphs
+  - stanford_paragraph_expandable_card
+  - stanford_paragraph_icon_link
+  - stanford_image_styles

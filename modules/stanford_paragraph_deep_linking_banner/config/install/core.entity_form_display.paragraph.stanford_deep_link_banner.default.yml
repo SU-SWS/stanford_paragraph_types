@@ -1,0 +1,101 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_deep_link_banner.field_p_deep_caption
+    - field.field.paragraph.stanford_deep_link_banner.field_p_deep_cards
+    - field.field.paragraph.stanford_deep_link_banner.field_p_deep_image
+    - field.field.paragraph.stanford_deep_link_banner.field_p_deep_title
+    - image.style.thumbnail
+    - paragraphs.paragraphs_type.stanford_deep_link_banner
+  module:
+    - field_group
+    - image
+    - paragraphs
+third_party_settings:
+  field_group:
+    group_p_deep_groups:
+      children:
+        - group_p_deep_group_1
+        - group_p_deep_group_2
+      parent_name: ''
+      weight: 3
+      format_type: tabs
+      format_settings:
+        id: ''
+        classes: ''
+        direction: vertical
+      label: Groups
+    group_p_deep_group_1:
+      children:
+        - field_p_deep_group_title_1
+        - field_p_deep_group_links_1
+      parent_name: group_p_deep_groups
+      weight: 20
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: open
+        description: ''
+        required_fields: true
+      label: 'Group 1'
+    group_p_deep_group_2:
+      children:
+        - field_p_deep_group_title_2
+        - field_p_deep_group_links_2
+      parent_name: group_p_deep_groups
+      weight: 21
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: 'Group 2'
+id: paragraph.stanford_deep_link_banner.default
+targetEntityType: paragraph
+bundle: stanford_deep_link_banner
+mode: default
+content:
+  field_p_deep_caption:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_p_deep_cards:
+    type: entity_reference_paragraphs
+    weight: 22
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    region: content
+  field_p_deep_image:
+    weight: 0
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_p_deep_title:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

@@ -1,0 +1,13 @@
+name: 'Expandable Card Paragraph'
+type: module
+core: 8.x
+dependencies:
+  - ds
+  - entity_reference_revisions
+  - field
+  - field_formatter_class
+  - field_group
+  - image
+  - paragraphs
+  - stanford_paragraph_icon_link
+  - stanford_image_styles
