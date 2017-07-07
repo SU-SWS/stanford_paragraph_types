@@ -1,0 +1,14 @@
+name: 'Link Banner Paragraph'
+type: module
+core: 8.x
+dependencies:
+  - ds
+  - entity_reference_revisions
+  - field
+  - field_formatter_class
+  - file
+  - filefield_paths
+  - image
+  - paragraphs
+  - stanford_image_styles
+  - stanford_link_item

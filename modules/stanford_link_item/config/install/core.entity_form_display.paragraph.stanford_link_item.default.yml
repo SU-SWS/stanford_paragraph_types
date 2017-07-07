@@ -1,0 +1,43 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_link_item.field_p_link_item_subtext
+    - field.field.paragraph.stanford_link_item.field_p_link_item_text
+    - field.field.paragraph.stanford_link_item.field_p_link_item_url
+    - paragraphs.paragraphs_type.stanford_link_item
+  module:
+    - link
+id: paragraph.stanford_link_item.default
+targetEntityType: paragraph
+bundle: stanford_link_item
+mode: default
+content:
+  field_p_link_item_subtext:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_p_link_item_text:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_p_link_item_url:
+    weight: 2
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true
