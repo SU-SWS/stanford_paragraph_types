@@ -71,7 +71,7 @@ env:
     - DEPLOYER_BRANCH=""
     - DRUPAL_PROFILE_BRANCH=""
     - CLICKY_BRANCH="HSDO-939-section-header"
-    - SCRIPTS_BRANCH="add-colors"
+    - SCRIPTS_BRANCH=""
 
 language: php
 php:
