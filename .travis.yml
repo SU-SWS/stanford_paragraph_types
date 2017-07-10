@@ -18,15 +18,30 @@
 # ENABLE_MODULES:
 # Enter as a space separated string, modules and submodules that you
 # would like to enable after the installation profile has run. Useful
-# for adding additional items.
+# for adding additional items. You do not need to include the module
+# being tested. You can include a specific module version or stanford
+# module branch name.
 # Example:
-# stanford_gallery nobots
+# stanford_gallery-7.x-2.x nobots-7.x-1.x-dev stanford_page
 #
 # DISABLE_MODULES:
 # Enter as a space separated string, modules you would like disabled after the
 # installation profile has run.
 # Example:
 # webauth webauth_extras
+#
+# ONLY_TEST:
+# This is an experimental feature for make files. So that we can test deployer
+# and Drupal Profile builds.
+# Example:
+# field_collection
+#
+# BEHAT_TAGS:
+# By default, we exclude tests requiring email and webauth. This variable gives
+# users the option of further limiting tests to `@deploy` only, for example, which
+# is useful when running a large number of product related tests.
+# Example:
+# deploy
 #
 # DEPLOYER_BRANCH:
 # Leave blank to use the default stanford-jumpstart-deployer branch.
@@ -48,13 +63,15 @@
 
 env:
   global:
-#    - PRODUCT_NAME=""
+    - PRODUCT_NAME=""
     - ENABLE_MODULES="multiple_selects stanford_field_formatters stanford_paragraphs_defaults stanford_paragraph_types_dynamic"
     - DISABLE_MODULES="webauth"
-#    - DEPLOYER_BRANCH=""
-#    - DRUPAL_PROFILE_BRANCH=""
-#    - CLICKY_BRANCH=""
-#    - SCRIPTS_BRANCH=""
+    - ONLY_TEST=""
+    - BEHAT_TAG=""
+    - DEPLOYER_BRANCH=""
+    - DRUPAL_PROFILE_BRANCH=""
+    - CLICKY_BRANCH="HSDO-939-section-header"
+    - SCRIPTS_BRANCH=""
 
 language: php
 php:
