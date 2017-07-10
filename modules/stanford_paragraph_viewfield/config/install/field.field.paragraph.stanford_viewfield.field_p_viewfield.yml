@@ -1,0 +1,44 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_p_viewfield
+    - paragraphs.paragraphs_type.stanford_viewfield
+  module:
+    - viewfield
+id: paragraph.stanford_viewfield.field_p_viewfield
+field_name: field_p_viewfield
+entity_type: paragraph
+bundle: stanford_viewfield
+label: Viewfield
+description: 'Add any number of Block or Feed Views to be displayed in this paragraph.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  force_default: 0
+  allowed_views:
+    content: 0
+    block_content: 0
+    files: 0
+    frontpage: 0
+    autocompletion_callbacks_nodes: 0
+    user_admin_people: 0
+    content_recent: 0
+    redirect: 0
+    scheduler_scheduled_content: 0
+    stanford_site_search: 0
+    taxonomy_term: 0
+    autocompletion_callbacks_users: 0
+    who_s_new: 0
+    who_s_online: 0
+  allowed_display_types:
+    block: block
+    feed: feed
+    autocompletion_callback: 0
+    default: 0
+    page: 0
+  handler: 'default:view'
+  handler_settings: {  }
+field_type: viewfield

@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_viewfield.field_p_viewfield
+    - paragraphs.paragraphs_type.stanford_viewfield
+  module:
+    - viewfield
+id: paragraph.stanford_viewfield.default
+targetEntityType: paragraph
+bundle: stanford_viewfield
+mode: default
+content:
+  field_p_viewfield:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: viewfield_select
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

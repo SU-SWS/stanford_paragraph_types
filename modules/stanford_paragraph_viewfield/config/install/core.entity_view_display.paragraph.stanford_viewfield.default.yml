@@ -1,0 +1,53 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_viewfield.field_p_viewfield
+    - paragraphs.paragraphs_type.stanford_viewfield
+  module:
+    - ds
+    - field_formatter_class
+    - viewfield
+third_party_settings:
+  ds:
+    layout:
+      id: pattern_filmstrip
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        classes: {  }
+        wrappers:
+          content: div
+          items: div
+          title: div
+          is_flexible: div
+          is_tight: div
+          is_tall: div
+        outer_wrapper: div
+        attributes: ''
+        link_attribute: ''
+        link_custom: ''
+    regions:
+      content:
+        - field_p_viewfield
+id: paragraph.stanford_viewfield.default
+targetEntityType: paragraph
+bundle: stanford_viewfield
+mode: default
+content:
+  field_p_viewfield:
+    weight: 0
+    label: hidden
+    settings:
+      view_title: hidden
+      empty_view_title: hidden
+      always_build_output: 0
+    third_party_settings:
+      field_formatter_class:
+        class: ''
+      ds:
+        ds_limit: ''
+    type: viewfield_default
+    region: content
+hidden: {  }

@@ -1,0 +1,12 @@
+name: 'Viewfield Paragraph'
+type: module
+core: 8.x
+dependencies:
+  - ds
+  - field
+  - field_formatter_class
+  - paragraphs
+  - viewfield
+  - views
+version: 8.x-1.0
+description: 'A simple paragraph type for Viewfields'
