@@ -64,7 +64,7 @@
 env:
   global:
     - PRODUCT_NAME=""
-    - ENABLE_MODULES="multiple_selects stanford_field_formatters stanford_paragraphs_defaults stanford_paragraph_types_dynamic"
+    - ENABLE_MODULES="multiple_selects stanford_field_formatters stanford_paragraphs_defaults stanford_paragraph_types_dynamic stanford_paragraph_types_section_header stanford_paragraph_types_textarea_header stanford_paragraph_types_two_columns"
     - DISABLE_MODULES="webauth"
     - ONLY_TEST=""
     - BEHAT_TAG=""
