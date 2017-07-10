@@ -29,12 +29,6 @@ settings:
       stanford_callout_text:
         weight: 12
         enabled: false
-      stanford_cta:
-        weight: 13
-        enabled: false
-      stanford_cta_list:
-        weight: 14
-        enabled: false
       stanford_paragraph_filmstrip:
         weight: 15
         enabled: false
