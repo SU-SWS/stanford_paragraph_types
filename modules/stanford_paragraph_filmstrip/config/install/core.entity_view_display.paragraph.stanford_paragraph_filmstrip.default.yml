@@ -1,0 +1,50 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_paragraph_filmstrip.field_p_filmstrip_descriptor
+    - field.field.paragraph.stanford_paragraph_filmstrip.field_p_filmstrip_slide
+    - field.field.paragraph.stanford_paragraph_filmstrip.field_p_filmstrip_title
+    - paragraphs.paragraphs_type.stanford_paragraph_filmstrip
+  module:
+    - ds
+    - entity_reference_revisions
+third_party_settings:
+  ds:
+    layout:
+      id: pattern_paragraph_filmstrip
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        pattern:
+          field_templates: default
+    regions:
+      content:
+        - field_p_filmstrip_slide
+      title:
+        - field_p_filmstrip_title
+id: paragraph.stanford_paragraph_filmstrip.default
+targetEntityType: paragraph
+bundle: stanford_paragraph_filmstrip
+mode: default
+content:
+  field_p_filmstrip_slide:
+    type: entity_reference_revisions_entity_view
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
+  field_p_filmstrip_title:
+    weight: 1
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: title
+hidden:
+  field_p_filmstrip_descriptor: true

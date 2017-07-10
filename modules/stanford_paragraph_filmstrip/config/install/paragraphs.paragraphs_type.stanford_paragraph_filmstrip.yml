@@ -1,0 +1,6 @@
+langcode: en
+status: true
+dependencies: {  }
+id: stanford_paragraph_filmstrip
+label: Filmstrip
+behavior_plugins: {  }

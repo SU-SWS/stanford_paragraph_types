@@ -1,0 +1,13 @@
+name: 'Stanford Paragraph Filmstrip'
+description: 'A Paragraph filmstrip feature'
+type: module
+core: 8.x
+dependencies:
+  - allowed_formats
+  - ds
+  - entity_reference_revisions
+  - field
+  - paragraphs
+  - stanford_paragraph_slide
+  - text
+version: 8.x-1.0-dev

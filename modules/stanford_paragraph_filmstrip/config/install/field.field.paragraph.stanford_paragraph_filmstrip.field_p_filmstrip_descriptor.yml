@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_p_filmstrip_descriptor
+    - paragraphs.paragraphs_type.stanford_paragraph_filmstrip
+  module:
+    - allowed_formats
+    - text
+third_party_settings:
+  allowed_formats:
+    content_editor: '0'
+    markdown: '0'
+    basic_html: '0'
+    restricted_html: '0'
+    full_html: '0'
+    plain_text: '0'
+id: paragraph.stanford_paragraph_filmstrip.field_p_filmstrip_descriptor
+field_name: field_p_filmstrip_descriptor
+entity_type: paragraph
+bundle: stanford_paragraph_filmstrip
+label: 'Descriptor Text'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

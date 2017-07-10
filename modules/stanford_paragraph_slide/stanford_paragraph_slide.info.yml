@@ -1,0 +1,15 @@
+name: 'Stanford Paragraph Slide'
+description: 'Simple single slide paragraph type'
+type: module
+core: 8.x
+dependencies:
+  - ds
+  - field
+  - field_formatter_class
+  - file
+  - filefield_paths
+  - image
+  - link
+  - paragraphs
+  - stanford_paragraph_cta
+version: 8.x-1.0-dev

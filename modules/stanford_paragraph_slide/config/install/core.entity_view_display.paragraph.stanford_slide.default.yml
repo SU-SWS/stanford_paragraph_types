@@ -1,0 +1,70 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_slide.field_p_slide_image
+    - field.field.paragraph.stanford_slide.field_p_slide_link
+    - field.field.paragraph.stanford_slide.field_p_slide_title
+    - image.style.component_film_card
+    - paragraphs.paragraphs_type.stanford_slide
+  module:
+    - ds
+    - field_formatter_class
+    - image
+    - link
+third_party_settings:
+  ds:
+    layout:
+      id: pattern_film_card
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        pattern:
+          field_templates: default
+    regions:
+      image:
+        - field_p_slide_image
+      link:
+        - field_p_slide_link
+      title:
+        - field_p_slide_title
+id: paragraph.stanford_slide.default
+targetEntityType: paragraph
+bundle: stanford_slide
+mode: default
+content:
+  field_p_slide_image:
+    weight: 0
+    label: hidden
+    settings:
+      image_style: component_film_card
+      image_link: ''
+    third_party_settings:
+      field_formatter_class:
+        class: ''
+    type: image
+    region: image
+  field_p_slide_link:
+    weight: 1
+    label: hidden
+    settings:
+      trim_length: null
+      url_only: true
+      url_plain: true
+      rel: '0'
+      target: '0'
+    third_party_settings:
+      field_formatter_class:
+        class: ''
+    type: link
+    region: link
+  field_p_slide_title:
+    weight: 2
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: title
+hidden: {  }
