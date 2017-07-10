@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * stanford_paragraph_types.install
+ */
+
+/**
+ * Remove all cta and cta_list paragraph entities.
+ */
+function stanford_paragraph_types_update_8101() {
+  // Delete all cta and cta_list paragraphs.
+  entity_delete_multiple('paragraph', \Drupal::entityQuery('paragraph')->condition("type", "stanford_cta")->execute());
+  entity_delete_multiple('paragraph', \Drupal::entityQuery('paragraph')->condition("type", "stanford_cta_list")->execute());
+}
