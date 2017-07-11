@@ -3,8 +3,8 @@ status: true
 dependencies:
   module:
     - paragraphs
-id: paragraph.field_p_banner_card_title_2
-field_name: field_p_banner_card_title_2
+id: paragraph.field_p_highlight_card_subtitle
+field_name: field_p_highlight_card_subtitle
 entity_type: paragraph
 type: string
 settings:

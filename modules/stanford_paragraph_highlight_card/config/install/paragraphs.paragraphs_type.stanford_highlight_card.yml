@@ -1,0 +1,6 @@
+langcode: en
+status: true
+dependencies: {  }
+id: stanford_highlight_card
+label: 'Highlight Card'
+behavior_plugins: {  }

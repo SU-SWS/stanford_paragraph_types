@@ -3,11 +3,13 @@ status: true
 dependencies:
   module:
     - paragraphs
-id: paragraph.field_p_banner_card_body_2
-field_name: field_p_banner_card_body_2
+id: paragraph.field_p_highlight_card_title
+field_name: field_p_highlight_card_title
 entity_type: paragraph
-type: string_long
+type: string
 settings:
+  max_length: 255
+  is_ascii: false
   case_sensitive: false
 module: core
 locked: false

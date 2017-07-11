@@ -2,24 +2,16 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.stanford_fw_banner.field_p_banner_card_body_1
-    - field.field.paragraph.stanford_fw_banner.field_p_banner_card_body_2
-    - field.field.paragraph.stanford_fw_banner.field_p_banner_card_link_1
-    - field.field.paragraph.stanford_fw_banner.field_p_banner_card_link_2
-    - field.field.paragraph.stanford_fw_banner.field_p_banner_card_subtitle_1
-    - field.field.paragraph.stanford_fw_banner.field_p_banner_card_subtitle_2
-    - field.field.paragraph.stanford_fw_banner.field_p_banner_card_title_1
-    - field.field.paragraph.stanford_fw_banner.field_p_banner_card_title_2
+    - field.field.paragraph.stanford_fw_banner.field_p_banner_cards
     - field.field.paragraph.stanford_fw_banner.field_p_banner_image
     - field.field.paragraph.stanford_fw_banner.field_p_banner_title
     - image.style.breakpoint_xl_2x
     - paragraphs.paragraphs_type.stanford_fw_banner
   module:
     - ds
+    - entity_reference_revisions
     - field_formatter_class
-    - field_group
     - image
-    - link
 third_party_settings:
   ds:
     layout:
@@ -30,165 +22,36 @@ third_party_settings:
       settings:
         pattern:
           field_templates: default
+          variants:
+            dash_under:
+              constant_value: 'has-dash-left'
+              dynamic_value: ''
+            is_centered:
+              constant_value: 'left-aligned'
+              dynamic_value: ''
+            is_featured:
+              constant_value: 'has-dash-emphasis'
+              dynamic_value: ''
     regions:
-      items:
-        - group_p_banner_card_1
-        - group_p_banner_card_2
-        - field_p_banner_card_title_1
-        - field_p_banner_card_title_2
-        - field_p_banner_card_subtitle_1
-        - field_p_banner_card_subtitle_2
-        - field_p_banner_card_body_1
-        - field_p_banner_card_body_2
-        - field_p_banner_card_link_1
-        - field_p_banner_card_link_2
       image:
         - field_p_banner_image
+      items:
+        - field_p_banner_cards
       superhead:
         - field_p_banner_title
-  field_group:
-    group_p_banner_card_1:
-      children:
-        - field_p_banner_card_title_1
-        - field_p_banner_card_subtitle_1
-        - field_p_banner_card_body_1
-        - field_p_banner_card_link_1
-      parent_name: ''
-      weight: 0
-      format_type: pattern_formatter
-      format_settings:
-        label: 'Card 1'
-        pattern: highlight_card
-        pattern_mapping:
-          'fields:field_p_banner_card_body_1':
-            destination: description
-            weight: 0
-            plugin: fields
-            source: field_p_banner_card_body_1
-          'fields:field_p_banner_card_link_1':
-            destination: link
-            weight: 1
-            plugin: fields
-            source: field_p_banner_card_link_1
-          'fields:field_p_banner_card_subtitle_1':
-            destination: intro
-            weight: 2
-            plugin: fields
-            source: field_p_banner_card_subtitle_1
-          'fields:field_p_banner_card_title_1':
-            destination: title
-            weight: 3
-            plugin: fields
-            source: field_p_banner_card_title_1
-      label: 'Card 1'
-    group_p_banner_card_2:
-      children:
-        - field_p_banner_card_title_2
-        - field_p_banner_card_subtitle_2
-        - field_p_banner_card_body_2
-        - field_p_banner_card_link_2
-      parent_name: ''
-      weight: 1
-      format_type: pattern_formatter
-      format_settings:
-        label: 'Card 2'
-        pattern: highlight_card
-        pattern_mapping:
-          'fields:field_p_banner_card_body_2':
-            destination: description
-            weight: 0
-            plugin: fields
-            source: field_p_banner_card_body_2
-          'fields:field_p_banner_card_link_2':
-            destination: link
-            weight: 1
-            plugin: fields
-            source: field_p_banner_card_link_2
-          'fields:field_p_banner_card_subtitle_2':
-            destination: intro
-            weight: 2
-            plugin: fields
-            source: field_p_banner_card_subtitle_2
-          'fields:field_p_banner_card_title_2':
-            destination: title
-            weight: 3
-            plugin: fields
-            source: field_p_banner_card_title_2
-      label: 'Card 2'
 id: paragraph.stanford_fw_banner.default
 targetEntityType: paragraph
 bundle: stanford_fw_banner
 mode: default
 content:
-  field_p_banner_card_body_1:
-    weight: 4
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    type: basic_string
-    region: items
-  field_p_banner_card_body_2:
-    weight: 5
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    type: basic_string
-    region: items
-  field_p_banner_card_link_1:
-    weight: 5
+  field_p_banner_cards:
+    type: entity_reference_revisions_entity_view
+    weight: 1
     label: hidden
     settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: ''
-      target: ''
+      view_mode: default
+      link: ''
     third_party_settings: {  }
-    type: link_separate
-    region: items
-  field_p_banner_card_link_2:
-    weight: 6
-    label: hidden
-    settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: ''
-      target: ''
-    third_party_settings: {  }
-    type: link_separate
-    region: items
-  field_p_banner_card_subtitle_1:
-    weight: 3
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: items
-  field_p_banner_card_subtitle_2:
-    weight: 4
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: items
-  field_p_banner_card_title_1:
-    weight: 2
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: items
-  field_p_banner_card_title_2:
-    weight: 3
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
     region: items
   field_p_banner_image:
     weight: 0
@@ -201,7 +64,7 @@ content:
     type: image_url
     region: image
   field_p_banner_title:
-    weight: 3
+    weight: 4
     label: hidden
     settings:
       link_to_entity: false

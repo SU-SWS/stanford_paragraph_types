@@ -2,14 +2,14 @@ langcode: en
 status: true
 dependencies:
   module:
-    - link
     - paragraphs
-id: paragraph.field_p_banner_card_link_1
-field_name: field_p_banner_card_link_1
+id: paragraph.field_p_highlight_card_desc
+field_name: field_p_highlight_card_desc
 entity_type: paragraph
-type: link
-settings: {  }
-module: link
+type: string_long
+settings:
+  case_sensitive: false
+module: core
 locked: false
 cardinality: 1
 translatable: true
