@@ -23,49 +23,7 @@ settings:
     target_bundles:
       stanford_highlight_card: stanford_highlight_card
     target_bundles_drag_drop:
-      stanford_buttons:
-        weight: 16
-        enabled: false
-      stanford_callout_text:
-        weight: 17
-        enabled: false
-      stanford_cta:
-        weight: 18
-        enabled: false
-      stanford_cta_list:
-        weight: 19
-        enabled: false
-      stanford_deep_link_banner:
-        weight: 20
-        enabled: false
-      stanford_expandable_card:
-        weight: 21
-        enabled: false
-      stanford_fw_banner:
-        weight: 22
-        enabled: false
       stanford_highlight_card:
         enabled: true
-        weight: 23
-      stanford_icon_link:
-        weight: 24
-        enabled: false
-      stanford_link_banner:
-        weight: 25
-        enabled: false
-      stanford_link_item:
-        weight: 26
-        enabled: false
-      stanford_paragraph_hero_banner:
-        weight: 27
-        enabled: false
-      stanford_postcard:
-        weight: 28
-        enabled: false
-      stanford_textarea:
-        weight: 29
-        enabled: false
-      stanford_wysiwyg:
-        weight: 30
-        enabled: false
+        weight: 1
 field_type: entity_reference_revisions

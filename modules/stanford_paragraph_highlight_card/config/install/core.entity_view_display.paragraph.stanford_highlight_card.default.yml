@@ -19,7 +19,7 @@ third_party_settings:
       entity_classes: all_classes
       settings:
         pattern:
-          field_templates: default
+          field_templates: only_content
     regions:
       description:
         - field_p_highlight_card_desc

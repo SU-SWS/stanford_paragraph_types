@@ -21,7 +21,7 @@ third_party_settings:
       entity_classes: all_classes
       settings:
         pattern:
-          field_templates: default
+          field_templates: only_content
           variants:
             dash_under:
               constant_value: 'has-dash-left'
