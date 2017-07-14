@@ -1,0 +1,16 @@
+name: 'Quote Banner'
+description: 'A full width banner with a quote in the middle'
+type: module
+core: 8.x
+package: Stanford
+dependencies:
+  - ds
+  - field
+  - field_formatter_class
+  - field_group
+  - file
+  - filefield_paths
+  - image
+  - paragraphs
+  - stanford_image_styles
+version: 8.x-1.0-dev
