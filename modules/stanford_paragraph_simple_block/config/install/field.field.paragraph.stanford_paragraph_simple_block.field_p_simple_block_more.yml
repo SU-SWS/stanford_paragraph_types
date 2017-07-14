@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_p_simple_block_more
+    - paragraphs.paragraphs_type.stanford_paragraph_simple_block
+id: paragraph.stanford_paragraph_simple_block.field_p_simple_block_more
+field_name: field_p_simple_block_more
+entity_type: paragraph
+bundle: stanford_paragraph_simple_block
+label: 'More link text'
+description: 'More link text that sits at the bottom of the block.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,6 @@
+langcode: en
+status: true
+dependencies: {  }
+id: stanford_paragraph_simple_block
+label: 'Simple Block'
+behavior_plugins: {  }

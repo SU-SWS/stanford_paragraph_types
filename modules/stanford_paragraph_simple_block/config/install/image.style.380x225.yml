@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: 380x225
+label: 380x225
+effects:
+  bd6c4abc-9a6d-406d-a5f5-612898564f8b:
+    uuid: bd6c4abc-9a6d-406d-a5f5-612898564f8b
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 380
+      height: 225

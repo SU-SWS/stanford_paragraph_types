@@ -1,0 +1,12 @@
+name: 'Feature Blocks'
+description: 'Featured blocks with a section header.'
+type: module
+core: 8.x
+dependencies:
+  - ds
+  - entity_reference_revisions
+  - field
+  - field_group
+  - paragraphs
+  - stanford_paragraph_simple_block
+version: 8.x-1.0-dev

@@ -1,0 +1,107 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_paragraph_simple_block.field_p_simple_block_description
+    - field.field.paragraph.stanford_paragraph_simple_block.field_p_simple_block_image
+    - field.field.paragraph.stanford_paragraph_simple_block.field_p_simple_block_link
+    - field.field.paragraph.stanford_paragraph_simple_block.field_p_simple_block_more
+    - field.field.paragraph.stanford_paragraph_simple_block.field_p_simple_block_tag
+    - field.field.paragraph.stanford_paragraph_simple_block.field_p_simple_block_title
+    - image.style.380x225
+    - paragraphs.paragraphs_type.stanford_paragraph_simple_block
+  module:
+    - ds
+    - field_formatter_class
+    - image
+    - link
+third_party_settings:
+  ds:
+    layout:
+      id: pattern_simple_block
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        pattern:
+          field_templates: only_content
+          variants:
+            has_arrow:
+              constant_value: '1'
+              dynamic_value: ''
+            is_slat:
+              constant_value: '0'
+              dynamic_value: ''
+    regions:
+      description:
+        - field_p_simple_block_description
+      image:
+        - field_p_simple_block_image
+      link:
+        - field_p_simple_block_link
+      tag:
+        - field_p_simple_block_tag
+      more:
+        - field_p_simple_block_more
+      title:
+        - field_p_simple_block_title
+id: paragraph.stanford_paragraph_simple_block.default
+targetEntityType: paragraph
+bundle: stanford_paragraph_simple_block
+mode: default
+content:
+  field_p_simple_block_description:
+    weight: 0
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: description
+  field_p_simple_block_image:
+    weight: 1
+    label: hidden
+    settings:
+      image_style: 380x225
+      image_link: ''
+    third_party_settings:
+      field_formatter_class:
+        class: ''
+    type: image
+    region: image
+  field_p_simple_block_link:
+    weight: 2
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: link
+  field_p_simple_block_more:
+    weight: 4
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: more
+  field_p_simple_block_tag:
+    weight: 3
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: tag
+  field_p_simple_block_title:
+    weight: 5
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: title
+hidden: {  }

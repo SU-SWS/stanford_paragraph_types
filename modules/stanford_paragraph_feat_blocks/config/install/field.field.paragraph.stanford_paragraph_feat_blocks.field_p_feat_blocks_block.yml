@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_p_feat_blocks_block
+    - paragraphs.paragraphs_type.stanford_paragraph_feat_blocks
+    - paragraphs.paragraphs_type.stanford_paragraph_simple_block
+  module:
+    - entity_reference_revisions
+id: paragraph.stanford_paragraph_feat_blocks.field_p_feat_blocks_block
+field_name: field_p_feat_blocks_block
+entity_type: paragraph
+bundle: stanford_paragraph_feat_blocks
+label: 'Block Item'
+description: 'A feature block with image, tag, and text. '
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      stanford_paragraph_simple_block: stanford_paragraph_simple_block
+    target_bundles_drag_drop:
+      stanford_paragraph_simple_block:
+        enabled: true
+        weight: 23
+field_type: entity_reference_revisions
