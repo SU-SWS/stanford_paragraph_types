@@ -13,4 +13,4 @@ dependencies:
   - link
   - paragraphs
   - stanford_image_styles
-  - stanford_paragraph_highlight_banner
+  - stanford_paragraph_highlight_card
