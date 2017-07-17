@@ -1,3 +1,5 @@
+@import 'colors';
+
 .paragraphs-item-p-callout {
   text-align: center;
 
@@ -30,68 +32,26 @@
   }
 
   &.cool-gray {
-    background-color: #4d4f53;
-    color: #ffffff;
-
-    a,
-    a:focus,
-    a:hover {
-      color: #d5d0c0;
-    }
+    @include paragraph-colors('cool-gray');
   }
 
   &.light-taupe {
-    background-color: #d5d0c0;
-    color: #333333;
-
-    a,
-    a:focus,
-    a:hover {
-      color: #4d4f53;
-    }
+    @include paragraph-colors('light-taupe');
   }
 
   &.bright-green {
-    background-color: #009b76;
-    color: #ffffff;
-
-    a,
-    a:focus,
-    a:hover {
-      color: #000000;
-    }
+    @include paragraph-colors('bright-green');
   }
 
   &.bright-blue {
-    background-color: #0f6c91;
-    color: #ffffff;
-
-    a,
-    a:focus,
-    a:hover {
-      color: #dad7cb;
-    }
+    @include paragraph-colors('bright-blue');
   }
 
   &.bright-yellow {
-    background-color: #eaab00;
-    color: #333333;
-
-    a,
-    a:focus,
-    a:hover {
-      color: #53284f;
-    }
+    @include paragraph-colors('bright-yellow');
   }
 
   &.bright-orange {
-    background-color: #e98300;
-    color: #333333;
-
-    a,
-    a:focus,
-    a:hover {
-      color: #4d4f53;
-    }
+    @include paragraph-colors('bright-orange');
   }
 }

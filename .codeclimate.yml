@@ -51,6 +51,8 @@ engines:
         enabled: false
       PseudoElement:
         enabled: false
+      StringQuotes:
+        enabled: false
   phpcodesniffer:
     enabled: true
     checks:

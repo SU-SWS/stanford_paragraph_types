@@ -35,6 +35,15 @@ function stanford_paragraphs_defaults_permission() {
   );
 }
 
+/**
+ * Check if user has permission.
+ *
+ * @param string $operation
+ *   Operation desired.
+ *
+ * @return bool
+ *   If the user has access to the operation.
+ */
 function stanford_paragraph_defaults_administer($operation) {
   switch ($operation) {
     case 'administer':
@@ -284,9 +293,6 @@ function stanford_paragraphs_defaults_field_attach_form($entity_type, $entity, &
 
 /**
  * Create a new default layout from existing content.
- *
- * @param array $form
- * @param array $form_state
  */
 function stanford_paragraphs_defaults_create_default_existing($form, &$form_state) {
   module_load_include('inc', 'stanford_paragraphs_defaults', 'stanford_paragraphs_defaults.forms');

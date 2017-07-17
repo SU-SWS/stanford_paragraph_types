@@ -23,7 +23,7 @@ function stanford_paragraph_types_theme($existing, $type, $theme, $path) {
  *   Name of the module to collect templates from.
  *
  * @return array
- *  New template options for fields and paragraph bundles.
+ *   New template options for fields and paragraph bundles.
  */
 function stanford_paragraph_types_theme_templates($existing, $module_name) {
   $theme = array();
@@ -98,6 +98,16 @@ function _stanford_paragraph_types_preprocess_entity_field_collection_item(&$var
   switch ($entity->field_name) {
     case 'field_p_cards_card':
       if (isset($vars['field_p_card_image'])) {
+        if ($color = field_get_items('field_collection_item', $entity, 'field_p_card_color')) {
+          $color = $color[0]['value'];
+
+          if ($pattern = field_get_items('field_collection_item', $entity, 'field_p_card_pattern')) {
+            $pattern = $pattern[0]['value'];
+          }
+          $vars['classes_array'][] = "color-$color";
+          $vars['classes_array'][] = "pattern-$pattern";
+        }
+
         // Depending what the user wants to use as the CTA link, hide the
         // unwanted field.
         if ($vars['field_collection_item']->field_p_card_action_button[LANGUAGE_NONE][0]['value'] == 'link') {

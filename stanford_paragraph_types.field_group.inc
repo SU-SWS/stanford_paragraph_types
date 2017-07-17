@@ -516,6 +516,36 @@ function stanford_paragraph_types_field_group_info() {
   $field_group = new stdClass();
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_p_card_color|field_collection_item|field_p_cards_card|form';
+  $field_group->group_name = 'group_p_card_color';
+  $field_group->entity_type = 'field_collection_item';
+  $field_group->bundle = 'field_p_cards_card';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Add Some Color',
+    'weight' => '3',
+    'children' => array(
+      0 => 'field_p_card_color',
+      1 => 'field_p_card_pattern',
+    ),
+    'format_type' => 'fieldset',
+    'format_settings' => array(
+      'label' => 'Add Some Color',
+      'instance_settings' => array(
+        'required_fields' => 1,
+        'id' => '',
+        'classes' => 'group-p-card-color field-group-fieldset',
+        'description' => '',
+      ),
+      'formatter' => 'collapsed',
+    ),
+  );
+  $field_groups['group_p_card_color|field_collection_item|field_p_cards_card|form'] = $field_group;
+
+  $field_group = new stdClass();
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_p_card_cta|field_collection_item|field_p_cards_card|form';
   $field_group->group_name = 'group_p_card_cta';
   $field_group->entity_type = 'field_collection_item';
@@ -1013,6 +1043,7 @@ function stanford_paragraph_types_field_group_info() {
 
   // Translatables
   // Included for use with string extractors like potx.
+  t('Add Some Color');
   t('Buttons');
   t('Call To Action');
   t('Callout Span');

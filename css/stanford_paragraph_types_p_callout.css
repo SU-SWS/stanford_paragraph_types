@@ -1,3 +1,62 @@
+.paragraphs-item-p-callout.cool-gray {
+  background-color: #4d4f53;
+  color: #ffffff;
+}
+.paragraphs-item-p-callout.cool-gray a,
+.paragraphs-item-p-callout.cool-gray a:focus,
+.paragraphs-item-p-callout.cool-gray a:hover {
+  color: #d5d0c0;
+}
+
+.paragraphs-item-p-callout.light-taupe {
+  background-color: #d5d0c0;
+  color: #333333;
+}
+.paragraphs-item-p-callout.light-taupe a,
+.paragraphs-item-p-callout.light-taupe a:focus,
+.paragraphs-item-p-callout.light-taupe a:hover {
+  color: #4d4f53;
+}
+
+.paragraphs-item-p-callout.bright-green {
+  background-color: #009b76;
+  color: #ffffff;
+}
+.paragraphs-item-p-callout.bright-green a,
+.paragraphs-item-p-callout.bright-green a:focus,
+.paragraphs-item-p-callout.bright-green a:hover {
+  color: #000000;
+}
+
+.paragraphs-item-p-callout.bright-blue {
+  background-color: #0f6c91;
+  color: #ffffff;
+}
+.paragraphs-item-p-callout.bright-blue a,
+.paragraphs-item-p-callout.bright-blue a:focus,
+.paragraphs-item-p-callout.bright-blue a:hover {
+  color: #dad7cb;
+}
+
+.paragraphs-item-p-callout.bright-yellow {
+  background-color: #eaab00;
+  color: #333333;
+}
+.paragraphs-item-p-callout.bright-yellow a,
+.paragraphs-item-p-callout.bright-yellow a:focus,
+.paragraphs-item-p-callout.bright-yellow a:hover {
+  color: #53284f;
+}
+
+.paragraphs-item-p-callout.bright-orange {
+  background-color: #e98300;
+  color: #333333;
+}
+.paragraphs-item-p-callout.bright-orange a,
+.paragraphs-item-p-callout.bright-orange a:focus,
+.paragraphs-item-p-callout.bright-orange a:hover {
+  color: #4d4f53;
+}
 
 .paragraphs-item-p-callout {
   text-align: center;
@@ -23,58 +82,4 @@
 }
 .paragraphs-item-p-callout a {
   text-decoration: underline;
-}
-.paragraphs-item-p-callout.cool-gray {
-  background-color: #4d4f53;
-  color: #ffffff;
-}
-.paragraphs-item-p-callout.cool-gray a,
-.paragraphs-item-p-callout.cool-gray a:focus,
-.paragraphs-item-p-callout.cool-gray a:hover {
-  color: #d5d0c0;
-}
-.paragraphs-item-p-callout.light-taupe {
-  background-color: #d5d0c0;
-  color: #333333;
-}
-.paragraphs-item-p-callout.light-taupe a,
-.paragraphs-item-p-callout.light-taupe a:focus,
-.paragraphs-item-p-callout.light-taupe a:hover {
-  color: #4d4f53;
-}
-.paragraphs-item-p-callout.bright-green {
-  background-color: #009b76;
-  color: #ffffff;
-}
-.paragraphs-item-p-callout.bright-green a,
-.paragraphs-item-p-callout.bright-green a:focus,
-.paragraphs-item-p-callout.bright-green a:hover {
-  color: #000000;
-}
-.paragraphs-item-p-callout.bright-blue {
-  background-color: #0f6c91;
-  color: #ffffff;
-}
-.paragraphs-item-p-callout.bright-blue a,
-.paragraphs-item-p-callout.bright-blue a:focus,
-.paragraphs-item-p-callout.bright-blue a:hover {
-  color: #dad7cb;
-}
-.paragraphs-item-p-callout.bright-yellow {
-  background-color: #eaab00;
-  color: #333333;
-}
-.paragraphs-item-p-callout.bright-yellow a,
-.paragraphs-item-p-callout.bright-yellow a:focus,
-.paragraphs-item-p-callout.bright-yellow a:hover {
-  color: #53284f;
-}
-.paragraphs-item-p-callout.bright-orange {
-  background-color: #e98300;
-  color: #333333;
-}
-.paragraphs-item-p-callout.bright-orange a,
-.paragraphs-item-p-callout.bright-orange a:focus,
-.paragraphs-item-p-callout.bright-orange a:hover {
-  color: #4d4f53;
 }
