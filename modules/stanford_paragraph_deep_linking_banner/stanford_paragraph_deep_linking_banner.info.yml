@@ -1,6 +1,8 @@
 name: 'Deep Linking Banner Paragraph'
+description: 'A full width banner with expandable blocks.'
 type: module
 core: 8.x
+package: Stanford
 dependencies:
   - ds
   - entity_reference_revisions
@@ -14,3 +16,4 @@ dependencies:
   - stanford_paragraph_expandable_card
   - stanford_paragraph_icon_link
   - stanford_image_styles
+version: 8.x-1.0-dev

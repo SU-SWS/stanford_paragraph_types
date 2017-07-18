@@ -1,5 +1,5 @@
-name: 'Expandable Card Paragraph'
-description: 'A card with a menu that opens up.'
+name: 'Callout Block Paragraph'
+description: 'A single callout block to be used in the callout blocks paragraph.'
 type: module
 core: 8.x
 package: Stanford
@@ -8,9 +8,10 @@ dependencies:
   - entity_reference_revisions
   - field
   - field_formatter_class
-  - field_group
+  - file
+  - filefield_paths
+  - focal_point
   - image
+  - link
   - paragraphs
-  - stanford_paragraph_icon_link
-  - stanford_image_styles
 version: 8.x-1.0-dev

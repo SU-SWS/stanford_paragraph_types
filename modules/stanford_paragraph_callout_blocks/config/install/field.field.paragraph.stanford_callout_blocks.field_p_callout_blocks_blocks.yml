@@ -1,0 +1,68 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_p_callout_blocks_blocks
+    - paragraphs.paragraphs_type.stanford_callout_block
+    - paragraphs.paragraphs_type.stanford_callout_blocks
+  module:
+    - entity_reference_revisions
+id: paragraph.stanford_callout_blocks.field_p_callout_blocks_blocks
+field_name: field_p_callout_blocks_blocks
+entity_type: paragraph
+bundle: stanford_callout_blocks
+label: Blocks
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      stanford_callout_block: stanford_callout_block
+    target_bundles_drag_drop:
+      stanford_buttons:
+        weight: 15
+        enabled: false
+      stanford_callout_block:
+        enabled: true
+        weight: 16
+      stanford_callout_blocks:
+        weight: 17
+        enabled: false
+      stanford_callout_text:
+        weight: 18
+        enabled: false
+      stanford_fw_banner:
+        weight: 19
+        enabled: false
+      stanford_paragraph_feat_blocks:
+        weight: 20
+        enabled: false
+      stanford_paragraph_filmstrip:
+        weight: 21
+        enabled: false
+      stanford_paragraph_hero_banner:
+        weight: 22
+        enabled: false
+      stanford_paragraph_simple_block:
+        weight: 23
+        enabled: false
+      stanford_postcard:
+        weight: 24
+        enabled: false
+      stanford_slide:
+        weight: 25
+        enabled: false
+      stanford_textarea:
+        weight: 26
+        enabled: false
+      stanford_viewfield:
+        weight: 27
+        enabled: false
+      stanford_wysiwyg:
+        weight: 28
+        enabled: false
+field_type: entity_reference_revisions

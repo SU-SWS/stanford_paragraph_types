@@ -1,6 +1,7 @@
 name: 'Viewfield Paragraph'
 type: module
 core: 8.x
+package: Stanford
 dependencies:
   - ds
   - field

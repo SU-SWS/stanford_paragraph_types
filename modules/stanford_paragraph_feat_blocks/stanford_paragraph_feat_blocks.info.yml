@@ -2,6 +2,7 @@ name: 'Feature Blocks'
 description: 'Featured blocks with a section header.'
 type: module
 core: 8.x
+package: Stanford
 dependencies:
   - ds
   - entity_reference_revisions

@@ -1,8 +1,11 @@
 name: 'Highlight Card Paragraph'
+description: 'A single highlight card to be used in banners and other paragraphs.'
 type: module
 core: 8.x
+package: Stanford
 dependencies:
   - ds
   - field
   - link
   - paragraphs
+version: 8.x-1.0-dev

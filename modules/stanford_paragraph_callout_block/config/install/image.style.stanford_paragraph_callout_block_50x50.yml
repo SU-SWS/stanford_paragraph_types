@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: stanford_paragraph_callout_block_50x50
+label: 'Stanford Paragraph Callout Block 50x50'
+effects:
+  679fa297-447f-45e1-beb9-5ca9d4fa6427:
+    uuid: 679fa297-447f-45e1-beb9-5ca9d4fa6427
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 50
+      height: 50

@@ -1,8 +1,11 @@
 name: 'Link Item Paragraph'
+description: 'A simple link item.'
 type: module
 core: 8.x
+package: Stanford
 dependencies:
   - ds
   - field
   - link
   - paragraphs
+version: 8.x-1.0-dev

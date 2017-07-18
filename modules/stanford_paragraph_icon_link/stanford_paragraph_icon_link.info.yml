@@ -1,6 +1,8 @@
 name: 'Icon Link Paragraph'
+description: 'A single icon link paragraph to be used in other paragraphs.'
 type: module
 core: 8.x
+package: Stanford
 dependencies:
   - ds
   - field
@@ -9,3 +11,4 @@ dependencies:
   - image
   - link
   - paragraphs
+version: 8.x-1.0-dev

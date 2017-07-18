@@ -2,6 +2,7 @@ name: 'Full Width Banner Paragraph'
 description: 'Full Width banner paragraph type.'
 type: module
 core: 8.x
+package: Stanford
 dependencies:
   - ds
   - field
@@ -14,3 +15,4 @@ dependencies:
   - paragraphs
   - stanford_image_styles
   - stanford_paragraph_highlight_card
+version: 8.x-1.0-dev
