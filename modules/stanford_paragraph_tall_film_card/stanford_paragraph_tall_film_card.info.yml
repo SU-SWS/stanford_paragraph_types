@@ -1,0 +1,14 @@
+name: 'Tall Film Card'
+description: 'A tall version of the film card paragraph'
+type: module
+core: 8.x
+dependencies:
+  - ds
+  - field
+  - file
+  - filefield_paths
+  - image
+  - link
+  - paragraphs
+  - responsive_image
+version: 8.x-1.0-dev

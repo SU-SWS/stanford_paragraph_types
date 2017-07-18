@@ -1,0 +1,6 @@
+langcode: en
+status: true
+dependencies: {  }
+id: stanford_tall_filmstrip_card
+label: 'Tall Film Card'
+behavior_plugins: {  }
