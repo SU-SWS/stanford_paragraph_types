@@ -8,29 +8,6 @@ dependencies:
     - ds
     - field_formatter_class
     - viewfield
-third_party_settings:
-  ds:
-    layout:
-      id: pattern_filmstrip
-      library: null
-      disable_css: false
-      entity_classes: all_classes
-      settings:
-        classes: {  }
-        wrappers:
-          content: div
-          items: div
-          title: div
-          is_flexible: div
-          is_tight: div
-          is_tall: div
-        outer_wrapper: div
-        attributes: ''
-        link_attribute: ''
-        link_custom: ''
-    regions:
-      content:
-        - field_p_viewfield
 id: paragraph.stanford_viewfield.default
 targetEntityType: paragraph
 bundle: stanford_viewfield
