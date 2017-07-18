@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_p_section_header_featured
+    - paragraphs.paragraphs_type.stanford_section_header
+  module:
+    - options
+id: paragraph.stanford_section_header.field_p_section_header_featured
+field_name: field_p_section_header_featured
+entity_type: paragraph
+bundle: stanford_section_header
+label: 'Dash with Emphasis'
+description: 'Dash has emphasis or default brand color?'
+required: true
+translatable: false
+default_value:
+  -
+    value: no-emphasis
+default_value_callback: ''
+settings: {  }
+field_type: list_string

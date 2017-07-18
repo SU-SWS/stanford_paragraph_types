@@ -1,0 +1,8 @@
+name: 'Section Header Paragraph'
+type: module
+core: 8.x
+dependencies:
+  - ds
+  - field
+  - link
+  - paragraphs

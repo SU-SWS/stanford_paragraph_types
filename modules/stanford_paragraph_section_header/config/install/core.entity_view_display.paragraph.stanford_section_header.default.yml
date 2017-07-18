@@ -1,0 +1,80 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_section_header.field_p_section_header_centered
+    - field.field.paragraph.stanford_section_header.field_p_section_header_dash
+    - field.field.paragraph.stanford_section_header.field_p_section_header_desc
+    - field.field.paragraph.stanford_section_header.field_p_section_header_featured
+    - field.field.paragraph.stanford_section_header.field_p_section_header_link
+    - field.field.paragraph.stanford_section_header.field_p_section_header_title
+    - paragraphs.paragraphs_type.stanford_section_header
+  module:
+    - ds
+    - link
+third_party_settings:
+  ds:
+    layout:
+      id: pattern_section_header
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        pattern:
+          field_templates: default
+          variants:
+            dash_under:
+              constant_value: has-dash-under
+              dynamic_value: field_p_section_header_dash
+            is_centered:
+              constant_value: left-aligned
+              dynamic_value: field_p_section_header_centered
+            is_featured:
+              constant_value: no-emphasis
+              dynamic_value: field_p_section_header_featured
+            centered_container:
+              constant_value: '1'
+              dynamic_value: ''
+    regions:
+      link:
+        - field_p_section_header_link
+      subhead:
+        - field_p_section_header_desc
+      superhead:
+        - field_p_section_header_title
+id: paragraph.stanford_section_header.default
+targetEntityType: paragraph
+bundle: stanford_section_header
+mode: default
+content:
+  field_p_section_header_desc:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: subhead
+  field_p_section_header_link:
+    weight: 0
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: link
+  field_p_section_header_title:
+    weight: 2
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: superhead
+hidden:
+  field_p_section_header_centered: true
+  field_p_section_header_dash: true
+  field_p_section_header_featured: true
