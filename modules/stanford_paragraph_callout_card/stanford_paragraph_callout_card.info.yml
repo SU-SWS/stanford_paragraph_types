@@ -1,0 +1,15 @@
+name: 'Callout Card'
+description: 'Stanford Paragraph Callout Card to be used with the Section Callout Cards paragraph type.'
+type: module
+core: 8.x
+package: Stanford
+dependencies:
+  - ds
+  - field
+  - field_formatter_class
+  - file
+  - filefield_paths
+  - image
+  - link
+  - paragraphs
+version: 8.x-1.0-dev

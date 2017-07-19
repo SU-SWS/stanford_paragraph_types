@@ -1,0 +1,71 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_paragraph_callout_cards.field_p_callout_cards_cards
+    - field.field.paragraph.stanford_paragraph_callout_cards.field_p_callout_cards_desc
+    - field.field.paragraph.stanford_paragraph_callout_cards.field_p_callout_cards_title
+    - paragraphs.paragraphs_type.stanford_paragraph_callout_cards
+  module:
+    - ds
+    - entity_reference_revisions
+third_party_settings:
+  ds:
+    layout:
+      id: pattern_section_callout_cards
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        pattern:
+          field_templates: only_content
+          variants:
+            dash_under:
+              constant_value: ''
+              dynamic_value: ''
+            is_centered:
+              constant_value: left-aligned
+              dynamic_value: ''
+            is_featured:
+              constant_value: no-emphasis
+              dynamic_value: ''
+            centered_container:
+              constant_value: '1'
+              dynamic_value: ''
+    regions:
+      items:
+        - field_p_callout_cards_cards
+      subhead:
+        - field_p_callout_cards_desc
+      superhead:
+        - field_p_callout_cards_title
+id: paragraph.stanford_paragraph_callout_cards.default
+targetEntityType: paragraph
+bundle: stanford_paragraph_callout_cards
+mode: default
+content:
+  field_p_callout_cards_cards:
+    type: entity_reference_revisions_entity_view
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: items
+  field_p_callout_cards_desc:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: subhead
+  field_p_callout_cards_title:
+    weight: 2
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: superhead
+hidden: {  }
