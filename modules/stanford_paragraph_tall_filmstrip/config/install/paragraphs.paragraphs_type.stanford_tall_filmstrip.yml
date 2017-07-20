@@ -1,6 +1,6 @@
 langcode: en
 status: true
 dependencies: {  }
-id: stanford_tall_filmstrip_card
-label: 'Tall Film Card'
+id: stanford_tall_filmstrip
+label: 'Tall Filmstrip'
 behavior_plugins: {  }

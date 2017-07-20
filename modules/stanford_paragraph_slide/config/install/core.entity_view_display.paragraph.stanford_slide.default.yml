@@ -5,7 +5,7 @@ dependencies:
     - field.field.paragraph.stanford_slide.field_p_slide_image
     - field.field.paragraph.stanford_slide.field_p_slide_link
     - field.field.paragraph.stanford_slide.field_p_slide_title
-    - image.style.component_film_card
+    - image.style.max_650x650
     - paragraphs.paragraphs_type.stanford_slide
   module:
     - ds
@@ -22,6 +22,10 @@ third_party_settings:
       settings:
         pattern:
           field_templates: default
+          variants:
+            arrow:
+              constant_value: has-arrow
+              dynamic_value: ''
     regions:
       image:
         - field_p_slide_image
@@ -38,7 +42,7 @@ content:
     weight: 0
     label: hidden
     settings:
-      image_style: component_film_card
+      image_style: max_650x650
       image_link: ''
     third_party_settings:
       field_formatter_class:
