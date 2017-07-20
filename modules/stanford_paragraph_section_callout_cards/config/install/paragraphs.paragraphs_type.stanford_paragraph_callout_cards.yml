@@ -1,0 +1,6 @@
+langcode: en
+status: true
+dependencies: {  }
+id: stanford_paragraph_callout_cards
+label: 'Callout Cards'
+behavior_plugins: {  }

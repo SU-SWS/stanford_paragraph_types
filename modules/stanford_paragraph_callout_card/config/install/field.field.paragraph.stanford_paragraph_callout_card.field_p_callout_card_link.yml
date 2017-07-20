@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_p_callout_card_link
+    - paragraphs.paragraphs_type.stanford_paragraph_callout_card
+  module:
+    - link
+id: paragraph.stanford_paragraph_callout_card.field_p_callout_card_link
+field_name: field_p_callout_card_link
+entity_type: paragraph
+bundle: stanford_paragraph_callout_card
+label: Link
+description: 'Optional link to another page or external website'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 0
+  title_predefined: ''
+field_type: link
