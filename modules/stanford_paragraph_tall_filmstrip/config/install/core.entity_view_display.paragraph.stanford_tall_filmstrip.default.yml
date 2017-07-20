@@ -45,7 +45,7 @@ third_party_settings:
               constant_value: is-single
               dynamic_value: ''
             is_expanded:
-              constant_value: ''
+              constant_value: '0'
               dynamic_value: ''
     regions:
       items:
