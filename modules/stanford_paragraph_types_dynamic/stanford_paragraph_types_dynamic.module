@@ -88,6 +88,154 @@ function stanford_paragraph_types_dynamic_preprocess_entity(&$vars) {
 }
 
 /**
+ * Implements hook_menu().
+ */
+function stanford_paragraph_types_dynamic_menu() {
+  $items = array();
+  foreach (entity_get_info() as $entity_type => $entity_info) {
+    if (!$entity_info['fieldable']) {
+      continue;
+    }
+
+    foreach ($entity_info['bundles'] as $bundle_name => $bundle_info) {
+      if (!isset($bundle_info['admin'])) {
+        continue;
+      }
+
+      // Extract path information from the bundle.
+      $path = $bundle_info['admin']['path'];
+
+      if (isset($bundle_info['admin']['bundle argument'])) {
+        $bundle_arg = $bundle_info['admin']['bundle argument'];
+        $bundle_pos = (string) $bundle_arg;
+      }
+      else {
+        $bundle_arg = $bundle_name;
+        $bundle_pos = '0';
+      }
+
+      $field_position = count(explode('/', $path)) + 1;
+
+      $access = array_intersect_key($bundle_info['admin'], drupal_map_assoc(array(
+        'access callback',
+        'access arguments',
+      )));
+      $access += array(
+        'access callback' => 'user_access',
+        'access arguments' => array('administer fields'),
+      );
+
+      $items["$path/fields/%stanford_paragraph_types_dynamic_menu/blockreference-option-permission"] = array(
+        'load arguments' => array(
+          $entity_type,
+          $bundle_arg,
+          $bundle_pos,
+          '%map',
+        ),
+        'title' => 'Option Permissions',
+        'page callback' => 'drupal_get_form',
+        'page arguments' => array(
+          'stanford_paragraph_types_dynamic_option_permission',
+          $field_position,
+        ),
+        'type' => MENU_LOCAL_TASK,
+      );
+      $items["$path/fields/%stanford_paragraph_types_dynamic_menu/blockreference-option-permission"] += $access;
+    }
+  }
+
+  return $items;
+}
+
+function stanford_paragraph_types_dynamic_option_permission($form, $form_state, $field) {
+  $form = array();
+  $instance = field_info_instance($field['entity_type'], $field['field_name'], $field['bundle']);
+
+  $options = blockreference_options_list(NULL, $instance, NULL, NULL);
+  $form['instance']['settings']['roles'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Roles'),
+    '#description' => t('Limit the options to particular roles. Leave empty to allow all options to all roles.'),
+    '#options' => user_roles(),
+    '#default_value' => $form['#instance']['settings']['roles'],
+  );
+  $form['instance']['settings']['options'] = array(
+    '#type' => 'select',
+    '#title' => t('Limit Options'),
+    '#description' => t('Select the options to display to the selected roles above.'),
+    '#options' => $options,
+    '#default_value' => $form['#instance']['settings']['options'],
+    '#multiple' => TRUE,
+  );
+
+  $form['submit'] = array('#type' => 'submit', '#value' => t('Save'));
+
+  return $form;
+}
+
+function stanford_paragraph_types_dynamic_option_permission_submit($form, &$form_state) {
+  $entity_type = $form_state['build_info']['args'][0]['entity_type'];
+  $field = $form_state['build_info']['args'][0]['field_name'];
+  $bundle = $form_state['build_info']['args'][0]['bundle'];
+  $variable = variable_get('stanford_parargraph_types_dynamic_blockreference', array());
+  $variable[$entity_type][$bundle][$field] = array(
+    'roles' => array_filter($form_state['values']['roles']),
+    'options' => $form_state['values']['options'],
+  );
+  variable_set('stanford_parargraph_types_dynamic_blockreference', $variable);
+}
+
+/**
+ * Menu loader; Load a field instance based on field and bundle name.
+ *
+ * @param $field_name
+ *   The name of the field, as contained in the path.
+ * @param $entity_type
+ *   The name of the entity.
+ * @param $bundle_name
+ *   The name of the bundle, as contained in the path.
+ * @param $bundle_pos
+ *   The position of $bundle_name in $map.
+ * @param $map
+ *   The translated menu router path argument map.
+ *
+ * @return bool|array
+ *   The field instance array.
+ *
+ * @see field_ui_menu_load().
+ */
+function stanford_paragraph_types_dynamic_menu_load($field_name, $entity_type, $bundle_name, $bundle_pos, $map) {
+  // Extract the actual bundle name from the translated argument map.
+  // The menu router path to manage fields of an entity can be shared among
+  // multiple bundles. For example:
+  // - admin/structure/types/manage/%node_type/fields/%field_ui_menu
+  // - admin/structure/types/manage/%comment_node_type/fields/%field_ui_menu
+  // The menu system will automatically load the correct bundle depending on the
+  // actual path arguments, but this menu loader function only receives the node
+  // type string as $bundle_name, which is not the bundle name for comments.
+  // We therefore leverage the dynamically translated $map provided by the menu
+  // system to retrieve the actual bundle and bundle name for the current path.
+  if ($bundle_pos > 0) {
+    $bundle = $map[$bundle_pos];
+    $bundle_name = field_extract_bundle($entity_type, $bundle);
+  }
+  // Check whether the field exists at all.
+  if ($field = field_info_field($field_name)) {
+    // We only want block reference fields.
+    if ($field['type'] !== 'blockreference') {
+      return FALSE;
+    }
+    // Only return the field if a field instance exists for the given entity
+    // type and bundle.
+    if ($instance = field_info_instance($entity_type, $field_name, $bundle_name)) {
+      return $instance;
+    }
+  }
+  return FALSE;
+}
+
+
+/**
  * Implements hook_field_info_alter().
  */
 function stanford_paragraph_types_dynamic_field_info_alter(&$info) {
@@ -102,17 +250,20 @@ function stanford_paragraph_types_dynamic_field_info_alter(&$info) {
  */
 function stanford_paragraph_types_dynamic_form_field_ui_field_edit_form_alter(&$form, &$form_state, $form_id) {
   if ($form['#field']['type'] == 'blockreference') {
-    $field_name = $form['#field']['field_name'];
+    // Field settings form alter.
+    $options = blockreference_options_list(NULL, $form['#instance'], NULL, NULL);
     $form['instance']['settings']['roles'] = array(
       '#type' => 'checkboxes',
       '#title' => t('Roles'),
+      '#description' => t('Limit the options to particular roles. Leave empty to allow all options to all roles.'),
       '#options' => user_roles(),
       '#default_value' => $form['#instance']['settings']['roles'],
     );
     $form['instance']['settings']['options'] = array(
       '#type' => 'select',
       '#title' => t('Limit Options'),
-      '#options' => $form['instance']['default_value_widget'][$field_name][LANGUAGE_NONE][0]['moddelta']['#options'],
+      '#description' => t('Select the options to display to the selected roles above.'),
+      '#options' => $options,
       '#default_value' => $form['#instance']['settings']['options'],
       '#multiple' => TRUE,
     );
@@ -123,32 +274,36 @@ function stanford_paragraph_types_dynamic_form_field_ui_field_edit_form_alter(&$
  * Implements hook_field_widget_form_alter().
  */
 function stanford_paragraph_types_dynamic_field_widget_form_alter(&$element, &$form_state, $context) {
-  if ($context['field']['type'] == 'blockreference' && array_filter($context['instance']['settings']['roles'])) {
-    $limited_options = FALSE;
-    foreach (array_filter($context['instance']['settings']['roles']) as $rid) {
-      if (user_has_role($rid)) {
-        $limited_options = TRUE;
-      }
-    }
-
-    if (!$limited_options) {
+  if ($context['field']['type'] == 'blockreference' &&
+    array_filter($context['instance']['settings']['roles']) &&
+    array_filter($context['instance']['settings']['options'])
+  ) {
+    global $user;
+    // Check if user has any of the configured roles or if the widget is an
+    // an autocomplete.
+    if (!array_intersect_key(array_filter($context['instance']['settings']['roles']), $user->roles) || $context['instance']['widget']['type'] == 'blockreference_autocomplete') {
       return;
     }
 
-    if (empty($element['moddelta']['#default_value'])) {
-      $element['moddelta']['#options'] = array_intersect_key($element['moddelta']['#options'], $context['instance']['settings']['options']);
-      return;
+    // Component for normal options.
+    $component = &$element;
+    // Multiple selects module changes the form element.
+    if ($context['instance']['widget']['type'] == 'multiple_selects') {
+      $component = &$element['moddelta'];
     }
 
-    foreach ($context['instance']['settings']['options'] as $option) {
-      if (is_array($element['moddelta']['#default_value']) && in_array($option, $element['moddelta']['#default_value'])) {
-        $element['moddelta']['#attributes']['disabled'] = TRUE;
-        break;
-      }
-      elseif (is_string($element['moddelta']['#default_value']) && $element['moddelta']['#default_value'] == $option) {
-        $element['moddelta']['#attributes']['disabled'] = TRUE;
-        break;
-      }
+    // Cardinality is greater than 1.
+    if (is_array($component['#default_value'])) {
+      $component['#attributes']['disabled'] = TRUE;
+    }
+    // Cardinality is 1.
+    elseif (is_string($component['#default_value']) && !in_array($component['#default_value'], $context['instance']['settings']['options'])) {
+      $component['#attributes']['disabled'] = TRUE;
+    }
+
+    // If the widget is not disabled, limit the available options to the user.
+    if (empty($component['#attributes']['disabled']) || !$component['#attributes']['disabled']) {
+      $component['#options'] = array_intersect_key($component['#options'], $context['instance']['settings']['options']);
     }
   }
 }
