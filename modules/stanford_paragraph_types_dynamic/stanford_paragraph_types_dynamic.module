@@ -86,3 +86,69 @@ function stanford_paragraph_types_dynamic_preprocess_entity(&$vars) {
     }
   }
 }
+
+/**
+ * Implements hook_field_info_alter().
+ */
+function stanford_paragraph_types_dynamic_field_info_alter(&$info) {
+  if (isset($info['blockreference'])) {
+    $info['blockreference']['settings']['roles'] = array();
+    $info['blockreference']['settings']['options'] = array();
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function stanford_paragraph_types_dynamic_form_field_ui_field_edit_form_alter(&$form, &$form_state, $form_id) {
+  if ($form['#field']['type'] == 'blockreference') {
+    $field_name = $form['#field']['field_name'];
+    $form['instance']['settings']['roles'] = array(
+      '#type' => 'checkboxes',
+      '#title' => t('Roles'),
+      '#options' => user_roles(),
+      '#default_value' => $form['#instance']['settings']['roles'],
+    );
+    $form['instance']['settings']['options'] = array(
+      '#type' => 'select',
+      '#title' => t('Limit Options'),
+      '#options' => $form['instance']['default_value_widget'][$field_name][LANGUAGE_NONE][0]['moddelta']['#options'],
+      '#default_value' => $form['#instance']['settings']['options'],
+      '#multiple' => TRUE,
+    );
+  }
+}
+
+/**
+ * Implements hook_field_widget_form_alter().
+ */
+function stanford_paragraph_types_dynamic_field_widget_form_alter(&$element, &$form_state, $context) {
+  if ($context['field']['type'] == 'blockreference' && array_filter($context['instance']['settings']['roles'])) {
+    $limited_options = FALSE;
+    foreach (array_filter($context['instance']['settings']['roles']) as $rid) {
+      if (user_has_role($rid)) {
+        $limited_options = TRUE;
+      }
+    }
+
+    if (!$limited_options) {
+      return;
+    }
+
+    if (empty($element['moddelta']['#default_value'])) {
+      $element['moddelta']['#options'] = array_intersect_key($element['moddelta']['#options'], $context['instance']['settings']['options']);
+      return;
+    }
+
+    foreach ($context['instance']['settings']['options'] as $option) {
+      if (is_array($element['moddelta']['#default_value']) && in_array($option, $element['moddelta']['#default_value'])) {
+        $element['moddelta']['#attributes']['disabled'] = TRUE;
+        break;
+      }
+      elseif (is_string($element['moddelta']['#default_value']) && $element['moddelta']['#default_value'] == $option) {
+        $element['moddelta']['#attributes']['disabled'] = TRUE;
+        break;
+      }
+    }
+  }
+}
