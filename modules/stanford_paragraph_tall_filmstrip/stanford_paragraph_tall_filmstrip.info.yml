@@ -1,9 +1,11 @@
 name: 'Tall Filmstrip Paragraph'
 type: module
 core: 8.x
+package: Stanford
 dependencies:
   - ds
   - entity_reference_revisions
   - field
   - paragraphs
   - stanford_paragraph_slide
+version: 8.x-1.0-dev
