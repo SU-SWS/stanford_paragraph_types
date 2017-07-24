@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - paragraphs
+id: paragraph.alternative_1
+label: 'Alternative #1'
+targetEntityType: paragraph
+cache: true

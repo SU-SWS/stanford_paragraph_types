@@ -4,12 +4,35 @@ dependencies:
   config:
     - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_citation
     - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_image
+    - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_page_title
     - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_sub_head
     - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_super_head
-    - image.style.breakpoint_sm_2x
+    - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_tall
+    - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_text_pos
+    - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_tint
+    - image.style.thumbnail
     - paragraphs.paragraphs_type.stanford_paragraph_hero_banner
   module:
+    - field_group
     - image
+third_party_settings:
+  field_group:
+    group_display_variants:
+      children:
+        - field_p_hero_banner_tint
+        - field_p_hero_banner_text_pos
+        - field_p_hero_banner_page_title
+        - field_p_hero_banner_tall
+      parent_name: ''
+      weight: 4
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: 'Display Variants'
 id: paragraph.stanford_paragraph_hero_banner.default
 targetEntityType: paragraph
 bundle: stanford_paragraph_hero_banner
@@ -31,6 +54,12 @@ content:
     third_party_settings: {  }
     type: image_image
     region: content
+  field_p_hero_banner_page_title:
+    weight: 7
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
   field_p_hero_banner_sub_head:
     weight: 2
     settings:
@@ -46,6 +75,24 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_p_hero_banner_tall:
+    weight: 8
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_p_hero_banner_text_pos:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_p_hero_banner_tint:
+    weight: 5
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
 hidden:
   created: true

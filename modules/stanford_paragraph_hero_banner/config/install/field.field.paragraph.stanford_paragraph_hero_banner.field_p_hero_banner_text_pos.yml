@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_p_hero_banner_text_pos
+    - paragraphs.paragraphs_type.stanford_paragraph_hero_banner
+  module:
+    - options
+id: paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_text_pos
+field_name: field_p_hero_banner_text_pos
+entity_type: paragraph
+bundle: stanford_paragraph_hero_banner
+label: 'Text Position'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: '0'
+default_value_callback: ''
+settings: {  }
+field_type: list_string
