@@ -1,0 +1,12 @@
+name: 'Stanford Paragraph Types View Mode'
+description: 'Stanford Paragraph Types View Mode'
+type: module
+core: 8.x
+dependencies:
+  - ds
+  - field_formatter_class
+  - image
+  - paragraphs
+  - stanford_image_styles
+  - stanford_paragraph_hero_banner
+version: 8.x-1.0-dev
