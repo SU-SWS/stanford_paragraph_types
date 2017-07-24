@@ -8,4 +8,5 @@ dependencies:
   - field
   - paragraphs
   - stanford_paragraph_slide
+  - stanford_paragraph_tall_slide
 version: 8.x-1.0-dev

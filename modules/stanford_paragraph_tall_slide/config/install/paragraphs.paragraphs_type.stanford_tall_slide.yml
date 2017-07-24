@@ -1,0 +1,6 @@
+langcode: en
+status: true
+dependencies: {  }
+id: stanford_tall_slide
+label: 'Tall Slide'
+behavior_plugins: {  }

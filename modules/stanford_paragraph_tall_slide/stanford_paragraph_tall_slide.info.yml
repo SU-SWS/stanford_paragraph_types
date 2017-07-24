@@ -1,0 +1,11 @@
+name: 'Tall Slide Paragraph'
+type: module
+core: 8.x
+dependencies:
+  - ds
+  - field
+  - field_formatter_class
+  - filefield_paths
+  - image
+  - link
+  - paragraphs

@@ -1,0 +1,94 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_tall_slide.field_p_tall_slide_desc
+    - field.field.paragraph.stanford_tall_slide.field_p_tall_slide_image
+    - field.field.paragraph.stanford_tall_slide.field_p_tall_slide_link
+    - field.field.paragraph.stanford_tall_slide.field_p_tall_slide_subtitle
+    - field.field.paragraph.stanford_tall_slide.field_p_tall_slide_title
+    - image.style.component_tall_film_card
+    - paragraphs.paragraphs_type.stanford_tall_slide
+  module:
+    - ds
+    - field_formatter_class
+    - image
+    - link
+third_party_settings:
+  ds:
+    layout:
+      id: pattern_film_card
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        pattern:
+          field_templates: default
+          variants:
+            arrow:
+              constant_value: no-arrow
+              dynamic_value: ''
+    regions:
+      description:
+        - field_p_tall_slide_desc
+      image:
+        - field_p_tall_slide_image
+      link:
+        - field_p_tall_slide_link
+      subtitle:
+        - field_p_tall_slide_subtitle
+      title:
+        - field_p_tall_slide_title
+id: paragraph.stanford_tall_slide.default
+targetEntityType: paragraph
+bundle: stanford_tall_slide
+mode: default
+content:
+  field_p_tall_slide_desc:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: description
+  field_p_tall_slide_image:
+    weight: 1
+    label: hidden
+    settings:
+      image_style: component_tall_film_card
+      image_link: ''
+    third_party_settings:
+      field_formatter_class:
+        class: ''
+    type: image
+    region: image
+  field_p_tall_slide_link:
+    weight: 2
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: link
+  field_p_tall_slide_subtitle:
+    weight: 3
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: subtitle
+  field_p_tall_slide_title:
+    weight: 4
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: title
+hidden: {  }
