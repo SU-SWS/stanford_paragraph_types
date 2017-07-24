@@ -149,6 +149,9 @@ function stanford_paragraph_types_dynamic_menu() {
   return $items;
 }
 
+/**
+ * Form callback for blockreference field option permissions.
+ */
 function stanford_paragraph_types_dynamic_option_permission($form, $form_state, $field) {
   $entity_type = $field['entity_type'];
   $bundle = $field['bundle'];
@@ -184,6 +187,9 @@ function stanford_paragraph_types_dynamic_option_permission($form, $form_state, 
   return $form;
 }
 
+/**
+ * Form submit for blockreference field option permissions.
+ */
 function stanford_paragraph_types_dynamic_option_permission_submit($form, &$form_state) {
   $entity_type = $form_state['build_info']['args'][0]['entity_type'];
   $field_name = $form_state['build_info']['args'][0]['field_name'];
@@ -209,21 +215,21 @@ function stanford_paragraph_types_dynamic_field_delete_instance($instance) {
 /**
  * Menu loader; Load a field instance based on field and bundle name.
  *
- * @param $field_name
+ * @param string $field_name
  *   The name of the field, as contained in the path.
- * @param $entity_type
+ * @param string $entity_type
  *   The name of the entity.
- * @param $bundle_name
+ * @param string $bundle_name
  *   The name of the bundle, as contained in the path.
- * @param $bundle_pos
+ * @param int $bundle_pos
  *   The position of $bundle_name in $map.
- * @param $map
+ * @param array $map
  *   The translated menu router path argument map.
  *
  * @return bool|array
  *   The field instance array.
  *
- * @see field_ui_menu_load().
+ * @see field_ui_menu_load()
  */
 function stanford_paragraph_types_dynamic_menu_load($field_name, $entity_type, $bundle_name, $bundle_pos, $map) {
   // Extract the actual bundle name from the translated argument map.
@@ -279,13 +285,25 @@ function stanford_paragraph_types_dynamic_field_widget_form_alter(&$element, &$f
     return;
   }
 
-  // Component for normal options.
-  $component = &$element;
   // Multiple selects module changes the form element.
   if ($context['instance']['widget']['type'] == 'multiple_selects') {
-    $component = &$element['moddelta'];
+    _stanford_paragraph_types_dynamic_alter_form_component($element['moddelta'], $limits);
+  }
+  else {
+    _stanford_paragraph_types_dynamic_alter_form_component($element, $limits);
   }
 
+}
+
+/**
+ * Alter the form component for blockrefence fields.
+ *
+ * @param array $component
+ *   Form API Component.
+ * @param array $limits
+ *   Keyed array of roles and options to limit the field.
+ */
+function _stanford_paragraph_types_dynamic_alter_form_component(&$component, $limits) {
   // Cardinality is greater than 1.
   if (is_array($component['#default_value'])) {
     foreach ($component['#default_value'] as $value) {
@@ -305,5 +323,4 @@ function stanford_paragraph_types_dynamic_field_widget_form_alter(&$element, &$f
   if (empty($component['#attributes']['disabled']) || !$component['#attributes']['disabled']) {
     $component['#options'] = array_intersect_key($component['#options'], $limits['options']);
   }
-
 }

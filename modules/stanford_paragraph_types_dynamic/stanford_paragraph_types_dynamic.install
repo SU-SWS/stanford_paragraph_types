@@ -2,19 +2,19 @@
 
 /**
  * @file
- * Stanford_paragraph_types_dynamic.install
+ * Stanford_paragraph_types_dynamic.install.
  */
 
 /**
  * Implements hook_uninstall().
  */
 function stanford_paragraph_types_dynamic_uninstall() {
-  $block_reference_fields = field_read_fields(array('type' => 'blockreference'));
+  $block_fields = field_read_fields(array('type' => 'blockreference'));
   $instances = field_info_instances();
   foreach ($instances as $entity_type => $bundles) {
     foreach ($bundles as $bundle => $fields) {
       foreach (array_keys($fields) as $field_name) {
-        if (isset($block_reference_fields[$field_name])) {
+        if (isset($block_fields[$field_name])) {
           variable_del("stanford_parargraph_types_dynamic-$entity_type-$bundle-$field_name");
         }
       }
