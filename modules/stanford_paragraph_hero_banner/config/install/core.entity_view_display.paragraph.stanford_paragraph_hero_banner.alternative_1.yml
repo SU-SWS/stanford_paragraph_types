@@ -41,7 +41,7 @@ third_party_settings:
               constant_value: is-tall
               dynamic_value: ''
             racing_stripe:
-              constant_value: '1'
+              constant_value: has-racing-stripe
               dynamic_value: ''
             stripe_block:
               constant_value: ''
