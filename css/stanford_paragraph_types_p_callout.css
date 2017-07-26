@@ -90,6 +90,9 @@
 .paragraphs-item-p-callout.entity-paragraphs-item.entity.color-background {
   margin-bottom: 3em;
 }
+.paragraphs-item-p-callout.entity-paragraphs-item.entity.color-background .center {
+  margin-bottom: 1em;
+}
 .paragraphs-item-p-callout.entity-paragraphs-item.entity.color-background .field-name-field-p-callout-text {
   margin-bottom: 0;
 }
