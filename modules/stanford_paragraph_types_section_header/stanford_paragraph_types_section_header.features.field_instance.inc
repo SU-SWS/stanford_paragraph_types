@@ -41,7 +41,9 @@ function stanford_paragraph_types_section_header_field_default_field_instances()
     'widget' => array(
       'active' => 1,
       'module' => 'options',
-      'settings' => array(),
+      'settings' => array(
+        'apply_chosen' => '',
+      ),
       'type' => 'options_select',
       'weight' => 2,
     ),
@@ -72,7 +74,7 @@ function stanford_paragraph_types_section_header_field_default_field_instances()
     'entity_type' => 'paragraphs_item',
     'field_name' => 'field_p_section_heading',
     'label' => 'Heading',
-    'required' => 0,
+    'required' => 1,
     'settings' => array(
       'better_formats' => array(
         'allowed_formats' => array(

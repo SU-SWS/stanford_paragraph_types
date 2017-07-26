@@ -13,6 +13,7 @@ features[features_api][] = api:2
 features[field_base][] = field_p_section_color
 features[field_base][] = field_p_section_heading
 features[field_group][] = group_p_section_header|paragraphs_item|p_section_header|default
+features[field_group][] = group_section_header|paragraphs_item|p_section_header|form
 features[field_instance][] = paragraphs_item-p_section_header-field_p_section_color
 features[field_instance][] = paragraphs_item-p_section_header-field_p_section_heading
 features[paragraphs][] = p_section_header
