@@ -116,27 +116,33 @@
   padding: 20px;
   margin-bottom: 60px;
 }
-.paragraphs-item-p-cards .pattern-argyle .group-card-title {
-  background-image: url("../img/argyle.png");
+.paragraphs-item-p-cards .pattern-asfalt-dark .group-card-title {
+  background-image: url("../img/asfalt-dark.png");
 }
-.paragraphs-item-p-cards .pattern-basketball .group-card-title {
-  background-image: url("../img/basketball.png");
+.paragraphs-item-p-cards .pattern-back-pattern .group-card-title {
+  background-image: url("../img/back-pattern.png");
 }
-.paragraphs-item-p-cards .pattern-brick-wall .group-card-title {
-  background-image: url("../img/brick-wall.png");
+.paragraphs-item-p-cards .pattern-cubes .group-card-title {
+  background-image: url("../img/cubes.png");
 }
-.paragraphs-item-p-cards .pattern-bright-squares .group-card-title {
-  background-image: url("../img/bright-squares.png");
+.paragraphs-item-p-cards .pattern-dimension .group-card-title {
+  background-image: url("../img/dimension.png");
 }
-.paragraphs-item-p-cards .pattern-brushed-alum .group-card-title {
-  background-image: url("../img/brushed-alum.png");
+.paragraphs-item-p-cards .pattern-flower-trail .group-card-title {
+  background-image: url("../img/flower-trail.png");
 }
-.paragraphs-item-p-cards .pattern-crisp-paper-ruffles .group-card-title {
-  background-image: url("../img/crisp-paper-ruffles.png");
+.paragraphs-item-p-cards .pattern-nami .group-card-title {
+  background-image: url("../img/nami.png");
 }
-.paragraphs-item-p-cards .pattern-diagmonds-light .group-card-title {
-  background-image: url("../img/diagmonds-light.png");
+.paragraphs-item-p-cards .pattern-quilt .group-card-title {
+  background-image: url("../img/quilt.png");
 }
-.paragraphs-item-p-cards .pattern-purty-wood .group-card-title {
-  background-image: url("../img/purty-wood.png");
+.paragraphs-item-p-cards .pattern-swirl .group-card-title {
+  background-image: url("../img/swirl.png");
+}
+.paragraphs-item-p-cards .pattern-wild-flowers .group-card-title {
+  background-image: url("../img/wild-flowers.png");
+}
+.paragraphs-item-p-cards .pattern-zig-zag .group-card-title {
+  background-image: url("../img/zig-zag.png");
 }
