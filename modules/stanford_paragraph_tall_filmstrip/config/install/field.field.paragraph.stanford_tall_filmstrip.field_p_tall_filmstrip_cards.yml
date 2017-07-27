@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_p_tall_filmstrip_cards
+    - paragraphs.paragraphs_type.stanford_tall_filmstrip
+    - paragraphs.paragraphs_type.stanford_tall_slide
+  module:
+    - entity_reference_revisions
+id: paragraph.stanford_tall_filmstrip.field_p_tall_filmstrip_cards
+field_name: field_p_tall_filmstrip_cards
+entity_type: paragraph
+bundle: stanford_tall_filmstrip
+label: Cards
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles:
+      stanford_tall_slide: stanford_tall_slide
+    target_bundles_drag_drop:
+      stanford_tall_slide:
+        enabled: true
+        weight: 0
+field_type: entity_reference_revisions

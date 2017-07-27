@@ -22,6 +22,10 @@ third_party_settings:
       settings:
         pattern:
           field_templates: default
+          variants:
+            arrow:
+              constant_value: has-arrow
+              dynamic_value: ''
     regions:
       image:
         - field_p_slide_image

@@ -12,15 +12,31 @@ dependencies:
 third_party_settings:
   ds:
     layout:
-      id: pattern_paragraph_filmstrip
+      id: pattern_filmstrip
       library: null
       disable_css: false
       entity_classes: all_classes
       settings:
         pattern:
           field_templates: default
+          variants:
+            card_widths:
+              constant_value: fixed-width
+              dynamic_value: ''
+            tight:
+              constant_value: not-tight
+              dynamic_value: ''
+            height:
+              constant_value: is-short
+              dynamic_value: ''
+            double:
+              constant_value: is-single
+              dynamic_value: ''
+            centered_container:
+              constant_value: '1'
+              dynamic_value: ''
     regions:
-      content:
+      items:
         - field_p_filmstrip_slide
       title:
         - field_p_filmstrip_title
@@ -37,7 +53,7 @@ content:
       view_mode: default
       link: ''
     third_party_settings: {  }
-    region: content
+    region: items
   field_p_filmstrip_title:
     weight: 1
     label: hidden
