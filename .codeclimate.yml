@@ -8,6 +8,10 @@ engines:
     checks:
       overqualified-elements:
         enabled: false
+      qualified-headings:
+        enabled: false
+      unique-headings:
+        enabled: false
       order-alphabetical:
         enabled: false
       adjoining-classes:
