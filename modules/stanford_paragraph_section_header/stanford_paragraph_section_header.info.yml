@@ -2,6 +2,7 @@ name: 'Section Header Paragraph'
 description: "A section header paragraph type."
 type: module
 core: 8.x
+package: Stanford
 dependencies:
   - ds
   - field

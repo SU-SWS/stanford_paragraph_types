@@ -13,5 +13,5 @@ dependencies:
   - image
   - paragraphs
   - stanford_image_styles
-  - stanford_link_item
+  - stanford_paragraph_link_item
 version: 8.x-1.0-dev
