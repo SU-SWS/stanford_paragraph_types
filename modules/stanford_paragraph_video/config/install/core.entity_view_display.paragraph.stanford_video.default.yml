@@ -1,0 +1,40 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_video.field_p_video_url
+    - paragraphs.paragraphs_type.stanford_video
+  module:
+    - ds
+    - field_formatter_class
+    - video_embed_field
+third_party_settings:
+  ds:
+    layout:
+      id: layout_basic
+      library: stanford_layouts/basic
+      disable_css: false
+      entity_classes: all_classes
+      settings: {  }
+    regions:
+      content:
+        - field_p_video_url
+id: paragraph.stanford_video.default
+targetEntityType: paragraph
+bundle: stanford_video
+mode: default
+content:
+  field_p_video_url:
+    weight: 0
+    label: hidden
+    settings:
+      responsive: true
+      width: 854
+      height: 480
+      autoplay: false
+    third_party_settings:
+      field_formatter_class:
+        class: ''
+    type: video_embed_field_video
+    region: content
+hidden: {  }

@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_video.field_p_video_url
+    - paragraphs.paragraphs_type.stanford_video
+  module:
+    - video_embed_field
+id: paragraph.stanford_video.default
+targetEntityType: paragraph
+bundle: stanford_video
+mode: default
+content:
+  field_p_video_url:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: video_embed_field_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true
