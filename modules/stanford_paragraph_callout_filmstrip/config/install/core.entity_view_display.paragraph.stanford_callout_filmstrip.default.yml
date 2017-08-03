@@ -1,0 +1,78 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_callout_filmstrip.field_p_callout_film_cards
+    - field.field.paragraph.stanford_callout_filmstrip.field_p_callout_film_subhead
+    - field.field.paragraph.stanford_callout_filmstrip.field_p_callout_film_title
+    - paragraphs.paragraphs_type.stanford_callout_filmstrip
+  module:
+    - ds
+    - entity_reference_revisions
+third_party_settings:
+  ds:
+    layout:
+      id: pattern_section_callout_filmstrip
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        pattern:
+          field_templates: only_content
+          variants:
+            dash_under:
+              constant_value: has-dash-under
+              dynamic_value: ''
+            is_centered:
+              constant_value: left-aligned
+              dynamic_value: ''
+            is_featured:
+              constant_value: no-emphasis
+              dynamic_value: ''
+            card_widths:
+              constant_value: fixed-width
+              dynamic_value: ''
+            tight:
+              constant_value: not-tight
+              dynamic_value: ''
+            has_columns:
+              constant_value: has-columns
+              dynamic_value: ''
+    regions:
+      subhead:
+        - field_p_callout_film_subhead
+      superhead:
+        - field_p_callout_film_title
+      items:
+        - field_p_callout_film_cards
+id: paragraph.stanford_callout_filmstrip.default
+targetEntityType: paragraph
+bundle: stanford_callout_filmstrip
+mode: default
+content:
+  field_p_callout_film_cards:
+    type: entity_reference_revisions_entity_view
+    weight: 2
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: items
+  field_p_callout_film_subhead:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: subhead
+  field_p_callout_film_title:
+    weight: 1
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: superhead
+hidden: {  }

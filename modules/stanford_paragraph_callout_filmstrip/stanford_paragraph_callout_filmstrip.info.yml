@@ -1,0 +1,7 @@
+name: 'Callout Filmstrip Paragraph'
+description: 'Callout Filmstrip paragraph type that uses Slide paragraph type.'
+type: module
+core: 8.x
+package: Stanford
+dependencies:
+  - paragraphs
