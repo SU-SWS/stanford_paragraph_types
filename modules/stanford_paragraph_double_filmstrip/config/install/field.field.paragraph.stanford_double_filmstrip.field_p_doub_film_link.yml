@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_p_doub_film_link
+    - paragraphs.paragraphs_type.stanford_double_filmstrip
+  module:
+    - link
+id: paragraph.stanford_double_filmstrip.field_p_doub_film_link
+field_name: field_p_doub_film_link
+entity_type: paragraph
+bundle: stanford_double_filmstrip
+label: 'Read More Link'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 2
+  title_predefined: ''
+field_type: link

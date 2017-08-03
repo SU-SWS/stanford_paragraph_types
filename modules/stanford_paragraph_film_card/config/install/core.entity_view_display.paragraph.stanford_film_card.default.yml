@@ -1,0 +1,83 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_film_card.field_s_film_card_desc
+    - field.field.paragraph.stanford_film_card.field_s_film_card_image
+    - field.field.paragraph.stanford_film_card.field_s_film_card_link
+    - field.field.paragraph.stanford_film_card.field_s_film_card_title
+    - image.style.large
+    - paragraphs.paragraphs_type.stanford_film_card
+  module:
+    - ds
+    - field_formatter_class
+    - image
+    - link
+third_party_settings:
+  ds:
+    layout:
+      id: pattern_film_card
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        pattern:
+          field_templates: only_content
+          variants:
+            arrow:
+              constant_value: has-arrow
+              dynamic_value: ''
+    regions:
+      description:
+        - field_s_film_card_desc
+      image:
+        - field_s_film_card_image
+      link:
+        - field_s_film_card_link
+      title:
+        - field_s_film_card_title
+id: paragraph.stanford_film_card.default
+targetEntityType: paragraph
+bundle: stanford_film_card
+mode: default
+content:
+  field_s_film_card_desc:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: description
+  field_s_film_card_image:
+    weight: 1
+    label: hidden
+    settings:
+      image_style: large
+      image_link: ''
+    third_party_settings:
+      field_formatter_class:
+        class: ''
+    type: image
+    region: image
+  field_s_film_card_link:
+    weight: 2
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: link
+  field_s_film_card_title:
+    weight: 3
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: title
+hidden: {  }

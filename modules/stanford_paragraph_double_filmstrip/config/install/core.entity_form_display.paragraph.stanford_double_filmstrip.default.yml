@@ -1,0 +1,57 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_double_filmstrip.field_p_doub_film_cards
+    - field.field.paragraph.stanford_double_filmstrip.field_p_doub_film_desc
+    - field.field.paragraph.stanford_double_filmstrip.field_p_doub_film_link
+    - field.field.paragraph.stanford_double_filmstrip.field_p_doub_film_title
+    - paragraphs.paragraphs_type.stanford_double_filmstrip
+  module:
+    - link
+    - paragraphs
+id: paragraph.stanford_double_filmstrip.default
+targetEntityType: paragraph
+bundle: stanford_double_filmstrip
+mode: default
+content:
+  field_p_doub_film_cards:
+    type: entity_reference_paragraphs
+    weight: 3
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: closed
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: ''
+    third_party_settings: {  }
+    region: content
+  field_p_doub_film_desc:
+    weight: 1
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_p_doub_film_link:
+    weight: 2
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  field_p_doub_film_title:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

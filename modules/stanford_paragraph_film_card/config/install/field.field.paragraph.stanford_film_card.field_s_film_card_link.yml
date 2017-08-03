@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_s_film_card_link
+    - paragraphs.paragraphs_type.stanford_film_card
+  module:
+    - link
+id: paragraph.stanford_film_card.field_s_film_card_link
+field_name: field_s_film_card_link
+entity_type: paragraph
+bundle: stanford_film_card
+label: Link
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 2
+  title_predefined: ''
+field_type: link
