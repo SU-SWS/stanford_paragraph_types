@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: component_tall_film_card
+label: 'Tall Film Card'
+effects:
+  679fa297-447f-45e2-beb9-5ca9d4fa6427:
+    uuid: 679fa297-447f-45e2-beb9-5ca9d4fa6427
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 380
+      height: 604

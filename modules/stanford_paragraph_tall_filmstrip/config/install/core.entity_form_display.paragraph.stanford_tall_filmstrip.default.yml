@@ -4,10 +4,27 @@ dependencies:
   config:
     - field.field.paragraph.stanford_tall_filmstrip.field_p_tall_filmstrip_cards
     - field.field.paragraph.stanford_tall_filmstrip.field_p_tall_filmstrip_desc
+    - field.field.paragraph.stanford_tall_filmstrip.field_p_tall_filmstrip_expanded
     - field.field.paragraph.stanford_tall_filmstrip.field_p_tall_filmstrip_title
     - paragraphs.paragraphs_type.stanford_tall_filmstrip
   module:
+    - field_group
     - paragraphs
+third_party_settings:
+  field_group:
+    group_display_variants:
+      children:
+        - field_p_tall_filmstrip_expanded
+      parent_name: ''
+      weight: 20
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: 'Display Variants'
 id: paragraph.stanford_tall_filmstrip.default
 targetEntityType: paragraph
 bundle: stanford_tall_filmstrip
@@ -32,6 +49,13 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
+    region: content
+  field_p_tall_filmstrip_expanded:
+    weight: 3
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
     region: content
   field_p_tall_filmstrip_title:
     weight: 0
