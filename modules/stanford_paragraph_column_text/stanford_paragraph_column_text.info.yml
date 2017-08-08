@@ -1,0 +1,14 @@
+name: 'Column Text Paragraph'
+description: 'A multiple css column block of text.'
+package: Stanford
+type: module
+core: 8.x
+dependencies:
+  - allowed_formats
+  - ds
+  - field
+  - field_group
+  - link
+  - options
+  - paragraphs
+  - text

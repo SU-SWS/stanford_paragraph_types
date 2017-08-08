@@ -1,0 +1,57 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_column_text.field_p_column_text
+    - field.field.paragraph.stanford_column_text.field_p_column_text_columns
+    - field.field.paragraph.stanford_column_text.field_p_column_text_link
+    - paragraphs.paragraphs_type.stanford_column_text
+  module:
+    - ds
+    - link
+    - text
+third_party_settings:
+  ds:
+    layout:
+      id: pattern_simple_columns
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        pattern:
+          field_templates: default
+          variants:
+            columns:
+              constant_value: two-columns
+              dynamic_value: field_p_column_text_columns
+    regions:
+      content:
+        - field_p_column_text
+      link:
+        - field_p_column_text_link
+id: paragraph.stanford_column_text.default
+targetEntityType: paragraph
+bundle: stanford_column_text
+mode: default
+content:
+  field_p_column_text:
+    weight: 0
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_p_column_text_link:
+    weight: 1
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: link
+hidden:
+  field_p_column_text_columns: true
