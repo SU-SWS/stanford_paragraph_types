@@ -1,0 +1,6 @@
+name: 'Stanford Paragraph Field Options'
+description: 'Configured which paragraph options are available for particular roles'
+type: module
+core: 8.x
+dependencies:
+  - paragraphs

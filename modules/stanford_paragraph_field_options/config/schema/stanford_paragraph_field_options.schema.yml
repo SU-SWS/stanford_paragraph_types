@@ -1,0 +1,12 @@
+stanford_paragraph_field_options.stanford_paragraph_field_options.*:
+  type: config_entity
+  label: 'Stanford paragraph field options config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    uuid:
+      type: string
