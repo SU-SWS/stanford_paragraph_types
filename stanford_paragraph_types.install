@@ -13,3 +13,26 @@ function stanford_paragraph_types_update_8101() {
   entity_delete_multiple('paragraph', \Drupal::entityQuery('paragraph')->condition("type", "stanford_cta")->execute());
   entity_delete_multiple('paragraph', \Drupal::entityQuery('paragraph')->condition("type", "stanford_cta_list")->execute());
 }
+
+/**
+ * Remove missing paragraph type modules from the DB.
+ */
+function stanford_paragraph_types_update_8202() {
+
+  $query = \Drupal::database()->delete('key_value');
+  $query->condition('name', 'stanford_link_item');
+  $query->execute();
+
+  $query = \Drupal::database()->delete('key_value');
+  $query->condition('name', 'stanford_paragraph_cta');
+  $query->execute();
+
+  $query = \Drupal::database()->delete('key_value');
+  $query->condition('name', 'stanford_paragraph_cta_list');
+  $query->execute();
+
+  $query = \Drupal::database()->delete('key_value');
+  $query->condition('name', 'stanford_paragraph_hero');
+  $query->execute();
+
+}
