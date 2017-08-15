@@ -1,8 +1,10 @@
 .entity-paragraphs-item {
   margin-bottom: 3em;
-}
 
-.entity-paragraphs-item.center {
-  margin: 0 auto 3em;
-  float: none;
+  &.center,
+  &.center.span12:first-child {
+    margin: 0 auto 3em;
+    float: none;
+    max-width: 1170px;
+  }
 }
