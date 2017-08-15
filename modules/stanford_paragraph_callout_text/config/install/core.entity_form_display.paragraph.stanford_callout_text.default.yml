@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.stanford_callout_text.field_p_callout_more_link
-    - field.field.paragraph.stanford_callout_text.field_p_wysiwyg
+    - field.field.paragraph.stanford_callout_text.field_p_callout_wysiwyg
     - paragraphs.paragraphs_type.stanford_callout_text
   module:
     - link
@@ -21,7 +21,7 @@ content:
     third_party_settings: {  }
     type: link_default
     region: content
-  field_p_wysiwyg:
+  field_p_callout_wysiwyg:
     weight: 0
     settings:
       rows: 9

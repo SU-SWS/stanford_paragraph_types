@@ -10,4 +10,5 @@ dependencies:
   - field_group
   - paragraphs
   - stanford_paragraph_simple_block
+  - stanford_paragraph_types
 version: 8.x-1.0-dev

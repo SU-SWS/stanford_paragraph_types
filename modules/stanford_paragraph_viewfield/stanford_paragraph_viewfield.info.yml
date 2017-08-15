@@ -9,5 +9,6 @@ dependencies:
   - paragraphs
   - viewfield
   - views
+  - stanford_paragraph_types
 version: 8.x-1.0
 description: 'A simple paragraph type for Viewfields'

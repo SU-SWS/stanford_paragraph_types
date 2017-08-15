@@ -11,3 +11,4 @@ dependencies:
   - link
   - paragraphs
   - responsive_image
+  - stanford_paragraph_types

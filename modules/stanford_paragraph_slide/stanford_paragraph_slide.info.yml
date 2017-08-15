@@ -12,4 +12,6 @@ dependencies:
   - image
   - link
   - paragraphs
+  - focal_point
+  - stanford_paragraph_types
 version: 8.x-1.0-dev

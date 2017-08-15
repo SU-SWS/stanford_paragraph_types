@@ -8,4 +8,7 @@ dependencies:
   - field
   - paragraphs
   - text
+  - allowed_formats
+  - stanford_layouts
+  - stanford_paragraph_types
 version: 8.x-1.0-dev

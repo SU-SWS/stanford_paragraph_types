@@ -11,4 +11,5 @@ dependencies:
   - image
   - link
   - paragraphs
+  - stanford_paragraph_types
 version: 8.x-1.0-dev

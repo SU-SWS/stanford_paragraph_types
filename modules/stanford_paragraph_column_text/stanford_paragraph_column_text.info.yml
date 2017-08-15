@@ -12,3 +12,4 @@ dependencies:
   - options
   - paragraphs
   - text
+  - stanford_paragraph_types

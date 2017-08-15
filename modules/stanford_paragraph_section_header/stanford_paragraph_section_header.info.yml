@@ -8,4 +8,6 @@ dependencies:
   - field
   - link
   - paragraphs
+  - field_group
+  - stanford_paragraph_types
 version: 8.x-1.0-dev

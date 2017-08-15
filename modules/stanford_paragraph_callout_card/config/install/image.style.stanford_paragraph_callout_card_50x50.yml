@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: stanford_paragraph_callout_card_50x50
+label: 'Stanford Paragraph Callout Card 50x50'
+effects:
+  31ba1af7-6373-412a-b7a6-82c2df3462c4:
+    uuid: 31ba1af7-6373-412a-b7a6-82c2df3462c4
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 50
+      height: 50

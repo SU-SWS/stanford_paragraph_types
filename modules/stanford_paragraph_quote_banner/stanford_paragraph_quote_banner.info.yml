@@ -13,4 +13,5 @@ dependencies:
   - image
   - paragraphs
   - stanford_image_styles
+  - stanford_paragraph_types
 version: 8.x-1.0-dev

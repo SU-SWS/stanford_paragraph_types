@@ -10,6 +10,8 @@ dependencies:
   - field_formatter_class
   - field_group
   - paragraphs
+  - focal_point
   - stanford_paragraph_slide
   - stanford_paragraph_tall_slide
+  - stanford_paragraph_types
 version: 8.x-1.0-dev

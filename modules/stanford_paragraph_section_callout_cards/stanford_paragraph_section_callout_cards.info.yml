@@ -8,5 +8,7 @@ dependencies:
   - entity_reference_revisions
   - field
   - paragraphs
+  - focal_point
   - stanford_paragraph_callout_card
+  - stanford_paragraph_types
 version: 8.x-1.0-dev

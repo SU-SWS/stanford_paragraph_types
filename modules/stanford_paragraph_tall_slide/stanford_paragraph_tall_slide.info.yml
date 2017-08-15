@@ -10,3 +10,5 @@ dependencies:
   - image
   - link
   - paragraphs
+  - focal_point
+  - stanford_paragraph_types
