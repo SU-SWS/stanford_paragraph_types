@@ -3,8 +3,9 @@
 namespace Drupal\stanford_paragraph_field_options\Form;
 
 use Drupal\Core\Entity\EntityForm;
-use Drupal\Core\Entity\EntityTypeBundleInfo;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\paragraphs\Plugin\Field\FieldWidget\ParagraphsWidget;
 
 /**
  * Class StanfordParagraphFieldOptionsForm.
@@ -14,7 +15,7 @@ class StanfordParagraphFieldOptionsForm extends EntityForm {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $entity_type_id = NULL, $bundle = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, $entity_type_id = NULL, $bundle = NULL, $field_config = NULL) {
     $form = [];
 
     if (!$form_state->get('entity_type_id')) {
@@ -23,8 +24,12 @@ class StanfordParagraphFieldOptionsForm extends EntityForm {
     if (!$form_state->get('bundle')) {
       $form_state->set('bundle', $bundle);
     }
+    if (!$form_state->get('field_config')) {
+      $form_state->set('field_config', $field_config);
+    }
 
-//    EntityTypeBundleInfo
+    $config = FieldConfig::load($field_config);
+//    dpm($config);
 
     $form['label'] = [
       '#type' => 'textfield',
