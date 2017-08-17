@@ -3,10 +3,29 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.stanford_callout_blocks.field_p_callout_blocks_blocks
+    - field.field.paragraph.stanford_callout_blocks.field_p_callout_blocks_centered
+    - field.field.paragraph.stanford_callout_blocks.field_p_callout_blocks_dash_emp
     - field.field.paragraph.stanford_callout_blocks.field_p_callout_blocks_title
     - paragraphs.paragraphs_type.stanford_callout_blocks
   module:
+    - field_group
     - paragraphs
+third_party_settings:
+  field_group:
+    group_display_variants:
+      children:
+        - field_p_callout_blocks_centered
+        - field_p_callout_blocks_dash_emp
+      parent_name: ''
+      weight: 20
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: 'Display Variants'
 id: paragraph.stanford_callout_blocks.default
 targetEntityType: paragraph
 bundle: stanford_callout_blocks
@@ -23,6 +42,18 @@ content:
       form_display_mode: default
       default_paragraph_type: ''
     third_party_settings: {  }
+    region: content
+  field_p_callout_blocks_centered:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
+  field_p_callout_blocks_dash_emp:
+    weight: 3
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
   field_p_callout_blocks_title:
     weight: 0

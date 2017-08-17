@@ -3,6 +3,8 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.stanford_callout_blocks.field_p_callout_blocks_blocks
+    - field.field.paragraph.stanford_callout_blocks.field_p_callout_blocks_centered
+    - field.field.paragraph.stanford_callout_blocks.field_p_callout_blocks_dash_emp
     - field.field.paragraph.stanford_callout_blocks.field_p_callout_blocks_title
     - paragraphs.paragraphs_type.stanford_callout_blocks
   module:
@@ -26,16 +28,16 @@ third_party_settings:
               constant_value: has-dash-under
               dynamic_value: ''
             is_centered:
-              constant_value: left-aligned
-              dynamic_value: ''
+              constant_value: is-centered
+              dynamic_value: field_p_callout_blocks_centered
             is_featured:
               constant_value: no-emphasis
-              dynamic_value: ''
+              dynamic_value: field_p_callout_blocks_dash_emp
     regions:
-      items:
-        - field_p_callout_blocks_blocks
       title:
         - field_p_callout_blocks_title
+      items:
+        - field_p_callout_blocks_blocks
 id: paragraph.stanford_callout_blocks.default
 targetEntityType: paragraph
 bundle: stanford_callout_blocks
@@ -43,7 +45,7 @@ mode: default
 content:
   field_p_callout_blocks_blocks:
     type: entity_reference_revisions_entity_view
-    weight: 0
+    weight: 1
     label: hidden
     settings:
       view_mode: default
@@ -51,11 +53,13 @@ content:
     third_party_settings: {  }
     region: items
   field_p_callout_blocks_title:
-    weight: 1
+    weight: 0
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
     type: string
     region: title
-hidden: {  }
+hidden:
+  field_p_callout_blocks_centered: true
+  field_p_callout_blocks_dash_emp: true

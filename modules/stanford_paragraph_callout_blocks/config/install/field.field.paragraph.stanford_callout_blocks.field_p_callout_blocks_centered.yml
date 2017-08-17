@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_p_callout_blocks_centered
+    - paragraphs.paragraphs_type.stanford_callout_blocks
+  module:
+    - options
+id: paragraph.stanford_callout_blocks.field_p_callout_blocks_centered
+field_name: field_p_callout_blocks_centered
+entity_type: paragraph
+bundle: stanford_callout_blocks
+label: 'Centered Header'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: left-aligned
+default_value_callback: ''
+settings: {  }
+field_type: list_string
