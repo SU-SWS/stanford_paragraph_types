@@ -4,11 +4,13 @@ core: 8.x
 package: Stanford
 dependencies:
   - ds
+  - entity_reference_revisions
   - field
   - field_formatter_class
   - paragraphs
+  - stanford_paragraph_section_header
+  - stanford_paragraph_types
   - viewfield
   - views
-  - stanford_paragraph_types
 version: 8.x-1.0
 description: 'A simple paragraph type for Viewfields'

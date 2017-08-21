@@ -3,18 +3,32 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.stanford_viewfield.field_p_viewfield
+    - field.field.paragraph.stanford_viewfield.field_p_viewfield_section_header
     - paragraphs.paragraphs_type.stanford_viewfield
   module:
     - ds
+    - entity_reference_revisions
     - field_formatter_class
     - viewfield
+third_party_settings:
+  ds:
+    layout:
+      id: layout_basic
+      library: stanford_layouts/basic
+      disable_css: false
+      entity_classes: all_classes
+      settings: {  }
+    regions:
+      content:
+        - field_p_viewfield_section_header
+        - field_p_viewfield
 id: paragraph.stanford_viewfield.default
 targetEntityType: paragraph
 bundle: stanford_viewfield
 mode: default
 content:
   field_p_viewfield:
-    weight: 0
+    weight: 1
     label: hidden
     settings:
       view_title: hidden
@@ -26,5 +40,14 @@ content:
       ds:
         ds_limit: ''
     type: viewfield_default
+    region: content
+  field_p_viewfield_section_header:
+    type: entity_reference_revisions_entity_view
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
     region: content
 hidden: {  }
