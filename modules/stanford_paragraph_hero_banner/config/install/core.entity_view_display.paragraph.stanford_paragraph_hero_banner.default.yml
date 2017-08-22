@@ -5,6 +5,7 @@ dependencies:
     - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_citation
     - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_image
     - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_page_title
+    - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_photo_credit
     - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_sub_head
     - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_super_head
     - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_tall
@@ -49,6 +50,8 @@ third_party_settings:
     regions:
       cite:
         - field_p_hero_banner_citation
+      footer:
+        - field_p_hero_banner_photo_credit
       image:
         - field_p_hero_banner_image
       subhead:
@@ -69,7 +72,7 @@ content:
     type: string
     region: cite
   field_p_hero_banner_image:
-    weight: 1
+    weight: 2
     label: hidden
     settings:
       image_style: breakpoint_xl_2x
@@ -78,8 +81,16 @@ content:
         class: ''
     type: image_url
     region: image
+  field_p_hero_banner_photo_credit:
+    weight: 1
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: footer
   field_p_hero_banner_sub_head:
-    weight: 2
+    weight: 3
     label: hidden
     settings:
       link_to_entity: false
@@ -87,7 +98,7 @@ content:
     type: string
     region: subhead
   field_p_hero_banner_super_head:
-    weight: 3
+    weight: 4
     label: hidden
     settings:
       link_to_entity: false

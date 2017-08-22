@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_p_hero_banner_photo_credit
+    - paragraphs.paragraphs_type.stanford_paragraph_hero_banner
+id: paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_photo_credit
+field_name: field_p_hero_banner_photo_credit
+entity_type: paragraph
+bundle: stanford_paragraph_hero_banner
+label: 'Photo Credit'
+description: 'Provide a credit to the photo''s source.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

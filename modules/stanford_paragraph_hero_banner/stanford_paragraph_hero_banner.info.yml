@@ -14,6 +14,6 @@ dependencies:
   - options
   - paragraphs
   - stanford_image_styles
-  - stanford_paragraph_types_view_mode
   - stanford_paragraph_types
+  - stanford_paragraph_types_view_mode
 version: 8.x-1.0-dev
