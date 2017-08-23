@@ -1,0 +1,49 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_responsive_image.field_p_responsive_image
+    - field.field.paragraph.stanford_responsive_image.field_p_responsive_image_cred
+    - paragraphs.paragraphs_type.stanford_responsive_image
+    - responsive_image.styles.stanford_hero_block_wide
+  module:
+    - ds
+    - field_formatter_class
+    - responsive_image
+third_party_settings:
+  ds:
+    layout:
+      id: layout_basic
+      library: stanford_layouts/basic
+      disable_css: false
+      entity_classes: all_classes
+      settings: {  }
+    regions:
+      content:
+        - field_p_responsive_image
+        - field_p_responsive_image_cred
+id: paragraph.stanford_responsive_image.default
+targetEntityType: paragraph
+bundle: stanford_responsive_image
+mode: default
+content:
+  field_p_responsive_image:
+    weight: 0
+    label: hidden
+    settings:
+      responsive_image_style: stanford_hero_block_wide
+      image_link: ''
+    third_party_settings:
+      field_formatter_class:
+        class: ''
+    type: responsive_image
+    region: content
+  field_p_responsive_image_cred:
+    weight: 1
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+hidden: {  }

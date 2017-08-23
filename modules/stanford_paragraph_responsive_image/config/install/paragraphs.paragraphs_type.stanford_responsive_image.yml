@@ -1,0 +1,6 @@
+langcode: en
+status: true
+dependencies: {  }
+id: stanford_responsive_image
+label: 'Responsive Image'
+behavior_plugins: {  }

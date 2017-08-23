@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_responsive_image.field_p_responsive_image
+    - field.field.paragraph.stanford_responsive_image.field_p_responsive_image_cred
+    - image.style.thumbnail
+    - paragraphs.paragraphs_type.stanford_responsive_image
+  module:
+    - image
+id: paragraph.stanford_responsive_image.default
+targetEntityType: paragraph
+bundle: stanford_responsive_image
+mode: default
+content:
+  field_p_responsive_image:
+    weight: 0
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
+  field_p_responsive_image_cred:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true
+  uid: true

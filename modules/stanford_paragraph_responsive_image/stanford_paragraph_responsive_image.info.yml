@@ -1,0 +1,15 @@
+name: 'Stanford Responsive Image Paragraph'
+type: module
+core: 8.x
+package: Stanford
+version: 8.x-1.0-dev
+dependencies:
+  - ds
+  - field
+  - field_formatter_class
+  - file
+  - filefield_paths
+  - image
+  - paragraphs
+  - responsive_image
+  - stanford_image_styles
