@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * stanford_paragraph_hero_banner.install
+ */
+
+use Drupal\field\Entity\FieldStorageConfig;
+
+/**
+ * Deletes old hero banner fields not in use.
+ */
+function stanford_paragraph_hero_banner_update_8102() {
+  $fields = [
+    'paragraph.field_p_banner_card_body_1',
+    'paragraph.field_p_banner_card_body_2',
+    'paragraph.field_p_banner_card_link_1',
+    'paragraph.field_p_banner_card_link_2',
+    'paragraph.field_p_banner_card_subtitle_1',
+    'paragraph.field_p_banner_card_subtitle_2',
+    'paragraph.field_p_banner_card_title_1',
+    'paragraph.field_p_banner_card_title_2',
+  ];
+  foreach ($fields as $field) {
+    if ($field = FieldStorageConfig::load($field)) {
+      $field->delete();
+    }
+  }
+}

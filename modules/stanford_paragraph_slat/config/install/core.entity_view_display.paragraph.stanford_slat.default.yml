@@ -1,0 +1,97 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_slat.field_p_slat_description
+    - field.field.paragraph.stanford_slat.field_p_slat_image
+    - field.field.paragraph.stanford_slat.field_p_slat_image_caption
+    - field.field.paragraph.stanford_slat.field_p_slat_image_side
+    - field.field.paragraph.stanford_slat.field_p_slat_link
+    - field.field.paragraph.stanford_slat.field_p_slat_title
+    - paragraphs.paragraphs_type.stanford_slat
+    - responsive_image.styles.wide
+  module:
+    - ds
+    - field_formatter_class
+    - link
+    - responsive_image
+third_party_settings:
+  ds:
+    layout:
+      id: pattern_simple_slat
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        pattern:
+          field_templates: default
+          variants:
+            image_side:
+              constant_value: has-image-left
+              dynamic_value: field_p_slat_image_side
+            width:
+              constant_value: is-narrow
+              dynamic_value: ''
+    regions:
+      description:
+        - field_p_slat_description
+      image:
+        - field_p_slat_image
+      image_caption:
+        - field_p_slat_image_caption
+      link:
+        - field_p_slat_link
+      title:
+        - field_p_slat_title
+id: paragraph.stanford_slat.default
+targetEntityType: paragraph
+bundle: stanford_slat
+mode: default
+content:
+  field_p_slat_description:
+    weight: 0
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: description
+  field_p_slat_image:
+    weight: 1
+    label: hidden
+    settings:
+      responsive_image_style: wide
+      image_link: ''
+    third_party_settings:
+      field_formatter_class:
+        class: ''
+    type: responsive_image
+    region: image
+  field_p_slat_image_caption:
+    weight: 2
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: image_caption
+  field_p_slat_link:
+    weight: 3
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: link
+  field_p_slat_title:
+    weight: 4
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: title
+hidden:
+  field_p_slat_image_side: true

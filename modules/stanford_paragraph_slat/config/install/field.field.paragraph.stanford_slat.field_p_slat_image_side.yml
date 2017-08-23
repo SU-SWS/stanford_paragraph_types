@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_p_slat_image_side
+    - paragraphs.paragraphs_type.stanford_slat
+  module:
+    - options
+id: paragraph.stanford_slat.field_p_slat_image_side
+field_name: field_p_slat_image_side
+entity_type: paragraph
+bundle: stanford_slat
+label: 'Image Side'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: has-image-left
+default_value_callback: ''
+settings: {  }
+field_type: list_string
