@@ -1,0 +1,13 @@
+name: 'Section Highlight Cards'
+description: 'Section highlight cards'
+type: module
+core: 8.x
+dependencies:
+  - ds
+  - entity_reference_revisions
+  - field
+  - field_formatter_class
+  - paragraphs
+  - stanford_paragraph_highlight_card
+version: 8.x-1.0-dev
+package: Stanford

@@ -9,4 +9,5 @@ dependencies:
   - link
   - paragraphs
   - stanford_paragraph_types
+  - stanford_paragraph_types_view_mode
 version: 8.x-1.0-dev

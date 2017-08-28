@@ -1,0 +1,6 @@
+langcode: en
+status: true
+dependencies: {  }
+id: stanford_section_highlight_cards
+label: 'Section Highlight Cards'
+behavior_plugins: {  }

@@ -22,9 +22,32 @@ function stanford_paragraph_types_update_8101() {
 }
 
 /**
+ * Remove missing paragraph type modules from the DB.
+ */
+function stanford_paragraph_types_update_8102() {
+
+  $query = \Drupal::database()->delete('key_value');
+  $query->condition('name', 'stanford_link_item');
+  $query->execute();
+
+  $query = \Drupal::database()->delete('key_value');
+  $query->condition('name', 'stanford_paragraph_cta');
+  $query->execute();
+
+  $query = \Drupal::database()->delete('key_value');
+  $query->condition('name', 'stanford_paragraph_cta_list');
+  $query->execute();
+
+  $query = \Drupal::database()->delete('key_value');
+  $query->condition('name', 'stanford_paragraph_hero');
+  $query->execute();
+
+}
+
+/**
  * Move data from field_p_wysiwyg to field_p_callout_wysiwyg.
  */
-function stanford_paragraph_types_update_8203() {
+function stanford_paragraph_types_update_8103() {
   $old_name = 'field_p_wysiwyg';
   $new_name = 'field_p_callout_wysiwyg';
   $bundle = 'stanford_callout_text';
@@ -147,27 +170,4 @@ function _stanford_paragraph_types_move_field_data($old_name, $new_name, $bundle
       ->condition('bundle', $bundle)
       ->execute();
   }
-}
-
-/**
- * Remove missing paragraph type modules from the DB.
- */
-function stanford_paragraph_types_update_8202() {
-
-  $query = \Drupal::database()->delete('key_value');
-  $query->condition('name', 'stanford_link_item');
-  $query->execute();
-
-  $query = \Drupal::database()->delete('key_value');
-  $query->condition('name', 'stanford_paragraph_cta');
-  $query->execute();
-
-  $query = \Drupal::database()->delete('key_value');
-  $query->condition('name', 'stanford_paragraph_cta_list');
-  $query->execute();
-
-  $query = \Drupal::database()->delete('key_value');
-  $query->condition('name', 'stanford_paragraph_hero');
-  $query->execute();
-
 }

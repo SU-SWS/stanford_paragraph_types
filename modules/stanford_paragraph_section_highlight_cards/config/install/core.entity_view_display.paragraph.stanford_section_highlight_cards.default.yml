@@ -1,0 +1,70 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.stanford_section_highlight_cards.field_highlight_cards_title
+    - field.field.paragraph.stanford_section_highlight_cards.field_p_highlight_cards_desc
+    - field.field.paragraph.stanford_section_highlight_cards.field_p_section_highlight_cards
+    - paragraphs.paragraphs_type.stanford_section_highlight_cards
+  module:
+    - ds
+    - entity_reference_revisions
+    - field_formatter_class
+third_party_settings:
+  ds:
+    layout:
+      id: pattern_section_highlight_cards
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        pattern:
+          field_templates: only_content
+          variants:
+            centered_container:
+              constant_value: '1'
+              dynamic_value: ''
+            card_width:
+              constant_value: is-narrow
+              dynamic_value: ''
+    regions:
+      items:
+        - field_p_section_highlight_cards
+      subhead:
+        - field_p_highlight_cards_desc
+      superhead:
+        - field_highlight_cards_title
+id: paragraph.stanford_section_highlight_cards.default
+targetEntityType: paragraph
+bundle: stanford_section_highlight_cards
+mode: default
+content:
+  field_highlight_cards_title:
+    weight: 2
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: superhead
+  field_p_highlight_cards_desc:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: basic_string
+    region: subhead
+  field_p_section_highlight_cards:
+    type: entity_reference_revisions_entity_view
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: alternative_1
+      link: ''
+    third_party_settings:
+      field_formatter_class:
+        class: ''
+      ds:
+        ds_limit: ''
+    region: items
+hidden: {  }
