@@ -2,17 +2,17 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_p_callout_film_subhead
+    - field.storage.paragraph.field_p_callout_film_s_head
     - paragraphs.paragraphs_type.stanford_callout_filmstrip
-id: paragraph.stanford_callout_filmstrip.field_p_callout_film_subhead
-field_name: field_p_callout_film_subhead
+id: paragraph.stanford_callout_filmstrip.field_p_callout_film_s_head
+field_name: field_p_callout_film_s_head
 entity_type: paragraph
 bundle: stanford_callout_filmstrip
-label: SubHeading
+label: Sub Heading
 description: ''
 required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: string
+field_type: string_long

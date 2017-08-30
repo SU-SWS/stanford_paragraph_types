@@ -2,9 +2,12 @@ name: 'Callout Filmstrip Paragraph'
 description: 'Callout Filmstrip paragraph type that uses Slide paragraph type.'
 type: module
 core: 8.x
-package: Stanford
 dependencies:
   - ds
+  - entity_reference_revisions
+  - field
+  - field_group
+  - options
   - paragraphs
   - stanford_paragraph_slide
-  - stanford_paragraph_types
+package: Stanford

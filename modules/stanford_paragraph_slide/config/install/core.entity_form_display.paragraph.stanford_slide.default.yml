@@ -4,7 +4,7 @@ dependencies:
   config:
     - field.field.paragraph.stanford_slide.field_p_slide_image
     - field.field.paragraph.stanford_slide.field_p_slide_link
-    - field.field.paragraph.stanford_slide.field_p_slide_title
+    - field.field.paragraph.stanford_slide.field_p_slide_body
     - image.style.thumbnail
     - paragraphs.paragraphs_type.stanford_slide
   module:
@@ -31,7 +31,7 @@ content:
     third_party_settings: {  }
     type: link_default
     region: content
-  field_p_slide_title:
+  field_p_slide_body:
     weight: 0
     settings:
       size: 60

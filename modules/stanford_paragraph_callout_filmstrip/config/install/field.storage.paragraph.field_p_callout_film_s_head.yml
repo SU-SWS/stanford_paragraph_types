@@ -3,13 +3,11 @@ status: true
 dependencies:
   module:
     - paragraphs
-id: paragraph.field_p_slide_title
-field_name: field_p_slide_title
+id: paragraph.field_p_callout_film_s_head
+field_name: field_p_callout_film_s_head
 entity_type: paragraph
-type: string
+type: string_long
 settings:
-  max_length: 60
-  is_ascii: false
   case_sensitive: false
 module: core
 locked: false

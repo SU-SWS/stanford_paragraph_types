@@ -5,8 +5,10 @@
  * stanford_paragraph_types.install
  */
 
-use \Drupal\Core\Config\FileStorage;
-use \Drupal\field\Entity\FieldStorageConfig;
+use Drupal\Core\Config\FileStorage;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\Core\Utility\UpdateException;
+use Drupal\Core\Logger\RfcLogLevel;
 
 /**
  * Remove all cta and cta_list paragraph entities.
@@ -82,7 +84,7 @@ function _stanford_paragraph_types_rename_field($old_name, $new_name, $bundle, $
     ->getStorage('field_config')
     ->load("paragraph.$bundle.$new_name");
   if ($field) {
-    return TRUE;
+    throw new UpdateException(t("New field already exists: %name", ["%name" => $new_name]));
   }
 
   // Import new field config.
@@ -90,8 +92,12 @@ function _stanford_paragraph_types_rename_field($old_name, $new_name, $bundle, $
   $source = new FileStorage($config_path);
 
   // Check if the module contains the two config files.
-  if (!$source->exists("field.field.paragraph.$bundle.$new_name") || !$source->exists("field.storage.paragraph.$new_name")) {
-    return FALSE;
+  if (!$source->exists("field.field.paragraph.$bundle.$new_name")) {
+    throw new UpdateException(t("Missing config: %s", ["%s" => "field.field.paragraph.$bundle.$new_name"]));
+  }
+
+  if (!$source->exists("field.storage.paragraph.$new_name")) {
+    throw new UpdateException(t("Missing config: %s", ["%s" => "field.storage.paragraph.$new_name"]));
   }
 
   /** @var \Drupal\Core\Config\CachedStorage $config_storage */
@@ -99,12 +105,13 @@ function _stanford_paragraph_types_rename_field($old_name, $new_name, $bundle, $
 
   // Create the storage and tables.
   if (!$config_storage->read("field.storage.paragraph.$new_name")) {
-    try {
-      $storage = new FieldStorageConfig($source->read("field.storage.paragraph.$new_name"));
-      $storage->enforceIsNew()->save();
+    $storage = new FieldStorageConfig($source->read("field.storage.paragraph.$new_name"));
+
+    if (!$storage->enforceIsNew()->save()) {
+      throw new UpdateException(t("Could not save new field storage table: %s", ["%s" => "field.storage.paragraph.$new_name"]));
     }
-    catch (Exception $e) {
-      return FALSE;
+    else {
+      \Drupal::logger("stanford_paragraph_types")->log(RfcLogLevel::DEBUG, "Saved new field storage: %", ["%s" => "field.storage.paragraph.$new_name"]);
     }
   }
 
@@ -115,12 +122,14 @@ function _stanford_paragraph_types_rename_field($old_name, $new_name, $bundle, $
   // Put the field on the paragraph entity display.
   $config_storage->write("core.entity_view_display.paragraph.$bundle.default", $source->read("core.entity_view_display.paragraph.$bundle.default"));
 
+  // Migrate the data.
   _stanford_paragraph_types_move_field_data($old_name, $new_name, $bundle);
 
   // Delete old field off bundle.
   $field = \Drupal::entityTypeManager()
     ->getStorage('field_config')
     ->load("paragraph.$bundle.$old_name");
+
   if ($field) {
     $field->delete();
   }
@@ -147,6 +156,16 @@ function _stanford_paragraph_types_move_field_data($old_name, $new_name, $bundle
   ];
 
   foreach ($tables as $old_table => $new_table) {
+    $schema = $database->schema();
+
+    if (!$schema->tableExists($old_table)) {
+      throw new UpdateException(t("Upgrade path cannot complete. Missing old table: %s", ["%s" => $old_table]));
+    }
+
+    if (!$schema->tableExists($new_table)) {
+      throw new UpdateException(t("Upgrade path cannot complete. Missing new table: %s", ["%s" => $new_table]));
+    }
+
     /** @var \Drupal\Core\Database\Statement $query */
     $query = $database->select($old_table, 'p')
       ->fields('p')
@@ -170,4 +189,25 @@ function _stanford_paragraph_types_move_field_data($old_name, $new_name, $bundle
       ->condition('bundle', $bundle)
       ->execute();
   }
+}
+
+/**
+ * Reverts all components in a feature.
+ *
+ * @param string $feature
+ *   The machine name of the feature (module).
+ */
+function _stanford_paragraph_types_revert_feature($feature) {
+  /** @var \Drupal\features\FeaturesManagerInterface $manager */
+  $manager = \Drupal::service('features.manager');
+  /** @var \Drupal\features\Package $feature */
+  $feature = $manager->loadPackage($feature, TRUE);
+  $components = $feature->getConfigOrig();
+  // Determine which config the user wants to import/revert.
+  $config_to_create = [];
+  foreach ($components as $component) {
+    $config_to_create[$component] = '';
+  }
+  $manager->createConfiguration($config_to_create);
+  drupal_flush_all_caches();
 }

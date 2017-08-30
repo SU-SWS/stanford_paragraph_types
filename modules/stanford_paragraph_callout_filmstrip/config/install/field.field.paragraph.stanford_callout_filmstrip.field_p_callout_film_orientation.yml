@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_p_callout_film_orientation
+    - paragraphs.paragraphs_type.stanford_callout_filmstrip
+  module:
+    - options
+id: paragraph.stanford_callout_filmstrip.field_p_callout_film_orientation
+field_name: field_p_callout_film_orientation
+entity_type: paragraph
+bundle: stanford_callout_filmstrip
+label: 'Heading Orientation'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: 'header-to-left:Left of filmstrip'
+default_value_callback: ''
+settings: {  }
+field_type: list_string

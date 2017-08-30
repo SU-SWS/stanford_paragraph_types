@@ -4,7 +4,7 @@ dependencies:
   config:
     - field.field.paragraph.stanford_slide.field_p_slide_image
     - field.field.paragraph.stanford_slide.field_p_slide_link
-    - field.field.paragraph.stanford_slide.field_p_slide_title
+    - field.field.paragraph.stanford_slide.field_p_slide_body
     - image.style.component_film_card
     - paragraphs.paragraphs_type.stanford_slide
   module:
@@ -32,7 +32,7 @@ third_party_settings:
       link:
         - field_p_slide_link
       title:
-        - field_p_slide_title
+        - field_p_slide_body
 id: paragraph.stanford_slide.default
 targetEntityType: paragraph
 bundle: stanford_slide
@@ -63,7 +63,7 @@ content:
         class: ''
     type: link
     region: link
-  field_p_slide_title:
+  field_p_slide_body:
     weight: 2
     label: hidden
     settings:

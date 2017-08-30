@@ -3,7 +3,8 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.stanford_callout_filmstrip.field_p_callout_film_cards
-    - field.field.paragraph.stanford_callout_filmstrip.field_p_callout_film_subhead
+    - field.field.paragraph.stanford_callout_filmstrip.field_p_callout_film_orientation
+    - field.field.paragraph.stanford_callout_filmstrip.field_p_callout_film_s_head
     - field.field.paragraph.stanford_callout_filmstrip.field_p_callout_film_title
     - paragraphs.paragraphs_type.stanford_callout_filmstrip
   module:
@@ -38,13 +39,19 @@ third_party_settings:
             has_columns:
               constant_value: has-columns
               dynamic_value: ''
+            section_header:
+              constant_value: ''
+              dynamic_value: field_p_callout_film_orientation
+            arrow:
+              constant_value: no-arrow
+              dynamic_value: ''
     regions:
-      subhead:
-        - field_p_callout_film_subhead
       superhead:
         - field_p_callout_film_title
       items:
         - field_p_callout_film_cards
+      subhead:
+        - field_p_callout_film_s_head
 id: paragraph.stanford_callout_filmstrip.default
 targetEntityType: paragraph
 bundle: stanford_callout_filmstrip
@@ -59,13 +66,12 @@ content:
       link: ''
     third_party_settings: {  }
     region: items
-  field_p_callout_film_subhead:
-    weight: 0
+  field_p_callout_film_s_head:
+    weight: 3
     label: hidden
-    settings:
-      link_to_entity: false
+    settings: {  }
     third_party_settings: {  }
-    type: string
+    type: basic_string
     region: subhead
   field_p_callout_film_title:
     weight: 1
@@ -75,4 +81,5 @@ content:
     third_party_settings: {  }
     type: string
     region: superhead
-hidden: {  }
+hidden:
+  field_p_callout_film_orientation: true

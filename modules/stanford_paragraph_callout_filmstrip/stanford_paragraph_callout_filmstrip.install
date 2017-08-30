@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * stanford_paragraph_callout_filmstrip.install
+ */
+
+use Drupal\Core\Utility\UpdateException;
+
+/**
+ * Move text field to text area field and delete old field.
+ */
+function stanford_paragraph_callout_filmstrip_update_8100() {
+  module_load_include('install', 'stanford_paragraph_types');
+
+  // Transition the field names and data.
+  if (!_stanford_paragraph_types_rename_field(
+    'field_p_callout_film_subhead',
+    'field_p_callout_film_s_head',
+    'stanford_callout_filmstrip',
+    'stanford_paragraph_callout_filmstrip')
+  ) {
+    throw new UpdateException(t('Unable to move %from to %to', [
+      '%from' => 'field_p_callout_film_subhead',
+      '%to' => 'field_p_callout_film_s_head',
+    ]));
+  }
+
+}
