@@ -7,6 +7,6 @@ dependencies:
   - ds
   - field
   - paragraphs
-  - text
   - stanford_paragraph_types
+  - text
 version: 8.x-1.0-dev

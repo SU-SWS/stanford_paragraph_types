@@ -4,11 +4,11 @@ type: module
 core: 8.x
 package: Stanford
 dependencies:
+  - allowed_formats
   - ds
   - field
   - paragraphs
-  - text
-  - allowed_formats
   - stanford_layouts
   - stanford_paragraph_types
+  - text
 version: 8.x-1.0-dev

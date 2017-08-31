@@ -24,13 +24,13 @@ third_party_settings:
           field_templates: only_content
           variants:
             dash_under:
-              constant_value: 'has-dash-left'
+              constant_value: has-dash-left
               dynamic_value: ''
             is_centered:
-              constant_value: 'left-aligned'
+              constant_value: left-aligned
               dynamic_value: ''
             is_featured:
-              constant_value: 'has-dash-emphasis'
+              constant_value: has-dash-emphasis
               dynamic_value: ''
     regions:
       image:

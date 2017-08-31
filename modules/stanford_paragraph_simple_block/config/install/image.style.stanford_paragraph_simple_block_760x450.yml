@@ -1,0 +1,6 @@
+langcode: en
+status: true
+dependencies: {  }
+name: stanford_paragraph_simple_block_760x450
+label: 'Stanford paragraph simple block 760x450'
+effects: {  }

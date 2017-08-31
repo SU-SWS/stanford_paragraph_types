@@ -6,10 +6,14 @@ package: Stanford
 dependencies:
   - ds
   - field
+  - field_formatter_class
   - file
   - filefield_paths
+  - focal_point
   - image
   - link
   - paragraphs
+  - responsive_image
+  - stanford_image_styles
   - stanford_paragraph_types
 version: 8.x-1.0-dev

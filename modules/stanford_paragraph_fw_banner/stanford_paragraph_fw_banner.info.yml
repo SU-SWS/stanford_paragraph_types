@@ -5,6 +5,7 @@ core: 8.x
 package: Stanford
 dependencies:
   - ds
+  - entity_reference_revisions
   - field
   - field_formatter_class
   - field_group

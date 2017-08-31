@@ -6,13 +6,13 @@ dependencies:
     - field.field.paragraph.stanford_film_card.field_s_film_card_image
     - field.field.paragraph.stanford_film_card.field_s_film_card_link
     - field.field.paragraph.stanford_film_card.field_s_film_card_title
-    - image.style.large
     - paragraphs.paragraphs_type.stanford_film_card
+    - responsive_image.styles.stanford_paragraph_film_card_220x145
   module:
     - ds
     - field_formatter_class
-    - image
     - link
+    - responsive_image
 third_party_settings:
   ds:
     layout:
@@ -53,12 +53,12 @@ content:
     weight: 1
     label: hidden
     settings:
-      image_style: large
+      responsive_image_style: stanford_paragraph_film_card_220x145
       image_link: ''
     third_party_settings:
       field_formatter_class:
         class: ''
-    type: image
+    type: responsive_image
     region: image
   field_s_film_card_link:
     weight: 2

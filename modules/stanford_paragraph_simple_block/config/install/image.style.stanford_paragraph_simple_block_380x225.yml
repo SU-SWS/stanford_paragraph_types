@@ -3,8 +3,8 @@ status: true
 dependencies:
   module:
     - focal_point
-name: 380x225
-label: 380x225
+name: stanford_paragraph_simple_block_380x225
+label: 'Stanford paragraph simple block 380x225'
 effects:
   bd6c4abc-9a6d-406d-a5f5-612898564f8b:
     uuid: bd6c4abc-9a6d-406d-a5f5-612898564f8b

@@ -5,10 +5,12 @@ dependencies:
     - field.field.paragraph.stanford_icon_link.field_p_icon_link_icon
     - field.field.paragraph.stanford_icon_link.field_p_icon_link_url
     - paragraphs.paragraphs_type.stanford_icon_link
+    - responsive_image.styles.stanford_paragraph_icon_link_50x50
   module:
     - ds
-    - image
+    - field_formatter_class
     - link
+    - responsive_image
 third_party_settings:
   ds:
     layout:
@@ -33,10 +35,12 @@ content:
     weight: 0
     label: hidden
     settings:
-      image_style: ''
+      responsive_image_style: stanford_paragraph_icon_link_50x50
       image_link: ''
-    third_party_settings: {  }
-    type: image
+    third_party_settings:
+      field_formatter_class:
+        class: ''
+    type: responsive_image
     region: image
   field_p_icon_link_url:
     weight: 1

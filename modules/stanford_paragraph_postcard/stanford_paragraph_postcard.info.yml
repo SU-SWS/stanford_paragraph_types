@@ -15,8 +15,8 @@ dependencies:
   - link
   - options
   - paragraphs
-  - text
-  - stanford_image_styles
   - stanford_components
+  - stanford_image_styles
   - stanford_paragraph_types
+  - text
 version: 8.x-1.0-dev

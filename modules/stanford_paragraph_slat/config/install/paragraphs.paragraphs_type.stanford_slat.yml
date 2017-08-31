@@ -2,5 +2,5 @@ langcode: en
 status: true
 dependencies: {  }
 id: stanford_slat
-label: Editorial Sidebar
+label: 'Editorial Sidebar'
 behavior_plugins: {  }

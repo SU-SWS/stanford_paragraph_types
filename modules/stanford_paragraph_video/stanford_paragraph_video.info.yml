@@ -8,6 +8,6 @@ dependencies:
   - field
   - field_formatter_class
   - paragraphs
-  - video_embed_field
   - stanford_layouts
   - stanford_paragraph_types
+  - video_embed_field

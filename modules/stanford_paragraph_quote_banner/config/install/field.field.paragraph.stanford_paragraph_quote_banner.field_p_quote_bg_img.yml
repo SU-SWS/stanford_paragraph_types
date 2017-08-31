@@ -11,7 +11,7 @@ third_party_settings:
   filefield_paths:
     enabled: true
     file_path:
-      value: 'paragraph/quote'
+      value: paragraph/quote
       options:
         slashes: false
         pathauto: false
@@ -36,7 +36,7 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  file_directory: 'paragraph/quote'
+  file_directory: paragraph/quote
   file_extensions: 'png gif jpg jpeg'
   max_filesize: ''
   max_resolution: ''

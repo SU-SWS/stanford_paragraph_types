@@ -8,13 +8,13 @@ dependencies:
     - field.field.paragraph.stanford_paragraph_simple_block.field_p_simple_block_more
     - field.field.paragraph.stanford_paragraph_simple_block.field_p_simple_block_tag
     - field.field.paragraph.stanford_paragraph_simple_block.field_p_simple_block_title
-    - image.style.380x225
     - paragraphs.paragraphs_type.stanford_paragraph_simple_block
+    - responsive_image.styles.stanford_paragraph_simple_block_380x225
   module:
     - ds
     - field_formatter_class
-    - image
     - link
+    - responsive_image
 third_party_settings:
   ds:
     layout:
@@ -28,9 +28,6 @@ third_party_settings:
           variants:
             has_arrow:
               constant_value: '1'
-              dynamic_value: ''
-            is_slat:
-              constant_value: '0'
               dynamic_value: ''
     regions:
       description:
@@ -61,12 +58,12 @@ content:
     weight: 1
     label: hidden
     settings:
-      image_style: 380x225
+      responsive_image_style: stanford_paragraph_simple_block_380x225
       image_link: ''
     third_party_settings:
       field_formatter_class:
         class: ''
-    type: image
+    type: responsive_image
     region: image
   field_p_simple_block_link:
     weight: 2

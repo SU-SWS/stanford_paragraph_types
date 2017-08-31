@@ -10,8 +10,10 @@ dependencies:
   - field_group
   - file
   - filefield_paths
+  - focal_point
   - image
   - paragraphs
+  - responsive_image
   - stanford_image_styles
   - stanford_paragraph_types
 version: 8.x-1.0-dev

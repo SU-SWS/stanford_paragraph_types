@@ -7,13 +7,13 @@ dependencies:
     - field.field.paragraph.stanford_callout_block.field_p_callout_block_link
     - field.field.paragraph.stanford_callout_block.field_p_callout_block_subtitle
     - field.field.paragraph.stanford_callout_block.field_p_callout_block_title
-    - image.style.stanford_paragraph_callout_block_50x50
     - paragraphs.paragraphs_type.stanford_callout_block
+    - responsive_image.styles.stanford_callout_block_50x50
   module:
     - ds
     - field_formatter_class
-    - image
     - link
+    - responsive_image
 third_party_settings:
   ds:
     layout:
@@ -44,12 +44,12 @@ content:
     weight: 0
     label: hidden
     settings:
-      image_style: stanford_paragraph_callout_block_50x50
+      responsive_image_style: stanford_callout_block_50x50
       image_link: ''
     third_party_settings:
       field_formatter_class:
         class: ''
-    type: image
+    type: responsive_image
     region: image
   field_p_callout_block_intro:
     weight: 1

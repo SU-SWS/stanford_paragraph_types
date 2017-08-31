@@ -11,7 +11,7 @@ type: list_string
 settings:
   allowed_values:
     -
-      value: 'no-tint'
+      value: no-tint
       label: 'No Tint'
     -
       value: has-tint

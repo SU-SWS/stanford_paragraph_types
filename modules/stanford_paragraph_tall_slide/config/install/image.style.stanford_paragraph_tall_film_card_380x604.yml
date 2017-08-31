@@ -3,8 +3,8 @@ status: true
 dependencies:
   module:
     - focal_point
-name: component_tall_film_card
-label: 'Tall Film Card'
+name: stanford_paragraph_tall_film_card_380x604
+label: 'Stanford Paragraph Tall Film Card 380x604'
 effects:
   679fa297-447f-45e2-beb9-5ca9d4fa6427:
     uuid: 679fa297-447f-45e2-beb9-5ca9d4fa6427

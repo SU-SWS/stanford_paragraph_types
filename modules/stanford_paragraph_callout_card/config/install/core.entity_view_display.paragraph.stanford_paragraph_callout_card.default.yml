@@ -5,13 +5,13 @@ dependencies:
     - field.field.paragraph.stanford_paragraph_callout_card.field_p_callout_card_icon
     - field.field.paragraph.stanford_paragraph_callout_card.field_p_callout_card_link
     - field.field.paragraph.stanford_paragraph_callout_card.field_p_callout_card_title
-    - image.style.stanford_paragraph_callout_card_50x50
     - paragraphs.paragraphs_type.stanford_paragraph_callout_card
+    - responsive_image.styles.stanford_callout_card_50x50
   module:
     - ds
     - field_formatter_class
-    - image
     - link
+    - responsive_image
 third_party_settings:
   ds:
     layout:
@@ -38,12 +38,12 @@ content:
     weight: 0
     label: hidden
     settings:
-      image_style: stanford_paragraph_callout_card_50x50
+      responsive_image_style: stanford_callout_card_50x50
       image_link: ''
     third_party_settings:
       field_formatter_class:
         class: ''
-    type: image
+    type: responsive_image
     region: image
   field_p_callout_card_link:
     weight: 1

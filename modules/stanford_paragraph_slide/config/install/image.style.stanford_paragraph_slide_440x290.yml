@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: stanford_paragraph_slide_440x290
+label: 'Stanford Paragraph Slide 440x290'
+effects:
+  ecec2bbe-f4b4-45ef-920d-7dfdc51ed605:
+    uuid: ecec2bbe-f4b4-45ef-920d-7dfdc51ed605
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 440
+      height: 290

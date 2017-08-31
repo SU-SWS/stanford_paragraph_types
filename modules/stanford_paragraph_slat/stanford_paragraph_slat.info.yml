@@ -14,5 +14,6 @@ dependencies:
   - options
   - paragraphs
   - responsive_image
+  - stanford_page
   - stanford_paragraph_slat
 package: Stanford

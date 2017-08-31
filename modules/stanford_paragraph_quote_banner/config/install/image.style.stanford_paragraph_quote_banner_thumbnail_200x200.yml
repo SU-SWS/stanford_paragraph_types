@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: stanford_paragraph_quote_banner_thumbnail_200x200
+label: 'Stanford Paragraph Quote Banner Thumbnail 200x200'
+effects:
+  ac594052-0eb2-407b-846b-b4a4c6b87e91:
+    uuid: ac594052-0eb2-407b-846b-b4a4c6b87e91
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 200
+      height: 200
