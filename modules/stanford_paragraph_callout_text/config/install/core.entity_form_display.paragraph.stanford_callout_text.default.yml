@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.stanford_callout_text.field_p_callout_more_link
+    - field.field.paragraph.stanford_callout_text.field_p_callout_title
     - field.field.paragraph.stanford_callout_text.field_p_callout_wysiwyg
     - paragraphs.paragraphs_type.stanford_callout_text
   module:
@@ -14,15 +15,23 @@ bundle: stanford_callout_text
 mode: default
 content:
   field_p_callout_more_link:
-    weight: 1
+    weight: 2
     settings:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
     type: link_default
     region: content
-  field_p_callout_wysiwyg:
+  field_p_callout_title:
     weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_p_callout_wysiwyg:
+    weight: 1
     settings:
       rows: 9
       summary_rows: 3

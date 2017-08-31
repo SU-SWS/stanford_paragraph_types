@@ -5,9 +5,11 @@ dependencies:
     - field.field.paragraph.stanford_column_text.field_p_column_text
     - field.field.paragraph.stanford_column_text.field_p_column_text_columns
     - field.field.paragraph.stanford_column_text.field_p_column_text_link
+    - field.field.paragraph.stanford_column_text.field_p_column_text_title
     - paragraphs.paragraphs_type.stanford_column_text
   module:
     - ds
+    - field_formatter_class
     - link
     - text
 third_party_settings:
@@ -19,12 +21,14 @@ third_party_settings:
       entity_classes: all_classes
       settings:
         pattern:
-          field_templates: default
+          field_templates: only_content
           variants:
             columns:
               constant_value: two-columns
               dynamic_value: field_p_column_text_columns
     regions:
+      title:
+        - field_p_column_text_title
       content:
         - field_p_column_text
       link:
@@ -35,14 +39,14 @@ bundle: stanford_column_text
 mode: default
 content:
   field_p_column_text:
-    weight: 0
+    weight: 1
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
   field_p_column_text_link:
-    weight: 1
+    weight: 2
     label: hidden
     settings:
       trim_length: 80
@@ -53,5 +57,15 @@ content:
     third_party_settings: {  }
     type: link
     region: link
+  field_p_column_text_title:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings:
+      field_formatter_class:
+        class: ''
+    type: string
+    region: title
 hidden:
   field_p_column_text_columns: true

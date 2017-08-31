@@ -7,9 +7,10 @@ dependencies:
   - allowed_formats
   - ds
   - field
+  - field_formatter_class
   - field_group
   - link
   - options
   - paragraphs
-  - text
   - stanford_paragraph_types
+  - text

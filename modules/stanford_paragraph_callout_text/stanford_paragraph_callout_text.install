@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * stanford_paragraph_callout_text.install
+ */
+
+use Drupal\field\Entity\FieldConfig;
+
+/**
+ * Delete stray field.
+ */
+function stanford_paragraph_callout_text_update_8100() {
+  if ($field = FieldConfig::load('paragraph.stanford_callout_text.field_p_wysiwyg')) {
+    $field->delete();
+  }
+}

@@ -3,13 +3,15 @@ status: true
 dependencies:
   module:
     - paragraphs
-    - text
-id: paragraph.field_p_callout_wysiwyg
-field_name: field_p_callout_wysiwyg
+id: paragraph.field_p_column_text_title
+field_name: field_p_column_text_title
 entity_type: paragraph
-type: text_with_summary
-settings: {  }
-module: text
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
 locked: false
 cardinality: 1
 translatable: true

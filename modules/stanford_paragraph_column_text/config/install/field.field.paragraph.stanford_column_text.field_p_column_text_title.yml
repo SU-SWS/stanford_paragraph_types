@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_p_column_text_title
+    - paragraphs.paragraphs_type.stanford_column_text
+id: paragraph.stanford_column_text.field_p_column_text_title
+field_name: field_p_column_text_title
+entity_type: paragraph
+bundle: stanford_column_text
+label: Title
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
