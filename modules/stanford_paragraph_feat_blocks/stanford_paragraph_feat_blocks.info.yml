@@ -8,6 +8,7 @@ dependencies:
   - entity_reference_revisions
   - field
   - field_group
+  - options
   - paragraphs
   - stanford_paragraph_simple_block
   - stanford_paragraph_types

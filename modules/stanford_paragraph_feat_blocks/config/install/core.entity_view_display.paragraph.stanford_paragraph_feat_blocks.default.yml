@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.field.paragraph.stanford_paragraph_feat_blocks.field_p_feat_blocks_block
     - field.field.paragraph.stanford_paragraph_feat_blocks.field_p_feat_blocks_description
+    - field.field.paragraph.stanford_paragraph_feat_blocks.field_p_feat_blocks_header_pos
     - field.field.paragraph.stanford_paragraph_feat_blocks.field_p_feat_blocks_super_head
     - paragraphs.paragraphs_type.stanford_paragraph_feat_blocks
   module:
@@ -20,12 +21,15 @@ third_party_settings:
         pattern:
           field_templates: only_content
           variants:
+            centered_container:
+              constant_value: '1'
+              dynamic_value: ''
             dash_under:
               constant_value: has-dash-under
               dynamic_value: ''
             is_centered:
-              constant_value: left-aligned
-              dynamic_value: ''
+              constant_value: ''
+              dynamic_value: field_p_feat_blocks_header_pos
             is_featured:
               constant_value: no-emphasis
               dynamic_value: ''
@@ -71,4 +75,5 @@ content:
     third_party_settings: {  }
     type: string
     region: superhead
-hidden: {  }
+hidden:
+  field_p_feat_blocks_header_pos: true

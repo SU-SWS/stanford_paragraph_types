@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.field.paragraph.stanford_paragraph_feat_blocks.field_p_feat_blocks_block
     - field.field.paragraph.stanford_paragraph_feat_blocks.field_p_feat_blocks_description
+    - field.field.paragraph.stanford_paragraph_feat_blocks.field_p_feat_blocks_header_pos
     - field.field.paragraph.stanford_paragraph_feat_blocks.field_p_feat_blocks_super_head
     - paragraphs.paragraphs_type.stanford_paragraph_feat_blocks
   module:
@@ -15,6 +16,7 @@ third_party_settings:
       children:
         - group_section_header
         - group_blocks
+        - group_display_variants
       parent_name: ''
       weight: 5
       format_type: tabs
@@ -50,6 +52,19 @@ third_party_settings:
         description: ''
         required_fields: true
       label: Blocks
+    group_display_variants:
+      children:
+        - field_p_feat_blocks_header_pos
+      parent_name: group_wrapper
+      weight: 5
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: 'Display Variants'
 id: paragraph.stanford_paragraph_feat_blocks.default
 targetEntityType: paragraph
 bundle: stanford_paragraph_feat_blocks
@@ -74,6 +89,12 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
+    region: content
+  field_p_feat_blocks_header_pos:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
   field_p_feat_blocks_super_head:
     weight: 0

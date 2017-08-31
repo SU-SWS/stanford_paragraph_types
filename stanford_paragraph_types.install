@@ -64,6 +64,14 @@ function stanford_paragraph_types_update_8103() {
 }
 
 /**
+ * Remove missing paragraph type modules from the DB.
+ */
+function stanford_paragraph_types_update_8104() {
+  // Try again.
+  stanford_paragraph_types_update_8102();
+}
+
+/**
  * Creates a new field on a paragraph bundle and copy data from old field.
  *
  * @param string $old_name
