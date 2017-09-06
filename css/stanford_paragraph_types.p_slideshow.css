@@ -4,6 +4,7 @@
 
 .paragraphs-item-p-slideshow .field-slideshow {
   width: 100% !important;
+  padding-bottom: 0 !important;
 }
 
 .paragraphs-item-p-slideshow .field-slideshow-caption {
