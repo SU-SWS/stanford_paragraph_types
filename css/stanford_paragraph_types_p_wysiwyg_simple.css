@@ -2,8 +2,11 @@
   width: 65%;
   margin: 50px auto 0;
 }
+
 @media (max-width: 480px) {
   .paragraphs-item-p-wysiwyg-simple {
     width: 100%;
   }
 }
+
+/*# sourceMappingURL=stanford_paragraph_types_p_wysiwyg_simple.css.map */

@@ -24,9 +24,13 @@ UPGRADE.txt
 nbproject
 Thumbs.db
 config.rb
+*.scssc
+*.sassc
+*.map
 
 # Folders to ignore
 .hg
 .svn
 .CVS
 cgi-bin
+node_modules
