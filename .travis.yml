@@ -70,8 +70,10 @@ env:
     - BEHAT_TAG=""
     - DEPLOYER_BRANCH=""
     - DRUPAL_PROFILE_BRANCH=""
-    - CLICKY_BRANCH=""
+    - CLICKY_BRANCH="HSDO-922-slideshow"
     - SCRIPTS_BRANCH=""
+
+dist: precise
 
 language: php
 php:
