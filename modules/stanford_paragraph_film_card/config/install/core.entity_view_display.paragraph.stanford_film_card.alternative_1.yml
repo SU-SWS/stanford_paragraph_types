@@ -1,0 +1,84 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.alternative_1
+    - field.field.paragraph.stanford_film_card.field_s_film_card_desc
+    - field.field.paragraph.stanford_film_card.field_s_film_card_image
+    - field.field.paragraph.stanford_film_card.field_s_film_card_link
+    - field.field.paragraph.stanford_film_card.field_s_film_card_title
+    - paragraphs.paragraphs_type.stanford_film_card
+    - responsive_image.styles.stanford_paragraph_film_card_420x277
+  module:
+    - ds
+    - field_formatter_class
+    - link
+    - responsive_image
+third_party_settings:
+  ds:
+    layout:
+      id: pattern_film_card
+      library: null
+      disable_css: false
+      entity_classes: all_classes
+      settings:
+        pattern:
+          field_templates: only_content
+          variants:
+            arrow:
+              constant_value: no-arrow
+              dynamic_value: ''
+    regions:
+      description:
+        - field_s_film_card_desc
+      image:
+        - field_s_film_card_image
+      link:
+        - field_s_film_card_link
+      title:
+        - field_s_film_card_title
+id: paragraph.stanford_film_card.alternative_1
+targetEntityType: paragraph
+bundle: stanford_film_card
+mode: alternative_1
+content:
+  field_s_film_card_desc:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: description
+  field_s_film_card_image:
+    weight: 1
+    label: hidden
+    settings:
+      responsive_image_style: stanford_paragraph_film_card_420x277
+      image_link: ''
+    third_party_settings:
+      field_formatter_class:
+        class: ''
+    type: responsive_image
+    region: image
+  field_s_film_card_link:
+    weight: 2
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: link
+  field_s_film_card_title:
+    weight: 3
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: title
+hidden: {  }

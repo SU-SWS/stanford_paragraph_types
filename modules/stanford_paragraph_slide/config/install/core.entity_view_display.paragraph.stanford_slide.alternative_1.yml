@@ -2,11 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.paragraph.alternative_1
     - field.field.paragraph.stanford_slide.field_p_slide_body
     - field.field.paragraph.stanford_slide.field_p_slide_image
     - field.field.paragraph.stanford_slide.field_p_slide_link
     - paragraphs.paragraphs_type.stanford_slide
-    - responsive_image.styles.stanford_paragraph_slide_220x145
+    - responsive_image.styles.stanford_paragraph_film_card_420x277
   module:
     - ds
     - field_formatter_class
@@ -31,12 +32,12 @@ third_party_settings:
         - field_p_slide_image
       link:
         - field_p_slide_link
-      title:
+      subtitle:
         - field_p_slide_body
-id: paragraph.stanford_slide.default
+id: paragraph.stanford_slide.alternative_1
 targetEntityType: paragraph
 bundle: stanford_slide
-mode: default
+mode: alternative_1
 content:
   field_p_slide_body:
     weight: 2
@@ -44,12 +45,12 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: basic_string
-    region: title
+    region: subtitle
   field_p_slide_image:
     weight: 0
     label: hidden
     settings:
-      responsive_image_style: stanford_paragraph_slide_220x145
+      responsive_image_style: stanford_paragraph_film_card_420x277
       image_link: ''
     third_party_settings:
       field_formatter_class:

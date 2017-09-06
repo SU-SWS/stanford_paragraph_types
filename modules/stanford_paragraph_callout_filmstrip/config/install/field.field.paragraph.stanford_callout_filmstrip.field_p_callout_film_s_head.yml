@@ -8,7 +8,7 @@ id: paragraph.stanford_callout_filmstrip.field_p_callout_film_s_head
 field_name: field_p_callout_film_s_head
 entity_type: paragraph
 bundle: stanford_callout_filmstrip
-label: Sub Heading
+label: 'Sub Heading'
 description: ''
 required: false
 translatable: false

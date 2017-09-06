@@ -6,8 +6,10 @@ dependencies:
   - ds
   - entity_reference_revisions
   - field
+  - field_formatter_class
   - field_group
   - options
   - paragraphs
+  - stanford_paragraph_film_card
   - stanford_paragraph_slide
 package: Stanford

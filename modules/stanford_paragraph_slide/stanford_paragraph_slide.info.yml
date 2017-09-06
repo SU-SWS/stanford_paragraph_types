@@ -15,5 +15,7 @@ dependencies:
   - paragraphs
   - responsive_image
   - stanford_image_styles
+  - stanford_paragraph_film_card
   - stanford_paragraph_types
+  - stanford_paragraph_types_view_mode
 version: 8.x-1.0-dev

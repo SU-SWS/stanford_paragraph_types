@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - image.style.stanford_paragraph_film_card_420x277
+    - image.style.stanford_paragraph_film_card_840x544
+  module:
+    - stanford_image_styles
+id: stanford_paragraph_film_card_420x277
+label: 'Stanford Paragraph Film Card 420x277'
+image_style_mappings:
+  -
+    breakpoint_id: stanford_image_styles.xs
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: stanford_paragraph_film_card_420x277
+  -
+    breakpoint_id: stanford_image_styles.xs
+    multiplier: 2x
+    image_mapping_type: image_style
+    image_mapping: stanford_paragraph_film_card_840x544
+breakpoint_group: stanford_image_styles
+fallback_image_style: stanford_paragraph_film_card_420x277

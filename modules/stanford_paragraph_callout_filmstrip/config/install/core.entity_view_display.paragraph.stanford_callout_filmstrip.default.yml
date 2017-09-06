@@ -10,6 +10,7 @@ dependencies:
   module:
     - ds
     - entity_reference_revisions
+    - field_formatter_class
 third_party_settings:
   ds:
     layout:
@@ -31,19 +32,19 @@ third_party_settings:
               constant_value: no-emphasis
               dynamic_value: ''
             card_widths:
-              constant_value: fixed-width
+              constant_value: is-flexible
               dynamic_value: ''
             tight:
               constant_value: not-tight
               dynamic_value: ''
             has_columns:
-              constant_value: has-columns
+              constant_value: no-columns
               dynamic_value: ''
             section_header:
               constant_value: ''
               dynamic_value: field_p_callout_film_orientation
             arrow:
-              constant_value: no-arrow
+              constant_value: has-arrow
               dynamic_value: ''
     regions:
       superhead:
@@ -62,9 +63,13 @@ content:
     weight: 2
     label: hidden
     settings:
-      view_mode: default
+      view_mode: alternative_1
       link: ''
-    third_party_settings: {  }
+    third_party_settings:
+      field_formatter_class:
+        class: ''
+      ds:
+        ds_limit: ''
     region: items
   field_p_callout_film_s_head:
     weight: 3
