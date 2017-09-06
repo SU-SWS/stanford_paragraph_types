@@ -4,7 +4,7 @@
  */
 
 (function ($) {
-  Drupal.behaviors.stanfordParagraphTypes = {
+  Drupal.behaviors.stanfordParagraphTypesHero = {
     attach: function (context, settings) {
       $('.field-name-field-p-hero-image', context).each(function () {
         var video = $(this).siblings('.field-name-field-p-hero-video');

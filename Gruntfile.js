@@ -80,18 +80,18 @@ module.exports = function(grunt) {
       dist: {
         files: {
           'css/stanford_paragraph_types.css': 'scss/stanford_paragraph_types.scss',
-          'css/stanford_paragraph_types_p_buttons.css': 'scss/stanford_paragraph_types_p_buttons.scss',
-          'css/stanford_paragraph_types_p_hero.css': 'scss/stanford_paragraph_types_p_hero.scss',
-          'css/stanford_paragraph_types_p_section_header.css': 'scss/stanford_paragraph_types_p_section_header.scss',
-          'css/stanford_paragraph_types_p_wysiwyg.css': 'scss/stanford_paragraph_types_p_wysiwyg.scss',
+          'css/stanford_paragraph_types.p_buttons.css': 'scss/stanford_paragraph_types.p_buttons.scss',
+          'css/stanford_paragraph_types.p_hero.css': 'scss/stanford_paragraph_types.p_hero.scss',
+          'css/stanford_paragraph_types.p_section_header.css': 'scss/stanford_paragraph_types.p_section_header.scss',
+          'css/stanford_paragraph_types.p_wysiwyg.css': 'scss/stanford_paragraph_types.p_wysiwyg.scss',
           'css/stanford_paragraph_types.admin.css': 'scss/stanford_paragraph_types.admin.scss',
-          'css/stanford_paragraph_types_p_callout.css': 'scss/stanford_paragraph_types_p_callout.scss',
-          'css/stanford_paragraph_types_p_icon.css': 'scss/stanford_paragraph_types_p_icon.scss',
-          'css/stanford_paragraph_types_p_slideshow.css': 'scss/stanford_paragraph_types_p_slideshow.scss',
-          'css/stanford_paragraph_types_p_wysiwyg_simple.css': 'scss/stanford_paragraph_types_p_wysiwyg_simple.scss',
-          'css/stanford_paragraph_types_p_cards.css': 'scss/stanford_paragraph_types_p_cards.scss',
-          'css/stanford_paragraph_types_p_menu.css': 'scss/stanford_paragraph_types_p_menu.scss',
-          'css/stanford_paragraph_types_p_two_columns.css': 'scss/stanford_paragraph_types_p_two_columns.scss'
+          'css/stanford_paragraph_types.p_callout.css': 'scss/stanford_paragraph_types.p_callout.scss',
+          'css/stanford_paragraph_types.p_icon.css': 'scss/stanford_paragraph_types.p_icon.scss',
+          'css/stanford_paragraph_types.p_slideshow.css': 'scss/stanford_paragraph_types.p_slideshow.scss',
+          'css/stanford_paragraph_types.p_wysiwyg_simple.css': 'scss/stanford_paragraph_types.p_wysiwyg_simple.scss',
+          'css/stanford_paragraph_types.p_cards.css': 'scss/stanford_paragraph_types.p_cards.scss',
+          'css/stanford_paragraph_types.p_menu.css': 'scss/stanford_paragraph_types.p_menu.scss',
+          'css/stanford_paragraph_types.p_two_columns.css': 'scss/stanford_paragraph_types.p_two_columns.scss'
         }
       }
     },

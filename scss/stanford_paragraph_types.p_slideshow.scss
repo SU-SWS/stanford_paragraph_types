@@ -9,12 +9,20 @@
   .field-slideshow-caption {
     position: absolute;
     z-index: 10;
-    bottom: 50%;
+    bottom: 0;
     text-align: center;
     width: 100%;
     color: #fff;
     font-size: 40px;
     font-weight: 400;
+    background: rgba(0,0,0,.5);
+    height: 100%;
+    line-height: 1.5em;
+  }
+
+  .field-slideshow-caption-text {
+    top: 50%;
+    position: relative;
   }
 
   .field-slideshow-pager {

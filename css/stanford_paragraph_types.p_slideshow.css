@@ -5,12 +5,20 @@
 .paragraphs-item-p-slideshow .field-slideshow-caption {
   position: absolute;
   z-index: 10;
-  bottom: 50%;
+  bottom: 0;
   text-align: center;
   width: 100%;
   color: #fff;
   font-size: 40px;
   font-weight: 400;
+  background: rgba(0, 0, 0, 0.5);
+  height: 100%;
+  line-height: 1.5em;
+}
+
+.paragraphs-item-p-slideshow .field-slideshow-caption-text {
+  top: 50%;
+  position: relative;
 }
 
 .paragraphs-item-p-slideshow .field-slideshow-pager {
@@ -35,4 +43,4 @@
   background-color: #8c1515;
 }
 
-/*# sourceMappingURL=stanford_paragraph_types_p_slideshow.css.map */
+/*# sourceMappingURL=stanford_paragraph_types.p_slideshow.css.map */

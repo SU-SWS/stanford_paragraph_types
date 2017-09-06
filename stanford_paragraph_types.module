@@ -138,9 +138,13 @@ function stanford_paragraph_types_entity_view($entity, $type, $view_mode, $langc
   if ($type == 'paragraphs_item') {
     $entity->content['#attached']['css'][] = drupal_get_path('module', 'stanford_paragraph_types') . '/css/stanford_paragraph_types.css';
     // Add specific style sheet if it exists.
-    $css_file = drupal_get_path('module', 'stanford_paragraph_types') . '/css/stanford_paragraph_types_' . $entity->bundle . '.css';
+    $css_file = drupal_get_path('module', 'stanford_paragraph_types') . '/css/stanford_paragraph_types.' . $entity->bundle . '.css';
+    $js_file = drupal_get_path('module', 'stanford_paragraph_types') . '/js/stanford_paragraph_types.' . $entity->bundle . '.js';
     if (file_exists($css_file)) {
       $entity->content['#attached']['css'][] = $css_file;
+    }
+    if (file_exists($js_file)) {
+      $entity->content['#attached']['js'][] = $js_file;
     }
   }
 }
@@ -291,13 +295,6 @@ function _stanford_paragraph_types_preprocess_field_field_p_card_file(&$vars) {
     }
     $vars['items'][$delta]['#markup'] = l($title, file_create_url($item['uri']), array('attributes' => array('class' => array('btn'))));
   }
-}
-
-/**
- * Helper for stanford_paragraph_types_preprocess_field().
- */
-function _stanford_paragraph_types_preprocess_field_field_p_hero_video(&$vars) {
-  drupal_add_js(drupal_get_path('module', 'stanford_paragraph_types') . '/js/stanford_paragraph_types.js');
 }
 
 /**
