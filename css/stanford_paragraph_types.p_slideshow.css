@@ -2,6 +2,10 @@
   position: relative;
 }
 
+.paragraphs-item-p-slideshow .field-slideshow {
+  width: 100% !important;
+}
+
 .paragraphs-item-p-slideshow .field-slideshow-caption {
   position: absolute;
   z-index: 10;
@@ -19,6 +23,9 @@
 .paragraphs-item-p-slideshow .field-slideshow-caption-text {
   top: 50%;
   position: relative;
+  max-width: 1170px;
+  display: block;
+  margin: 0 auto;
 }
 
 .paragraphs-item-p-slideshow .field-slideshow-pager {

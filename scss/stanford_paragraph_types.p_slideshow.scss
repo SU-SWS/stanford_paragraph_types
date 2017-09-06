@@ -3,7 +3,9 @@
     position: relative;
   }
 
-  .field-slideshow-slide {
+  // Have to use important to override javascript width.
+  .field-slideshow {
+    width: 100% !important;
   }
 
   .field-slideshow-caption {
@@ -15,7 +17,7 @@
     color: #fff;
     font-size: 40px;
     font-weight: 400;
-    background: rgba(0,0,0,.5);
+    background: rgba(0, 0, 0, .5);
     height: 100%;
     line-height: 1.5em;
   }
@@ -23,6 +25,9 @@
   .field-slideshow-caption-text {
     top: 50%;
     position: relative;
+    max-width: 1170px;
+    display: block;
+    margin: 0 auto;
   }
 
   .field-slideshow-pager {
