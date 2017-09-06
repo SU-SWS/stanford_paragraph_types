@@ -21,6 +21,13 @@
     background: rgba(0, 0, 0, .5);
     height: 100%;
     line-height: 1.5em;
+
+    @media(max-width: 768px) {
+      font-size: 5vw;
+      position: relative;
+      background: transparent;
+      color: #000;
+    }
   }
 
   .field-slideshow-caption-text {
@@ -29,6 +36,14 @@
     max-width: 1170px;
     display: block;
     margin: 0 auto;
+
+    @media(min-width: 900px) and (max-width: 1170px) {
+      top: 30%
+    }
+
+    @media(max-width: 900px) {
+      top: 20%;
+    }
   }
 
   .field-slideshow-pager {
@@ -37,6 +52,11 @@
     bottom: 20px;
     text-align: center;
     width: 100%;
+
+    @media(max-width: 768px) {
+      position: relative;
+      bottom: 0;
+    }
 
     a {
       font-size: 0;
