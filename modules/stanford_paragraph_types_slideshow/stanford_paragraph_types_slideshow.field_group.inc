@@ -36,7 +36,7 @@ function stanford_paragraph_types_slideshow_field_group_info() {
       ),
     ),
   );
-  $field_groups[''] = $field_group;
+  $field_groups['group_slideshow|paragraphs_item|p_slideshow|form'] = $field_group;
 
   // Translatables
   // Included for use with string extractors like potx.
