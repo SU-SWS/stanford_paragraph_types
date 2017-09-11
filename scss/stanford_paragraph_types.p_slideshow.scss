@@ -14,11 +14,12 @@
     z-index: 10;
     bottom: 0;
     text-align: center;
-    width: 100%;
+    width: calc(100% - 80px);
+    padding:40px;
     color: #fff;
     font-size: 40px;
     font-weight: 400;
-    background: rgba(0, 0, 0, .5);
+    background: rgba(0, 0, 0, .3);
     height: 100%;
     line-height: 1.5em;
 
@@ -60,16 +61,48 @@
 
     a {
       font-size: 0;
-      width: 30px;
-      height: 30px;
+      width: 20px;
+      height: 20px;
       display: inline-block;
-      background-color: #ccc;
+      background-color: #b1040e;
       border-radius: 15px;
       margin-right: 10px;
 
       &.activeSlide {
-        background-color: #8c1515;
+        background-color: #ccc;
       }
     }
   }
+
+  .field-slideshow-controls {
+    position: absolute;
+    top: calc(50% - 15px);
+    z-index: 10;
+    width: 100%;
+    font-size: 0;
+
+    a {
+      border: solid #b1040e;
+      border-width: 0 5px 5px 0;
+      display: block;
+      padding: 3px;
+      height: 20px;
+      width: 20px;
+    }
+
+    .next {
+      transform: rotate(-45deg);
+      -webkit-transform: rotate(-45deg);
+      float: right;
+      margin-right: 20px;
+    }
+
+    .prev {
+      transform: rotate(135deg);
+      -webkit-transform: rotate(135deg);
+      float: left;
+      margin-left: 20px;
+    }
+  }
+
 }
