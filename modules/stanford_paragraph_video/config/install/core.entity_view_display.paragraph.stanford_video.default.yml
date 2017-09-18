@@ -2,7 +2,11 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.stanford_video.field_p_video_autoplay
+    - field.field.paragraph.stanford_video.field_p_video_subheading
+    - field.field.paragraph.stanford_video.field_p_video_title
     - field.field.paragraph.stanford_video.field_p_video_url
+    - field.field.paragraph.stanford_video.field_p_video_width
     - paragraphs.paragraphs_type.stanford_video
   module:
     - ds
@@ -11,19 +15,64 @@ dependencies:
 third_party_settings:
   ds:
     layout:
-      id: layout_basic
-      library: stanford_layouts/basic
+      id: pattern_hero_banner
+      library: null
       disable_css: false
       entity_classes: all_classes
-      settings: {  }
+      settings:
+        pattern:
+          field_templates: default
+          variants:
+            centered_container:
+              constant_value: ''
+              dynamic_value: field_p_video_width
+            has_tint:
+              constant_value: has-tint
+              dynamic_value: ''
+            header_position:
+              constant_value: is-right
+              dynamic_value: ''
+            is_page_title:
+              constant_value: '0'
+              dynamic_value: ''
+            is_tall:
+              constant_value: ''
+              dynamic_value: ''
+            racing_stripe:
+              constant_value: ''
+              dynamic_value: ''
+            stripe_block:
+              constant_value: ''
+              dynamic_value: ''
+              text_value: ''
     regions:
-      content:
+      image:
         - field_p_video_url
+      subhead:
+        - field_p_video_subheading
+      superhead:
+        - field_p_video_title
 id: paragraph.stanford_video.default
 targetEntityType: paragraph
 bundle: stanford_video
 mode: default
 content:
+  field_p_video_subheading:
+    weight: 1
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: subhead
+  field_p_video_title:
+    weight: 2
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: superhead
   field_p_video_url:
     weight: 0
     label: hidden
@@ -36,5 +85,7 @@ content:
       field_formatter_class:
         class: ''
     type: video_embed_field_video
-    region: content
-hidden: {  }
+    region: image
+hidden:
+  field_p_video_autoplay: true
+  field_p_video_width: true

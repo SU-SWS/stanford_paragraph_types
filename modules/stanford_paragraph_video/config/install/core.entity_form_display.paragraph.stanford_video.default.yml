@@ -2,20 +2,70 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.stanford_video.field_p_video_autoplay
+    - field.field.paragraph.stanford_video.field_p_video_subheading
+    - field.field.paragraph.stanford_video.field_p_video_title
     - field.field.paragraph.stanford_video.field_p_video_url
+    - field.field.paragraph.stanford_video.field_p_video_width
     - paragraphs.paragraphs_type.stanford_video
   module:
+    - field_group
     - video_embed_field
+third_party_settings:
+  field_group:
+    group_display_variants:
+      children:
+        - field_p_video_width
+        - field_p_video_autoplay
+      parent_name: ''
+      weight: 3
+      format_type: tab
+      format_settings:
+        id: ''
+        classes: ''
+        formatter: closed
+        description: ''
+        required_fields: true
+      label: 'Display Variants'
 id: paragraph.stanford_video.default
 targetEntityType: paragraph
 bundle: stanford_video
 mode: default
 content:
+  field_p_video_autoplay:
+    weight: 3
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_p_video_subheading:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_p_video_title:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_p_video_url:
     weight: 0
     settings: {  }
     third_party_settings: {  }
     type: video_embed_field_textfield
+    region: content
+  field_p_video_width:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
     region: content
 hidden:
   created: true

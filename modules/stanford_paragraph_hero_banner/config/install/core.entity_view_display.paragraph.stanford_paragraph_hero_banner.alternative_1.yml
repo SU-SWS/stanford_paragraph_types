@@ -6,17 +6,18 @@ dependencies:
     - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_citation
     - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_image
     - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_page_title
+    - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_photo_credit
     - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_sub_head
     - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_super_head
     - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_tall
     - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_text_pos
     - field.field.paragraph.stanford_paragraph_hero_banner.field_p_hero_banner_tint
-    - image.style.breakpoint_xl_2x
     - paragraphs.paragraphs_type.stanford_paragraph_hero_banner
+    - responsive_image.styles.stanford_hero_block_wide
   module:
     - ds
     - field_formatter_class
-    - image
+    - responsive_image
 third_party_settings:
   ds:
     layout:
@@ -28,6 +29,9 @@ third_party_settings:
         pattern:
           field_templates: only_content
           variants:
+            centered_container:
+              constant_value: 0
+              dynamic_value: ''
             has_tint:
               constant_value: has-tint
               dynamic_value: ''
@@ -73,11 +77,12 @@ content:
     weight: 0
     label: hidden
     settings:
-      image_style: breakpoint_xl_2x
+      responsive_image_style: stanford_hero_block_wide
+      image_link: ''
     third_party_settings:
       field_formatter_class:
         class: ''
-    type: image_url
+    type: responsive_image
     region: image
   field_p_hero_banner_sub_head:
     weight: 2
@@ -97,6 +102,7 @@ content:
     region: superhead
 hidden:
   field_p_hero_banner_page_title: true
+  field_p_hero_banner_photo_credit: true
   field_p_hero_banner_tall: true
   field_p_hero_banner_text_pos: true
   field_p_hero_banner_tint: true
