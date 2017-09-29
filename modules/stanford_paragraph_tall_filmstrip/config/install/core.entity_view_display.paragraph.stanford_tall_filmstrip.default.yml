@@ -29,7 +29,7 @@ third_party_settings:
               constant_value: has-dash-under
               dynamic_value: ''
             is_centered:
-              constant_value: left-aligned
+              constant_value: is-centered
               dynamic_value: ''
             is_featured:
               constant_value: has-dash-emphasis
