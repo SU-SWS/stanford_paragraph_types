@@ -2,7 +2,11 @@
   background-color: #4d4f53;
   color: #ffffff;
 }
-.paragraphs-item-p-cards .color-cool-gray .group-card-title h2, .paragraphs-item-p-cards .color-cool-gray .group-card-title .field-item h2, .paragraphs-item-p-cards .color-cool-gray .group-card-title h3, .paragraphs-item-p-cards .color-cool-gray .group-card-title .field-item h3, .paragraphs-item-p-cards .color-cool-gray .group-card-title h4, .paragraphs-item-p-cards .color-cool-gray .group-card-title .field-item h4 {
+.paragraphs-item-p-cards .color-cool-gray .group-card-title h2, .paragraphs-item-p-cards .color-cool-gray .group-card-title .field-item h2,
+.paragraphs-item-p-cards .color-cool-gray .group-card-title h3,
+.paragraphs-item-p-cards .color-cool-gray .group-card-title .field-item h3,
+.paragraphs-item-p-cards .color-cool-gray .group-card-title h4,
+.paragraphs-item-p-cards .color-cool-gray .group-card-title .field-item h4 {
   color: #ffffff;
 }
 .paragraphs-item-p-cards .color-cool-gray .group-card-title a, .paragraphs-item-p-cards .color-cool-gray .group-card-title .field-item a,
@@ -15,7 +19,11 @@
   background-color: #d5d0c0;
   color: #333333;
 }
-.paragraphs-item-p-cards .color-light-taupe .group-card-title h2, .paragraphs-item-p-cards .color-light-taupe .group-card-title .field-item h2, .paragraphs-item-p-cards .color-light-taupe .group-card-title h3, .paragraphs-item-p-cards .color-light-taupe .group-card-title .field-item h3, .paragraphs-item-p-cards .color-light-taupe .group-card-title h4, .paragraphs-item-p-cards .color-light-taupe .group-card-title .field-item h4 {
+.paragraphs-item-p-cards .color-light-taupe .group-card-title h2, .paragraphs-item-p-cards .color-light-taupe .group-card-title .field-item h2,
+.paragraphs-item-p-cards .color-light-taupe .group-card-title h3,
+.paragraphs-item-p-cards .color-light-taupe .group-card-title .field-item h3,
+.paragraphs-item-p-cards .color-light-taupe .group-card-title h4,
+.paragraphs-item-p-cards .color-light-taupe .group-card-title .field-item h4 {
   color: #333333;
 }
 .paragraphs-item-p-cards .color-light-taupe .group-card-title a, .paragraphs-item-p-cards .color-light-taupe .group-card-title .field-item a,
@@ -28,7 +36,11 @@
   background-color: #009b76;
   color: #ffffff;
 }
-.paragraphs-item-p-cards .color-bright-green .group-card-title h2, .paragraphs-item-p-cards .color-bright-green .group-card-title .field-item h2, .paragraphs-item-p-cards .color-bright-green .group-card-title h3, .paragraphs-item-p-cards .color-bright-green .group-card-title .field-item h3, .paragraphs-item-p-cards .color-bright-green .group-card-title h4, .paragraphs-item-p-cards .color-bright-green .group-card-title .field-item h4 {
+.paragraphs-item-p-cards .color-bright-green .group-card-title h2, .paragraphs-item-p-cards .color-bright-green .group-card-title .field-item h2,
+.paragraphs-item-p-cards .color-bright-green .group-card-title h3,
+.paragraphs-item-p-cards .color-bright-green .group-card-title .field-item h3,
+.paragraphs-item-p-cards .color-bright-green .group-card-title h4,
+.paragraphs-item-p-cards .color-bright-green .group-card-title .field-item h4 {
   color: #ffffff;
 }
 .paragraphs-item-p-cards .color-bright-green .group-card-title a, .paragraphs-item-p-cards .color-bright-green .group-card-title .field-item a,
@@ -41,7 +53,11 @@
   background-color: #0f6c91;
   color: #ffffff;
 }
-.paragraphs-item-p-cards .color-bright-blue .group-card-title h2, .paragraphs-item-p-cards .color-bright-blue .group-card-title .field-item h2, .paragraphs-item-p-cards .color-bright-blue .group-card-title h3, .paragraphs-item-p-cards .color-bright-blue .group-card-title .field-item h3, .paragraphs-item-p-cards .color-bright-blue .group-card-title h4, .paragraphs-item-p-cards .color-bright-blue .group-card-title .field-item h4 {
+.paragraphs-item-p-cards .color-bright-blue .group-card-title h2, .paragraphs-item-p-cards .color-bright-blue .group-card-title .field-item h2,
+.paragraphs-item-p-cards .color-bright-blue .group-card-title h3,
+.paragraphs-item-p-cards .color-bright-blue .group-card-title .field-item h3,
+.paragraphs-item-p-cards .color-bright-blue .group-card-title h4,
+.paragraphs-item-p-cards .color-bright-blue .group-card-title .field-item h4 {
   color: #ffffff;
 }
 .paragraphs-item-p-cards .color-bright-blue .group-card-title a, .paragraphs-item-p-cards .color-bright-blue .group-card-title .field-item a,
@@ -54,7 +70,11 @@
   background-color: #eaab00;
   color: #333333;
 }
-.paragraphs-item-p-cards .color-bright-yellow .group-card-title h2, .paragraphs-item-p-cards .color-bright-yellow .group-card-title .field-item h2, .paragraphs-item-p-cards .color-bright-yellow .group-card-title h3, .paragraphs-item-p-cards .color-bright-yellow .group-card-title .field-item h3, .paragraphs-item-p-cards .color-bright-yellow .group-card-title h4, .paragraphs-item-p-cards .color-bright-yellow .group-card-title .field-item h4 {
+.paragraphs-item-p-cards .color-bright-yellow .group-card-title h2, .paragraphs-item-p-cards .color-bright-yellow .group-card-title .field-item h2,
+.paragraphs-item-p-cards .color-bright-yellow .group-card-title h3,
+.paragraphs-item-p-cards .color-bright-yellow .group-card-title .field-item h3,
+.paragraphs-item-p-cards .color-bright-yellow .group-card-title h4,
+.paragraphs-item-p-cards .color-bright-yellow .group-card-title .field-item h4 {
   color: #333333;
 }
 .paragraphs-item-p-cards .color-bright-yellow .group-card-title a, .paragraphs-item-p-cards .color-bright-yellow .group-card-title .field-item a,
@@ -67,7 +87,11 @@
   background-color: #e98300;
   color: #333333;
 }
-.paragraphs-item-p-cards .color-bright-orange .group-card-title h2, .paragraphs-item-p-cards .color-bright-orange .group-card-title .field-item h2, .paragraphs-item-p-cards .color-bright-orange .group-card-title h3, .paragraphs-item-p-cards .color-bright-orange .group-card-title .field-item h3, .paragraphs-item-p-cards .color-bright-orange .group-card-title h4, .paragraphs-item-p-cards .color-bright-orange .group-card-title .field-item h4 {
+.paragraphs-item-p-cards .color-bright-orange .group-card-title h2, .paragraphs-item-p-cards .color-bright-orange .group-card-title .field-item h2,
+.paragraphs-item-p-cards .color-bright-orange .group-card-title h3,
+.paragraphs-item-p-cards .color-bright-orange .group-card-title .field-item h3,
+.paragraphs-item-p-cards .color-bright-orange .group-card-title h4,
+.paragraphs-item-p-cards .color-bright-orange .group-card-title .field-item h4 {
   color: #333333;
 }
 .paragraphs-item-p-cards .color-bright-orange .group-card-title a, .paragraphs-item-p-cards .color-bright-orange .group-card-title .field-item a,
@@ -76,14 +100,21 @@
   color: #4d4f53;
 }
 
-.paragraphs-item-p-cards .field-item .field-collection-view {
-  padding: 0 10px;
-}
-.paragraphs-item-p-cards .field-item:first-child .field-collection-view {
-  padding: 0 10px 0 0;
-}
-.paragraphs-item-p-cards .field-item:last-child .field-collection-view {
-  padding: 0 0 0 10px;
+@media (min-width: 767px) {
+  .paragraphs-item-p-cards .field-name-field-p-cards-card > .field-items {
+    display: flex;
+  }
+  .paragraphs-item-p-cards .field-name-field-p-cards-card > .field-items > .field-item {
+    flex-grow: 1;
+    margin: 0 10px;
+    float: left;
+  }
+  .paragraphs-item-p-cards .field-name-field-p-cards-card.items-3 > .field-items > .field-item {
+    width: 33%;
+  }
+  .paragraphs-item-p-cards .field-name-field-p-cards-card.items-2 > .field-items > .field-item {
+    width: 33%;
+  }
 }
 .paragraphs-item-p-cards img {
   margin: 0 auto;

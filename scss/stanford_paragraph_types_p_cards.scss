@@ -1,16 +1,29 @@
 @import 'colors';
 
 .paragraphs-item-p-cards {
-  .field-item .field-collection-view {
-    padding: 0 10px;
-  }
 
-  .field-item:first-child .field-collection-view {
-    padding: 0 10px 0 0;
-  }
+  .field-name-field-p-cards-card {
 
-  .field-item:last-child .field-collection-view {
-    padding: 0 0 0 10px;
+    @media(min-width: 767px) {
+      > .field-items {
+        display: flex;
+
+        > .field-item {
+          flex-grow: 1;
+          margin: 0 10px;
+          float: left;
+        }
+      }
+
+      // Old IE Fix.
+      &.items-3 > .field-items > .field-item {
+        width: 33%;
+      }
+
+      &.items-2 > .field-items > .field-item {
+        width: 33%;
+      }
+    }
   }
 
   img {
@@ -106,7 +119,6 @@
       }
     }
   }
-
 
   .pattern-asfalt-dark .group-card-title {
     background-image: url('../img/asfalt-dark.png');

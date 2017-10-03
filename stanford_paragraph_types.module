@@ -246,10 +246,7 @@ function stanford_paragraph_types_preprocess_field(&$vars) {
  */
 function _stanford_paragraph_types_preprocess_field_field_p_cards_card(&$vars) {
   // Sets a class depending how many items exist.
-  $class = count($vars['items']) == 2 ? 'span6' : 'span4';
-  foreach ($vars['items'] as &$item) {
-    $item['#attributes']['class'][] = $class;
-  }
+  $vars['classes_array'][] = 'items-' . count($vars['items']);
 }
 
 /**
