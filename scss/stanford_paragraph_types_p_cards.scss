@@ -1,9 +1,12 @@
 @import 'colors';
 
 .paragraphs-item-p-cards {
-
   .field-name-field-p-cards-card {
-
+    @media (max-width: 1199px) {
+      .group-card-title {
+        padding: 0 0.6em;
+      }
+    }
     @media(min-width: 767px) {
       > .field-items {
         display: flex;
@@ -30,7 +33,6 @@
     margin: 0 auto;
     display: block;
   }
-
   @media (max-width: 767px) {
     .field-item .field-collection-view,
     .field-item:first-child .field-collection-view,
@@ -42,10 +44,6 @@
     .field-name-field-p-card-file,
     .field-name-field-p-card-text {
       padding: 0 1em;
-    }
-
-    .group-card-title {
-      padding: 0 0.6em;
     }
   }
 
