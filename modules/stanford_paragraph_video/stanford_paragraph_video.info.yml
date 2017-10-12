@@ -7,6 +7,8 @@ dependencies:
   - ds
   - field
   - field_formatter_class
+  - field_group
+  - options
   - paragraphs
   - stanford_layouts
   - stanford_paragraph_types

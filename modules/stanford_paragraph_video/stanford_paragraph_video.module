@@ -26,4 +26,17 @@ function stanford_paragraph_video_preprocess_field(&$variables) {
       $variables['items'][0]['content']['children']['#query']['rel'] = FALSE;
     }
   }
+
+  $loop_field = $variables['element']['#object']->get('field_p_video_loop');
+  if ($loop_field && $loop_field->getValue()) {
+    $loop = $loop_field->getValue();
+    // If the paragraph is checked to loop, set the query parameter & playlist.
+    if ($loop[0]['value']) {
+      $variables['items'][0]['content']['children']['#query']['loop'] = TRUE;
+      $video_url = $variables['element']['#object']->get('field_p_video_url')->getValue();
+      $video_hash = array_pop(explode("/", $video_url[0]['value']));
+      $variables['items'][0]['content']['children']['#query']['playlist'] = $video_hash;
+    }
+  }
+
 }

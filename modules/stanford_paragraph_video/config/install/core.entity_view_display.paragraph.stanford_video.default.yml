@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.stanford_video.field_p_video_autoplay
+    - field.field.paragraph.stanford_video.field_p_video_loop
     - field.field.paragraph.stanford_video.field_p_video_subheading
     - field.field.paragraph.stanford_video.field_p_video_title
     - field.field.paragraph.stanford_video.field_p_video_url
@@ -88,4 +89,5 @@ content:
     region: image
 hidden:
   field_p_video_autoplay: true
+  field_p_video_loop: true
   field_p_video_width: true

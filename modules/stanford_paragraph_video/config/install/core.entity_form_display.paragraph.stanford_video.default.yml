@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.stanford_video.field_p_video_autoplay
+    - field.field.paragraph.stanford_video.field_p_video_loop
     - field.field.paragraph.stanford_video.field_p_video_subheading
     - field.field.paragraph.stanford_video.field_p_video_title
     - field.field.paragraph.stanford_video.field_p_video_url
@@ -17,6 +18,7 @@ third_party_settings:
       children:
         - field_p_video_width
         - field_p_video_autoplay
+        - field_p_video_loop
       parent_name: ''
       weight: 3
       format_type: tab
@@ -34,6 +36,13 @@ mode: default
 content:
   field_p_video_autoplay:
     weight: 3
+    settings:
+      display_label: true
+    third_party_settings: {  }
+    type: boolean_checkbox
+    region: content
+  field_p_video_loop:
+    weight: 4
     settings:
       display_label: true
     third_party_settings: {  }
