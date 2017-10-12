@@ -343,8 +343,12 @@ function stanford_paragraph_types_entity_view_mode_alter(&$view_mode, $context) 
       switch ($entity->field_name) {
         case 'field_p_icon_columns':
 
-          if (empty($entity->field_p_icon_image)) {
-            $view_mode = 'default';
+          if (!empty($entity->field_p_icon_icon_style[LANGUAGE_NONE][0]['value'])) {
+            switch ($entity->field_p_icon_icon_style[LANGUAGE_NONE][0]['value']) {
+              case 'image':
+                $view_mode = 'stanford_list';
+                break;
+            }
           }
 
           break;

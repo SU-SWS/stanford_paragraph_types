@@ -1,15 +1,46 @@
-$bright-orange-background: #e98300;
-$bright-orange-color: #333333;
-$bright-orange-link: #4d4f53;
 
-%cool-gray {
-  background-color: #4d4f53;
-  color: #ffffff;
+%red {
+  background-color: #8c1515;
+  color: #fff;
 
   h2,
   h3,
   h4 {
-    color: #ffffff;
+    color: #fff;
+  }
+
+  a,
+  a:focus,
+  a:hover {
+    color: #d5d0c0;
+  }
+}
+
+%black {
+  background-color: #000;
+  color: #fff;
+
+  h2,
+  h3,
+  h4 {
+    color: #fff;
+  }
+
+  a,
+  a:focus,
+  a:hover {
+    color: #d5d0c0;
+  }
+}
+
+%cool-gray {
+  background-color: #4d4f53;
+  color: #fff;
+
+  h2,
+  h3,
+  h4 {
+    color: #fff;
   }
 
   a,
@@ -21,12 +52,12 @@ $bright-orange-link: #4d4f53;
 
 %light-taupe {
   background-color: #d5d0c0;
-  color: #333333;
+  color: #333;
 
   h2,
   h3,
   h4 {
-    color: #333333;
+    color: #333;
   }
 
   a,
@@ -36,31 +67,65 @@ $bright-orange-link: #4d4f53;
   }
 }
 
-%bright-green {
-  background-color: #009b76;
-  color: #ffffff;
+%dark-taupe {
+  background-color: #928b81;
+  color: #fff;
 
   h2,
   h3,
   h4 {
-    color: #ffffff;
+    color: #fff;
   }
 
   a,
   a:focus,
   a:hover {
-    color: #000000;
+    color: #d5d0c0;
+  }
+}
+
+%bright-green {
+  background-color: #009b76;
+  color: #fff;
+
+  h2,
+  h3,
+  h4 {
+    color: #fff;
+  }
+
+  a,
+  a:focus,
+  a:hover {
+    color: #000;
   }
 }
 
 %bright-blue {
   background-color: #0f6c91;
-  color: #ffffff;
+  color: #fff;
 
   h2,
   h3,
   h4 {
-    color: #ffffff;
+    color: #fff;
+  }
+
+  a,
+  a:focus,
+  a:hover {
+    color: #dad7cb;
+  }
+}
+
+%deep-blue {
+  background-color: #006374;
+  color: #fff;
+
+  h2,
+  h3,
+  h4 {
+    color: #fff;
   }
 
   a,
@@ -72,12 +137,12 @@ $bright-orange-link: #4d4f53;
 
 %bright-yellow {
   background-color: #eaab00;
-  color: #333333;
+  color: #333;
 
   h2,
   h3,
   h4 {
-    color: #333333;
+    color: #333;
   }
 
   a,
@@ -89,18 +154,35 @@ $bright-orange-link: #4d4f53;
 
 %bright-orange {
   background-color: #e98300;
-  color: #333333;
+  color: #333;
 
   h2,
   h3,
   h4 {
-    color: #333333;
+    color: #333;
   }
 
   a,
   a:focus,
   a:hover {
     color: #4d4f53;
+  }
+}
+
+%deep-purple {
+  background-color: #53284f;
+  color: #fff;
+
+  h2,
+  h3,
+  h4 {
+    color: #fff;
+  }
+
+  a,
+  a:focus,
+  a:hover {
+    color: #dad7cb;
   }
 }
 

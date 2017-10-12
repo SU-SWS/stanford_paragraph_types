@@ -448,6 +448,12 @@ function stanford_paragraph_types_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 4,
       ),
+      'stanford_list' => array(
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 6,
+      ),
     ),
     'entity_type' => 'field_collection_item',
     'field_name' => 'field_p_icon_color',
@@ -463,7 +469,7 @@ function stanford_paragraph_types_field_default_field_instances() {
         'apply_chosen' => '',
       ),
       'type' => 'options_select',
-      'weight' => 3,
+      'weight' => 4,
     ),
   );
 
@@ -492,6 +498,12 @@ function stanford_paragraph_types_field_default_field_instances() {
         'type' => 'hidden',
         'weight' => 5,
       ),
+      'stanford_list' => array(
+        'label' => 'hidden',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 5,
+      ),
     ),
     'entity_type' => 'field_collection_item',
     'field_name' => 'field_p_icon_icon',
@@ -505,6 +517,47 @@ function stanford_paragraph_types_field_default_field_instances() {
       'module' => 'stanford_field_formatters',
       'settings' => array(),
       'type' => 'fontawesome_icon_widget',
+      'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance:
+  // 'field_collection_item-field_p_icon_columns-field_p_icon_icon_style'.
+  $field_instances['field_collection_item-field_p_icon_columns-field_p_icon_icon_style'] = array(
+    'bundle' => 'field_p_icon_columns',
+    'default_value' => array(
+      0 => array(
+        'value' => 'icon',
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 3,
+      ),
+      'stanford_list' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 4,
+      ),
+    ),
+    'entity_type' => 'field_collection_item',
+    'field_name' => 'field_p_icon_icon_style',
+    'label' => 'Icon Style',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_buttons',
       'weight' => 1,
     ),
   );
@@ -532,6 +585,16 @@ function stanford_paragraph_types_field_default_field_instances() {
         'type' => 'image',
         'weight' => 0,
       ),
+      'stanford_list' => array(
+        'label' => 'hidden',
+        'module' => 'image',
+        'settings' => array(
+          'image_link' => '',
+          'image_style' => 'large',
+        ),
+        'type' => 'image',
+        'weight' => 0,
+      ),
     ),
     'entity_type' => 'field_collection_item',
     'field_name' => 'field_p_icon_image',
@@ -543,7 +606,7 @@ function stanford_paragraph_types_field_default_field_instances() {
       'file_directory' => '',
       'file_extensions' => 'png',
       'max_filesize' => '',
-      'max_resolution' => '100x100',
+      'max_resolution' => '400x400',
       'min_resolution' => '50x50',
       'title_field' => 0,
       'user_register_form' => FALSE,
@@ -564,7 +627,7 @@ function stanford_paragraph_types_field_default_field_instances() {
         'progress_indicator' => 'throbber',
       ),
       'type' => 'image_image',
-      'weight' => 2,
+      'weight' => 3,
     ),
   );
 
@@ -584,6 +647,13 @@ function stanford_paragraph_types_field_default_field_instances() {
         'weight' => 3,
       ),
       'full' => array(
+        'label' => 'hidden',
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_default',
+        'weight' => 3,
+      ),
+      'stanford_list' => array(
         'label' => 'hidden',
         'module' => 'link',
         'settings' => array(),
@@ -623,7 +693,7 @@ function stanford_paragraph_types_field_default_field_instances() {
       'module' => 'link',
       'settings' => array(),
       'type' => 'link_field',
-      'weight' => 5,
+      'weight' => 6,
     ),
   );
 
@@ -643,6 +713,13 @@ function stanford_paragraph_types_field_default_field_instances() {
         'weight' => 2,
       ),
       'full' => array(
+        'label' => 'hidden',
+        'module' => 'text',
+        'settings' => array(),
+        'type' => 'text_default',
+        'weight' => 2,
+      ),
+      'stanford_list' => array(
         'label' => 'hidden',
         'module' => 'text',
         'settings' => array(),
@@ -695,7 +772,7 @@ function stanford_paragraph_types_field_default_field_instances() {
         'size' => 60,
       ),
       'type' => 'text_textfield',
-      'weight' => 4,
+      'weight' => 5,
     ),
   );
 
@@ -2136,6 +2213,7 @@ function stanford_paragraph_types_field_default_field_instances() {
   t('Hero Style');
   t('Hero Video');
   t('Hide Call To Action Button');
+  t('Icon Style');
   t('Image');
   t('Image insert');
   t('Links');

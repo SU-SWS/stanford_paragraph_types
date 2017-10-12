@@ -1,149 +1,137 @@
+@import "colors";
 
 .paragraphs-item-p-icon {
   text-align: center;
-  line-height: 1em;
 
-  .field-collection-view.span4:nth-child(3n+1) {
-    clear: none;
-  }
-
-  i,
+  .field-name-field-p-icon-icon,
   .field-name-field-p-icon-image {
-    font-size: 80px;
-    height: 160px;
     width: 160px;
-    border-radius: 80px;
-    position: relative;
-    margin-bottom: -2.5px;
-  }
-
-  i::before {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .content div.field-name-field-p-icon-image {
     height: 160px;
-    width: 160px;
     border-radius: 80px;
-    display: table;
     margin: 0 auto;
+    font-size: 80px;
+    position: relative;
 
-    > div {
-      display: table-cell;
-      vertical-align: middle;
-    }
+    a {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      border-radius: 80px;
+      left: 0;
+      top: 0;
+      display: table;
 
-    img {
-      height: 80px;
-      width: 80px;
+      &:hover,
+      &:focus {
+        text-decoration: none;
+        background: rgba(255, 255, 255, .2);
+      }
+
+      > * {
+        display: table-cell;
+        vertical-align: middle;
+      }
+
+      img {
+        margin: auto;
+        vertical-align: middle;
+        display: inline-block;
+      }
     }
   }
 
-  .field-name-field-p-icon-title {
-    margin: 20px 0;
+  .field-name-field-p-icon-icon {
+    line-height: 160px;
   }
 
-  .field-name-field-p-icon-links {
-    margin-bottom: 20px;
+  .field-name-field-p-icon-image {
+    line-height: 140px;
+  }
+
+  .entity.entity-field-collection-item .field {
+    margin-bottom: 0;
+  }
+
+  img {
+    max-height: 140px;
+    max-width: 140px;
   }
 
   .color-red {
-    i,
+    .field-name-field-p-icon-icon,
     .field-name-field-p-icon-image {
-      background-color: #8c1515;
-      color: #ffffff;
+      @include paragraph-colors('red');
     }
   }
 
   .color-black {
-    i,
+    .field-name-field-p-icon-icon,
     .field-name-field-p-icon-image {
-      background-color: #000000;
-      color: #ffffff;
-    }
-  }
-
-  .color-white {
-    i,
-    .field-name-field-p-icon-image {
-      background-color: #ffffff;
-      color: #000000;
+      @include paragraph-colors('black');
     }
   }
 
   .color-cool-gray {
-    i,
+    .field-name-field-p-icon-icon,
     .field-name-field-p-icon-image {
-      background-color: #4d4f53;
-      color: #ffffff;
+      @include paragraph-colors('cool-gray');
     }
   }
 
   .color-dark-taupe {
-    i,
+    .field-name-field-p-icon-icon,
     .field-name-field-p-icon-image {
-      background-color: #928b81;
-      color: #ffffff;
+      @include paragraph-colors('dark-taupe');
     }
   }
 
   .color-light-taupe {
-    i,
+    .field-name-field-p-icon-icon,
     .field-name-field-p-icon-image {
-      background-color: #d5d0c0;
-      color: #ffffff;
+      @include paragraph-colors('light-taupe');
     }
   }
 
   .color-deep-blue {
-    i,
+    .field-name-field-p-icon-icon,
     .field-name-field-p-icon-image {
-      background-color: #006374;
-      color: #ffffff;
+      @include paragraph-colors('deep-blue');
     }
   }
 
   .color-deep-purple {
-    i,
+    .field-name-field-p-icon-icon,
     .field-name-field-p-icon-image {
-      background-color: #53284f;
-      color: #ffffff;
+      @include paragraph-colors('deep-purple');
     }
-
   }
 
   .color-bright-green {
-    i,
+    .field-name-field-p-icon-icon,
     .field-name-field-p-icon-image {
-      background-color: #009b76;
-      color: #ffffff;
+      @include paragraph-colors('bright-green');
     }
   }
 
   .color-bright-blue {
-    i,
+    .field-name-field-p-icon-icon,
     .field-name-field-p-icon-image {
-      background-color: #0f6c91;
-      color: #ffffff;
+      @include paragraph-colors('bright-blue');
     }
   }
 
   .color-bright-yellow {
-    i,
+    .field-name-field-p-icon-icon,
     .field-name-field-p-icon-image {
-      background-color: #eaab00;
-      color: #ffffff;
+      @include paragraph-colors('bright-yellow');
     }
   }
 
   .color-bright-orange {
-    i,
+    .field-name-field-p-icon-icon,
     .field-name-field-p-icon-image {
-      background-color: #e98300;
-      color: #ffffff;
+      @include paragraph-colors('bright-orange');
     }
   }
+
 }

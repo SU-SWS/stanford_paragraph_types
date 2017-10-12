@@ -609,6 +609,31 @@ function stanford_paragraph_types_field_default_field_bases() {
     'type' => 'fontawesome_icon',
   );
 
+  // Exported field_base: 'field_p_icon_icon_style'.
+  $field_bases['field_p_icon_icon_style'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_p_icon_icon_style',
+    'indexes' => array(
+      'value' => array(
+        0 => 'value',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'list',
+    'settings' => array(
+      'allowed_values' => array(
+        'icon' => 'FontAwesome Icon',
+        'image' => 'Image File',
+      ),
+      'allowed_values_function' => '',
+    ),
+    'translatable' => 0,
+    'type' => 'list_text',
+  );
+
   // Exported field_base: 'field_p_icon_image'.
   $field_bases['field_p_icon_image'] = array(
     'active' => 1,
