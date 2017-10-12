@@ -13,6 +13,7 @@ dependencies:
   - image
   - options
   - paragraphs
+  - responsive_image
   - stanford_image_styles
   - stanford_paragraph_types
   - stanford_paragraph_types_view_mode
