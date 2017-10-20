@@ -40,7 +40,7 @@ content:
     region: content
   field_p_responsive_image_cred:
     weight: 1
-    label: inline
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
