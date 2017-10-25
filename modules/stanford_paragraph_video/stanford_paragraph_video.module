@@ -13,6 +13,10 @@ function stanford_paragraph_video_preprocess_field(&$variables) {
     return;
   }
 
+  // Some always set variables.
+  $variables['items'][0]['content']['children']['#query']['showinfo'] = FALSE;
+  $variables['items'][0]['content']['children']['#query']['rel'] = FALSE;
+
   /** @var \Drupal\Core\Field\FieldItemList $autoplay_field */
   $autoplay_field = $variables['element']['#object']->get('field_p_video_autoplay');
 
@@ -22,8 +26,6 @@ function stanford_paragraph_video_preprocess_field(&$variables) {
     // If the paragraph is checked to autoplay, set the query parameter.
     if ($autoplay[0]['value']) {
       $variables['items'][0]['content']['children']['#query']['autoplay'] = TRUE;
-      $variables['items'][0]['content']['children']['#query']['showinfo'] = FALSE;
-      $variables['items'][0]['content']['children']['#query']['rel'] = FALSE;
     }
   }
 
