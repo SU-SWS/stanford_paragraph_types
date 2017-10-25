@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: stanford_hero_p_3000_x_1320
+label: 'Hero 3000 x 1320'
+effects:
+  53cb2bc3-f298-4b65-8116-e29de40d40d0:
+    uuid: 53cb2bc3-f298-4b65-8116-e29de40d40d0
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 3000
+      height: 1320
+      crop_type: focal_point

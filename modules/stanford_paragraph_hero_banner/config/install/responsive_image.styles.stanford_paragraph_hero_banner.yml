@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - image.style.stanford_hero_p_1024_x_500
+    - image.style.stanford_hero_p_1500_x_660
+    - image.style.stanford_hero_p_2048_x_1000
+    - image.style.stanford_hero_p_3000_x_1320
+  module:
+    - stanford_image_styles
+id: stanford_paragraph_hero_banner
+label: 'Stanford Paragraph Hero Banner'
+image_style_mappings:
+  -
+    breakpoint_id: stanford_image_styles.xl
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: stanford_hero_p_1500_x_660
+  -
+    breakpoint_id: stanford_image_styles.xl
+    multiplier: 2x
+    image_mapping_type: image_style
+    image_mapping: stanford_hero_p_3000_x_1320
+  -
+    breakpoint_id: stanford_image_styles.xs
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: stanford_hero_p_1024_x_500
+  -
+    breakpoint_id: stanford_image_styles.xs
+    multiplier: 2x
+    image_mapping_type: image_style
+    image_mapping: stanford_hero_p_2048_x_1000
+breakpoint_group: stanford_image_styles
+fallback_image_style: stanford_hero_p_1024_x_500

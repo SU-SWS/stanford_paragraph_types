@@ -15,7 +15,7 @@ dependencies:
     - paragraphs.paragraphs_type.stanford_paragraph_hero_banner
   module:
     - field_group
-    - image
+    - focal_point
 third_party_settings:
   field_group:
     group_display_variants:
@@ -52,8 +52,10 @@ content:
     settings:
       preview_image_style: thumbnail
       progress_indicator: throbber
+      preview_link: true
+      offsets: '50,50'
     third_party_settings: {  }
-    type: image_image
+    type: image_focal_point
     region: content
   field_p_hero_banner_page_title:
     weight: 7

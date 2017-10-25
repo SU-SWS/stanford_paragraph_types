@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - focal_point
+name: stanford_hero_p_1024_x_500
+label: 'Hero 1024 x 500'
+effects:
+  a916f17b-2040-4a52-ab21-c59583c51d18:
+    uuid: a916f17b-2040-4a52-ab21-c59583c51d18
+    id: focal_point_scale_and_crop
+    weight: 1
+    data:
+      width: 1024
+      height: 500
+      crop_type: focal_point

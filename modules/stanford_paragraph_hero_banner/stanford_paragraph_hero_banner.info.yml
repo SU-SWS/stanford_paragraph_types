@@ -10,6 +10,7 @@ dependencies:
   - field_group
   - file
   - filefield_paths
+  - focal_point
   - image
   - options
   - paragraphs
