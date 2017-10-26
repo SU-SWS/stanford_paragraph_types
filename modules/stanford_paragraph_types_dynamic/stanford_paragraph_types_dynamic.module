@@ -304,6 +304,9 @@ function stanford_paragraph_types_dynamic_field_widget_form_alter(&$element, &$f
  *   Keyed array of roles and options to limit the field.
  */
 function _stanford_paragraph_types_dynamic_alter_form_component(&$component, $limits) {
+  // Flag if we need to have the "None" option, we'll add it back at the end.
+  $has_none = isset($component['#options']['_none']);
+
   // Cardinality is greater than 1.
   if (is_array($component['#default_value'])) {
     foreach ($component['#default_value'] as $value) {
@@ -322,5 +325,10 @@ function _stanford_paragraph_types_dynamic_alter_form_component(&$component, $li
   // options. If we did that, it would erase what the admin set.
   if (empty($component['#attributes']['disabled']) || !$component['#attributes']['disabled']) {
     $component['#options'] = array_intersect_key($component['#options'], $limits['options']);
+  }
+
+  // Restore the "None" option.
+  if ($has_none) {
+    $component['#options'] = array('_none' => t('- None -')) + $component['#options'];
   }
 }
