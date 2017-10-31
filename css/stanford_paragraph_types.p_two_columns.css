@@ -9,6 +9,7 @@
   -moz-column-gap: 30px;
   column-gap: 30px;
 }
+
 @media (max-width: 767px) {
   .paragraphs-item-p-two-columns {
     -webkit-column-count: 1;

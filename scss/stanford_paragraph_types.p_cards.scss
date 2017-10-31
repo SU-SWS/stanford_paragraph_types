@@ -2,11 +2,7 @@
 
 .paragraphs-item-p-cards {
   .field-name-field-p-cards-card {
-    @media (max-width: 1199px) {
-      .group-card-title {
-        padding: 0 0.6em;
-      }
-    }
+
     @media(min-width: 767px) {
       > .field-items {
         display: flex;

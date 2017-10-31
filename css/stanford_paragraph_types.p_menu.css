@@ -4,9 +4,11 @@
   margin-bottom: 1em;
   max-width: 270px;
 }
+
 .paragraphs-item-p-menu .group-featured-image div.field {
   margin-bottom: 0;
 }
+
 @media (max-width: 767px) {
   .paragraphs-item-p-menu {
     padding: 0 1em;
