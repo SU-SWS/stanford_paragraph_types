@@ -1,5 +1,11 @@
 Stanford Paragraph Types
 -------------------------------
+7.x-1.2              2017-12-18
+-------------------------------
+- HSDO-1069 inset text at earlier breakpoint
+- HSDO-1089 restored the "None" option to dynamic paragraph fields
+- CSS and JS file name changes and improvements.
+
 7.x-1.1              2017-06-19
 -------------------------------
 - HSDO-923: Added color and texture options to teaser card paragraph type.
