@@ -3,6 +3,7 @@ core = 7.x
 package = Stanford
 version = 7.x-1.2
 dependencies[] = features
+dependencies[] = pathologic
 dependencies[] = wysiwyg
 dependencies[] = wysiwyg_filter
 features[features_api][] = api:2
