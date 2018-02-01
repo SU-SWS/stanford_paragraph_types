@@ -26,7 +26,7 @@ function stanford_paragraph_types_theme($existing, $type, $theme, $path) {
  *   New template options for fields and paragraph bundles.
  */
 function stanford_paragraph_types_theme_templates($existing, $module_name) {
-  $theme = array();
+  $theme = [];
   $module_path = drupal_get_path('module', $module_name);
   $info = system_get_info('module', $module_name);
 
@@ -40,7 +40,7 @@ function stanford_paragraph_types_theme_templates($existing, $module_name) {
 
     list(, $bundle, $field_name) = explode('-', $instance);
     // Various template patterns for the field.
-    $patterns = array("field__$field_name", "field__{$field_name}__{$bundle}");
+    $patterns = ["field__$field_name", "field__{$field_name}__{$bundle}"];
 
     foreach ($patterns as $pattern) {
       $field['template'] = str_replace('_', '-', $pattern);
@@ -57,13 +57,13 @@ function stanford_paragraph_types_theme_templates($existing, $module_name) {
   unset($paragraph['includes'], $paragraph['file']);
 
   foreach ($info['features']['paragraphs'] as $bundle) {
-    $patterns = array("paragraphs_item__$bundle");
+    $patterns = ["paragraphs_item__$bundle"];
     foreach ($patterns as $pattern) {
-      $my_paragraph = array(
+      $my_paragraph = [
         'template' => str_replace('_', '-', $pattern),
         'theme path' => $module_path,
         'path' => "$module_path/theme",
-      );
+      ];
 
       if (file_exists("{$my_paragraph['path']}/{$my_paragraph['template']}.tpl.php")) {
         $theme[$pattern] = array_merge($paragraph, $my_paragraph);
@@ -293,7 +293,7 @@ function _stanford_paragraph_types_preprocess_field_field_p_card_file(&$vars) {
     else {
       $title = $item['filename'];
     }
-    $vars['items'][$delta]['#markup'] = l($title, file_create_url($item['uri']), array('attributes' => array('class' => array('btn'))));
+    $vars['items'][$delta]['#markup'] = l($title, file_create_url($item['uri']), ['attributes' => ['class' => ['btn']]]);
   }
 }
 
@@ -347,6 +347,9 @@ function stanford_paragraph_types_entity_view_mode_alter(&$view_mode, $context) 
             switch ($entity->field_p_icon_icon_style[LANGUAGE_NONE][0]['value']) {
               case 'image':
                 $view_mode = 'stanford_list';
+                break;
+              case 'text':
+                $view_mode = 'stanford_block';
                 break;
             }
           }
@@ -459,23 +462,23 @@ function _stanford_paragraph_types_field_attach_form_p_buttons($entity_type, $en
     $item = &$form['field_p_buttons_button'][LANGUAGE_NONE][$delta];
     if ($item['#type'] == 'link_field') {
       $language = $form['#language'];
-      $parents = array('field_p_buttons_button', $language, $delta);
+      $parents = ['field_p_buttons_button', $language, $delta];
 
-      $item['remove_button'] = array(
+      $item['remove_button'] = [
         '#delta' => $delta,
         '#name' => implode('_', $parents) . '_remove_button',
         '#type' => 'submit',
         '#value' => t('Remove'),
-        '#validate' => array(),
-        '#submit' => array('stanford_paragraph_types_link_remove_submit'),
-        '#limit_validation_errors' => array(),
+        '#validate' => [],
+        '#submit' => ['stanford_paragraph_types_link_remove_submit'],
+        '#limit_validation_errors' => [],
         '#weight' => 1000,
-        '#ajax' => array(
+        '#ajax' => [
           'effect' => 'fade',
           'callback' => 'stanford_paragraph_types_link_remove_callback',
           'wrapper' => $form['field_p_buttons_button'][LANGUAGE_NONE]['add_more']['#ajax']['wrapper'],
-        ),
-      );
+        ],
+      ];
     }
   }
 }
@@ -521,17 +524,17 @@ function _stanford_paragraph_types_field_attach_validate_p_hero($entity_type, $e
   $videos = field_get_items($entity_type, $entity, 'field_p_hero_video');
 
   if (($style == 'image' || $style == 'both') && (!$images || !$images[0]['fid'])) {
-    $errors['field_p_hero_image'][LANGUAGE_NONE][0][] = array(
+    $errors['field_p_hero_image'][LANGUAGE_NONE][0][] = [
       'error' => 'field_example_invalid',
       'message' => t('Image required.'),
-    );
+    ];
   }
 
   if (($style == 'video' || $style == 'both') && (!$videos || !array_filter($videos[0]))) {
-    $errors['field_p_hero_video'][LANGUAGE_NONE][0][] = array(
+    $errors['field_p_hero_video'][LANGUAGE_NONE][0][] = [
       'error' => 'field_example_invalid',
       'message' => t('Video Required.'),
-    );
+    ];
   }
 }
 
@@ -555,8 +558,8 @@ function stanford_paragraph_types_link_remove_submit($form, &$form_state) {
   $field_state = field_form_get_state($parents, $field_name, $langcode, $form_state);
 
   for ($i = $delta; $i <= $field_state['items_count']; $i++) {
-    $old_element_address = array_merge($address, array($i + 1));
-    $new_element_address = array_merge($address, array($i));
+    $old_element_address = array_merge($address, [$i + 1]);
+    $new_element_address = array_merge($address, [$i]);
 
     $moving_element = drupal_array_get_nested_value($form, $old_element_address);
     $moving_element_value = drupal_array_get_nested_value($form_state['values'], $old_element_address);

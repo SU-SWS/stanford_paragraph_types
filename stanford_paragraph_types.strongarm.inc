@@ -128,7 +128,7 @@ function stanford_paragraph_types_strongarm() {
         'custom_settings' => FALSE,
       ),
       'stanford_block' => array(
-        'custom_settings' => FALSE,
+        'custom_settings' => TRUE,
       ),
       'stanford_list' => array(
         'custom_settings' => TRUE,

@@ -4,7 +4,8 @@
   text-align: center;
 
   .field-name-field-p-icon-icon,
-  .field-name-field-p-icon-image {
+  .field-name-field-p-icon-image,
+  .field-name-field-p-icon-text {
     width: 160px;
     height: 160px;
     border-radius: 80px;
@@ -48,6 +49,11 @@
     line-height: 140px;
   }
 
+  .field-name-field-p-icon-text {
+    font-size: 50px;
+    line-height: 160px;
+  }
+
   .entity.entity-field-collection-item .field {
     margin-bottom: 0;
   }
@@ -59,77 +65,88 @@
 
   .color-red {
     .field-name-field-p-icon-icon,
-    .field-name-field-p-icon-image {
+    .field-name-field-p-icon-image,
+    .field-name-field-p-icon-text {
       @include paragraph-colors('red');
     }
   }
 
   .color-black {
     .field-name-field-p-icon-icon,
-    .field-name-field-p-icon-image {
+    .field-name-field-p-icon-image,
+    .field-name-field-p-icon-text {
       @include paragraph-colors('black');
     }
   }
 
   .color-cool-gray {
     .field-name-field-p-icon-icon,
-    .field-name-field-p-icon-image {
+    .field-name-field-p-icon-image,
+    .field-name-field-p-icon-text {
       @include paragraph-colors('cool-gray');
     }
   }
 
   .color-dark-taupe {
     .field-name-field-p-icon-icon,
-    .field-name-field-p-icon-image {
+    .field-name-field-p-icon-image,
+    .field-name-field-p-icon-text {
       @include paragraph-colors('dark-taupe');
     }
   }
 
   .color-light-taupe {
     .field-name-field-p-icon-icon,
-    .field-name-field-p-icon-image {
+    .field-name-field-p-icon-image,
+    .field-name-field-p-icon-text {
       @include paragraph-colors('light-taupe');
     }
   }
 
   .color-deep-blue {
     .field-name-field-p-icon-icon,
-    .field-name-field-p-icon-image {
+    .field-name-field-p-icon-image,
+    .field-name-field-p-icon-text {
       @include paragraph-colors('deep-blue');
     }
   }
 
   .color-deep-purple {
     .field-name-field-p-icon-icon,
-    .field-name-field-p-icon-image {
+    .field-name-field-p-icon-image,
+    .field-name-field-p-icon-text {
       @include paragraph-colors('deep-purple');
     }
   }
 
   .color-bright-green {
     .field-name-field-p-icon-icon,
-    .field-name-field-p-icon-image {
+    .field-name-field-p-icon-image,
+    .field-name-field-p-icon-text {
       @include paragraph-colors('bright-green');
     }
   }
 
   .color-bright-blue {
     .field-name-field-p-icon-icon,
-    .field-name-field-p-icon-image {
+    .field-name-field-p-icon-image,
+    .field-name-field-p-icon-text {
       @include paragraph-colors('bright-blue');
     }
   }
 
   .color-bright-yellow {
     .field-name-field-p-icon-icon,
-    .field-name-field-p-icon-image {
+    .field-name-field-p-icon-image,
+    .field-name-field-p-icon-text {
       @include paragraph-colors('bright-yellow');
     }
   }
 
   .color-bright-orange {
     .field-name-field-p-icon-icon,
-    .field-name-field-p-icon-image {
+    .field-name-field-p-icon-image,
+    .field-name-field-p-icon-text {
       @include paragraph-colors('bright-orange');
     }
   }

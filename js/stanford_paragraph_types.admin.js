@@ -82,11 +82,19 @@
           case 'icon':
             showFields.push('.field-name-field-p-icon-icon');
             hideFields.push('.field-name-field-p-icon-image');
+            hideFields.push('.field-name-field-p-icon-text');
             break;
 
           case 'image':
             showFields.push('.field-name-field-p-icon-image');
             hideFields.push('.field-name-field-p-icon-icon');
+            hideFields.push('.field-name-field-p-icon-text');
+            break;
+
+          case 'text':
+            showFields.push('.field-name-field-p-icon-text');
+            hideFields.push('.field-name-field-p-icon-icon');
+            hideFields.push('.field-name-field-p-icon-image');
             break;
 
         }

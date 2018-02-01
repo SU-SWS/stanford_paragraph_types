@@ -627,6 +627,7 @@ function stanford_paragraph_types_field_default_field_bases() {
       'allowed_values' => array(
         'icon' => 'FontAwesome Icon',
         'image' => 'Image File',
+        'text' => 'Text/Number',
       ),
       'allowed_values_function' => '',
     ),
@@ -683,6 +684,27 @@ function stanford_paragraph_types_field_default_field_bases() {
     ),
     'translatable' => 0,
     'type' => 'link_field',
+  );
+
+  // Exported field_base: 'field_p_icon_text'.
+  $field_bases['field_p_icon_text'] = array(
+    'active' => 1,
+    'cardinality' => 1,
+    'deleted' => 0,
+    'entity_types' => array(),
+    'field_name' => 'field_p_icon_text',
+    'indexes' => array(
+      'format' => array(
+        0 => 'format',
+      ),
+    ),
+    'locked' => 0,
+    'module' => 'text',
+    'settings' => array(
+      'max_length' => 5,
+    ),
+    'translatable' => 0,
+    'type' => 'text',
   );
 
   // Exported field_base: 'field_p_icon_title'.
