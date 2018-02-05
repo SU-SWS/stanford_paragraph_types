@@ -836,6 +836,7 @@ function stanford_paragraph_types_field_group_info() {
     'weight' => '1',
     'children' => array(
       0 => 'field_p_icon_columns',
+      1 => 'field_p_icons_per_row',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(

@@ -301,22 +301,30 @@ function _stanford_paragraph_types_preprocess_field_field_p_card_file(&$vars) {
  * Helper for stanford_paragraph_types_preprocess_field().
  */
 function _stanford_paragraph_types_preprocess_field_field_p_icon_columns(&$vars) {
-  $offset = 0;
-  // If not a multiple of 3, set the offset to center the field item.
-  if (count($vars['items']) % 3) {
-    $offset = -2 * (count($vars['items']) % 3 - 3);
+  $object = $vars['element']['#object'];
+  $num_per_row = 3;
+  if (!empty($object->field_p_icons_per_row)) {
+    $num_per_row = $object->field_p_icons_per_row[LANGUAGE_NONE][0]['value'];
   }
 
-  foreach ($vars['items'] as $delta => &$item) {
-    $item['#attributes']['class'][] = 'span4';
+  // Use chuncks to group spans togeather.
+  $vars['item_chunks'] = array_chunk($vars['items'], $num_per_row);
+  $vars['partial_offset'] = FALSE;
 
-    // Sets the offset to the first item of the last group of 3. Ex:
-    // 1 or 2 items - the very first will get the offset. 4 or 5 - the 4th
-    // item will get the offset and so on.
-    if ($offset && !($delta % 3) && count($vars['items']) - $delta < 3) {
-      $item['#attributes']['class'][] = "offset$offset";
+  foreach ($vars['item_chunks'] as $delta => $chunk) {
+    $vars['offsets'][$delta] = '';
+
+    // Use this to apply an offset to the first of each row.
+    if (count($chunk) % $num_per_row) {
+      $offset = (12 - (12 / $num_per_row * count($chunk))) / 2;
+      if ($offset != floor($offset)) {
+        $offset = floor($offset);
+        $vars['partial_offset'] = TRUE;
+      }
+      $vars['offsets'][$delta] = "offset$offset";
     }
   }
+  $vars['span_per_item'] = ' span' . 12 / $num_per_row;
 }
 
 /**

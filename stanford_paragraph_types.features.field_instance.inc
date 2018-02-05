@@ -1573,7 +1573,47 @@ function stanford_paragraph_types_field_default_field_instances() {
       'module' => 'field_collection',
       'settings' => array(),
       'type' => 'field_collection_embed',
-      'weight' => 0,
+      'weight' => 2,
+    ),
+  );
+
+  // Exported field_instance: 'paragraphs_item-p_icon-field_p_icons_per_row'.
+  $field_instances['paragraphs_item-p_icon-field_p_icons_per_row'] = array(
+    'bundle' => 'p_icon',
+    'default_value' => array(
+      0 => array(
+        'value' => 3,
+      ),
+    ),
+    'deleted' => 0,
+    'description' => '',
+    'display' => array(
+      'default' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 1,
+      ),
+      'paragraphs_editor_preview' => array(
+        'label' => 'above',
+        'settings' => array(),
+        'type' => 'hidden',
+        'weight' => 0,
+      ),
+    ),
+    'entity_type' => 'paragraphs_item',
+    'field_name' => 'field_p_icons_per_row',
+    'label' => 'Icons per Row',
+    'required' => 1,
+    'settings' => array(
+      'user_register_form' => FALSE,
+    ),
+    'widget' => array(
+      'active' => 1,
+      'module' => 'options',
+      'settings' => array(),
+      'type' => 'options_select',
+      'weight' => 1,
     ),
   );
 
@@ -2329,6 +2369,7 @@ function stanford_paragraph_types_field_default_field_instances() {
   t('Hero Video');
   t('Hide Call To Action Button');
   t('Icon Style');
+  t('Icons per Row');
   t('Image');
   t('Image insert');
   t('Links');

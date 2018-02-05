@@ -11,14 +11,27 @@
     <div class="field-label"<?php print $title_attributes; ?>><?php print $label ?>:&nbsp;</div>
   <?php endif; ?>
 
-  <?php foreach ($items as $delta => $item): ?>
-    <?php if(!($delta % 3)): ?>
-      <div class="field-items row-fluid clearfix"<?php print $content_attributes; ?>>
-    <?php endif; ?>
-        <?php print render($item); ?>
-    <?php if($delta % 3 == 2 || $delta == count($items) - 1): ?>
-      </div>
-    <?php endif; ?>
+  <?php if(isset($item_chunks)): ?>
+    <?php foreach($item_chunks as $chunk_delta => $items): ?>
 
-  <?php endforeach; ?>
+      <div class="field-items clearfix <?php print $partial_offset ? 'partial-offset' : ''; ?>"<?php print $content_attributes; ?>>
+        <?php foreach ($items as $delta => $item): ?>
+          <div class="collection-field-item <?php print $delta % 2 ? 'odd ' : 'even '; print $offsets[$chunk_delta]; $offsets[$chunk_delta] = ''; print $span_per_item;?>"<?php print $item_attributes[$delta]; ?>>
+            <?php print render($item); ?>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    <?php endforeach; ?>
+
+  <?php else: ?>
+    <?php
+    // The original template for fields within the field collection.
+    ?>
+    <div class="field-items"<?php print $content_attributes; ?>>
+      <?php foreach ($items as $delta => $item): ?>
+        <div class="field-item <?php print $delta % 2 ? 'odd' : 'even'; ?>"<?php print $item_attributes[$delta]; ?>><?php print render($item); ?></div>
+      <?php endforeach; ?>
+    </div>
+  <?php endif; ?>
+
 </div>
