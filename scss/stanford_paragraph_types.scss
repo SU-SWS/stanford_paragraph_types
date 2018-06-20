@@ -7,4 +7,9 @@
     float: none;
     max-width: 1170px;
   }
+
+  @media (max-width: 1169px) {
+    padding-right: 30px;
+    padding-left: 30px;
+  }
 }

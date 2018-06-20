@@ -28,7 +28,7 @@
 
   .group-overlay-text {
     position: absolute;
-    background-color: #ffffff;
+    background-color: #fff;
     padding: 40px;
 
     .field.field-name-field-p-hero-headline,
@@ -66,7 +66,7 @@
     font-size: 0;
     left: calc(50% - 70px);
     top: calc(50% - 70px);
-    color: #ffffff;
+    color: #fff;
 
     &:focus,
     &:hover {
@@ -93,6 +93,13 @@
   .style-custom-styles-dark & {
     .group-overlay-text {
       background: #2e2d29;
+    }
+  }
+
+  @media (max-width: 1169px) {
+    &.entity-paragraphs-item {
+      padding-right: 0;
+      padding-left: 0;
     }
   }
 }
