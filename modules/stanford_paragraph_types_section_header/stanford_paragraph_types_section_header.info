@@ -1,7 +1,7 @@
 name = Stanford Paragraph Types Section Header
 core = 7.x
 package = Stanford
-version = 7.x-1.4
+version = 7.x-1.x-dev
 dependencies[] = features
 dependencies[] = field_group
 dependencies[] = list
