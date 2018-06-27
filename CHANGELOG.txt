@@ -1,5 +1,11 @@
 Stanford Paragraph Types
 -------------------------------
+
+7.x-1.4              2018-06-26
+-------------------------------
+- added a little padding for mobile display
+- added composer.json
+
 7.x-1.3              2018-04-16
 -------------------------------
 - HSDO-1153 configured pathologic for minimal filter
