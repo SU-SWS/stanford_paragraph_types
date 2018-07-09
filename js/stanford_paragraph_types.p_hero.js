@@ -3,44 +3,77 @@
  * Applies some functionality on the paragraph types.
  */
 
+var tag = document.createElement('script');
+tag.src = 'https://www.youtube.com/iframe_api';
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+function onYouTubeIframeAPIReady() {
+  // After Youtube API is loaded, we can do what we need.
+  Drupal.behaviors.stanfordParagraphPHero.youTubeReady()
+}
+
 (function ($) {
   Drupal.behaviors.stanfordParagraphPHero = {
-    attach: function (context, settings) {
-      $('.field-name-field-p-hero-image', context).each(function () {
-        var video = $(this).siblings('.field-name-field-p-hero-video');
+    youTubeReady: function () {
 
-        if (video.length) {
-          $(video).find('iframe').attr('title', Drupal.t('Video Player'));
-          var videoUrl = $(video).find('div[data-video-embed-url]').attr('data-video-embed-url');
+      var i = 0;
 
-          var play = $('<a>', {
-            class: 'play-video',
-            href: videoUrl,
-            html: $('<i>', {
-              class: 'fa fa-youtube-play icon-youtube-play',
-              html: 'Play Video',
-              'aria-label': Drupal.t('Play Video - Opens to the video website')
-            })
-          }).click(function (e) {
+      $('.field-name-field-p-hero-image').once('youtube', function () {
+        var $video = $(this).siblings('.field-name-field-p-hero-video').find('iframe');
 
-            // Mouse has eventPhase 3, keyboard has 2.
-            if (e.eventPhase == 3) {
-              e.preventDefault();
-              $dad = $(this).parent();
-              $dad.hide();
-              $dad.siblings('.group-overlay-text').hide();
-              var iframe = $(video).find('iframe')[0];
-
-              iframe.src += "&autoplay=1";
-              $(iframe).attr('onload', 'this.contentWindow.focus()');
-              $(video).show();
-            }
-
-          });
-
-          $(this).prepend(play);
+        if (!$video.length) {
+          return;
         }
+
+        // Gives the video unique ID's and a title.
+        $video.attr('id', 'hero-video-' + i)
+          .attr('onload', 'this.contentWindow.focus()')
+          .attr('title', Drupal.t('Video Player'));
+
+        // Initialze the Youtube api.
+        new YT.Player($video.attr('id'), {
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+        i++;
       });
+
+      function onPlayerReady(event) {
+        var fieldWrapper = event.target.a.closest('.field-name-field-p-hero-video');
+        var imageOverlay = $(fieldWrapper).siblings('.field-name-field-p-hero-image');
+
+        var play = $('<a>', {
+          class: 'play-video',
+          href: event.target.getVideoUrl(),
+          html: $('<i>', {
+            class: 'fa fa-youtube-play icon-youtube-play',
+            html: 'Play Video',
+            'aria-label': Drupal.t('Play Video - Opens to the video website')
+          })
+        }).click(function (e) {
+          // Mouse has eventPhase 3, keyboard has 2.
+          if (e.eventPhase == 3) {
+            e.preventDefault();
+            $dad = $(this).parent();
+            $dad.hide();
+            $dad.siblings('.group-overlay-text').hide();
+            // $(iframe).attr('onload', 'this.contentWindow.focus()');
+            event.target.playVideo();
+            $(fieldWrapper).show();
+          }
+        });
+
+        $(imageOverlay).prepend(play);
+
+
+      }
+
+      function onPlayerStateChange(event) {
+        // changeBorderColor(event.data);
+      }
     }
   }
 })(jQuery);
