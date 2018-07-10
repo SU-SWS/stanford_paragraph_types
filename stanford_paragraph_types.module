@@ -180,11 +180,6 @@ function _stanford_paragraph_types_preprocess_entity_paragraphs_item(&$vars) {
       elseif ($style == 'video') {
         unset($vars['content']['field_p_hero_image']);
       }
-      else {
-        // For videos with image overlay, we want to autoplay the video after
-        // image is clicked.
-        $vars['content']['field_p_hero_video'][0][0]['#url'] .= '&autoplay=1';
-      }
 
       break;
 
