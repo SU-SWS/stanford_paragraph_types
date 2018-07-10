@@ -3,14 +3,6 @@
  * Applies some functionality on the paragraph types.
  */
 
-/**
- * Called automatically by YouTube's API.
- */
-function onYouTubeIframeAPIReady() {
-  // After Youtube API is loaded, we can do what we need.
-  Drupal.behaviors.stanfordParagraphPHero.youTubeReady();
-}
-
 (function ($) {
   Drupal.behaviors.stanfordParagraphPHero = {
 
@@ -134,3 +126,11 @@ function onYouTubeIframeAPIReady() {
 
   }
 })(jQuery);
+
+/**
+ * Called automatically by YouTube's API.
+ */
+function onYouTubeIframeAPIReady() {
+  // After Youtube API is loaded, we can do what we need.
+  Drupal.behaviors.stanfordParagraphPHero.youTubeReady();
+}
