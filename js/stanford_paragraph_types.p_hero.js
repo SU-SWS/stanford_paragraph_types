@@ -8,18 +8,17 @@
  */
 function onYouTubeIframeAPIReady() {
   // After Youtube API is loaded, we can do what we need.
-  Drupal.behaviors.stanfordParagraphPHero.youTubeReady()
+  Drupal.behaviors.stanfordParagraphPHero.youTubeReady();
 }
 
 (function ($) {
   Drupal.behaviors.stanfordParagraphPHero = {
-    heroFunctions: this,
 
     attach: function (context, settings) {
       var i = 0;
-      $('.field-name-field-p-hero-video iframe').each(function () {
+      $('.field-name-field-p-hero-video iframe').each(function (i, iframe) {
         // Make sure the video has an ID attribute.
-        if (typeof $(this).attr('id') == 'undefined') {
+        if (typeof $(iframe).attr('id') == 'undefined') {
           $(this).attr('id', 'hero-video-' + i);
         }
         i++;
@@ -42,11 +41,13 @@ function onYouTubeIframeAPIReady() {
 
     },
 
+    /**
+     * Called after YouTubes API is ready and adds event reactions to videos.
+     */
     youTubeReady: function () {
-      $heroFunctions = this;
 
-      $('.field-name-field-p-hero-image').once('youtube', function () {
-        var $video = $(this).siblings('.field-name-field-p-hero-video').find('iframe[src*="youtube"]');
+      $('.field-name-field-p-hero-image').once('youtube', function (i, heroImage) {
+        var $video = $(heroImage).siblings('.field-name-field-p-hero-video').find('iframe[src*="youtube"]');
 
         if (!$video.length) {
           return;
@@ -68,7 +69,7 @@ function onYouTubeIframeAPIReady() {
         $fieldWrapper = $(event.target.a.closest('.field-name-field-p-hero-video'));
         $imageOverlay = $fieldWrapper.siblings('.field-name-field-p-hero-image');
 
-        var play = $heroFunctions.getPlayerButton(event.target.getVideoUrl());
+        var play = Drupal.behaviors.stanfordParagraphPHero.getPlayerButton(event.target.getVideoUrl());
         play.click(function (e) {
           // Mouse has eventPhase 3, keyboard has 2.
           if (e.eventPhase == 3) {
@@ -85,15 +86,17 @@ function onYouTubeIframeAPIReady() {
       }
     },
 
+    /**
+     * After vimeo API is loaded, add the play button and listener to iframes.
+     */
     vimeoReady: function () {
-      $('.field-name-field-p-hero-video iframe[src*="vimeo"]').each(function () {
-        $video = $(this);
-        var player = new Vimeo.Player($video);
+      $('.field-name-field-p-hero-video iframe[src*="vimeo"]').each(function (i, iframe) {
+        var player = new Vimeo.Player($(iframe));
 
-        $fieldWrapper = $($video.closest('.field-name-field-p-hero-video'));
+        $fieldWrapper = $($(iframe).closest('.field-name-field-p-hero-video'));
         $imageOverlay = $fieldWrapper.siblings('.field-name-field-p-hero-image');
 
-        var play = Drupal.behaviors.stanfordParagraphPHero.getPlayerButton($video.attr('src'));
+        var play = Drupal.behaviors.stanfordParagraphPHero.getPlayerButton($(iframe).attr('src'));
 
         play.click(function (e) {
           // Mouse has eventPhase 3, keyboard has 2.
