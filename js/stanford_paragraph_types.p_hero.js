@@ -30,7 +30,6 @@
           Drupal.behaviors.stanfordParagraphPHero.vimeoReady();
         });
       }
-
     },
 
     /**
@@ -39,29 +38,18 @@
     youTubeReady: function () {
 
       $('.field-name-field-p-hero-image').once('youtube', function (i, heroImage) {
-        var $video = $(heroImage).siblings('.field-name-field-p-hero-video').find('iframe[src*="youtube"]');
+        var $fieldWrapper = $(heroImage).siblings('.field-name-field-p-hero-video');
+        var $video = $fieldWrapper.find('iframe[src*="youtube"]');
 
         if (!$video.length) {
           return;
         }
         $video.attr('onload', 'this.contentWindow.focus()')
           .attr('title', Drupal.t('Video Player'));
+        var ytPlayer = new YT.Player($video.attr('id'));
 
-        // Initialze the Youtube api.
-        new YT.Player($video.attr('id'), {events: {'onReady': onYoutubePlayerReady}});
-      });
+        var play = Drupal.behaviors.stanfordParagraphPHero.getPlayerButton($video.attr('src'));
 
-      /**
-       * When the youtube video is ready to play, we'll add a play button over
-       * the image and add the click listener.
-       *
-       * @param event
-       */
-      function onYoutubePlayerReady(event) {
-        $fieldWrapper = $(event.target.a.closest('.field-name-field-p-hero-video'));
-        $imageOverlay = $fieldWrapper.siblings('.field-name-field-p-hero-image');
-
-        var play = Drupal.behaviors.stanfordParagraphPHero.getPlayerButton(event.target.getVideoUrl());
         play.click(function (e) {
           // Mouse has eventPhase 3, keyboard has 2.
           if (e.eventPhase == 3) {
@@ -69,13 +57,18 @@
             $dad = $(this).parent();
             $dad.hide();
             $dad.siblings('.group-overlay-text').hide();
-            event.target.playVideo();
+
             $fieldWrapper.show();
+            try {
+              ytPlayer.playVideo()();
+            }
+            catch (e) {
+            }
           }
         });
 
-        $imageOverlay.prepend(play);
-      }
+        $(heroImage).prepend(play);
+      });
     },
 
     /**
