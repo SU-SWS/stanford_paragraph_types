@@ -665,7 +665,7 @@ function stanford_paragraph_types_preprocess_video_embed_field_embed_code(&$vari
   // https://www.drupal.org/project/video_embed_field/issues/2580459
   foreach (explode('&', $parsed_url['query']) as $query_part) {
     list($key) = explode('=', $query_part);
-    if (isset($variables['style_settings'])) {
+    if (isset($variables['style_settings'][$key])) {
       $variables['embed_code'] = str_replace("$key=" . $variables['style_settings'][$key], $query_part, $variables['embed_code']);
     }
   }
