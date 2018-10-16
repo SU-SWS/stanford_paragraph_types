@@ -649,3 +649,24 @@ function stanford_paragraph_types_link_remove_callback($form, &$form_state) {
 
   return $element;
 }
+
+/**
+ * Implements hook_preprocess().
+ */
+function stanford_paragraph_types_preprocess_video_embed_field_embed_code(&$variables) {
+  $parsed_url = parse_url($variables['url']);
+  if (!isset($parsed_url['query'])) {
+    return;
+  }
+
+  // When a user inputs a video url and provides parameters for the video
+  // options such as `rel=0` or something, we have to correct the embed code
+  // to allow those options. This requires the patch from
+  // https://www.drupal.org/project/video_embed_field/issues/2580459
+  foreach (explode('&', $parsed_url['query']) as $query_part) {
+    list($key) = explode('=', $query_part);
+    if (isset($variables['style_settings'][$key])) {
+      $variables['embed_code'] = str_replace("$key=" . $variables['style_settings'][$key], $query_part, $variables['embed_code']);
+    }
+  }
+}
