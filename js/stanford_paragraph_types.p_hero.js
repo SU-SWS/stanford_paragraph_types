@@ -31,7 +31,15 @@
               $dad.siblings('.group-overlay-text').hide();
               var iframe = $(video).find('iframe')[0];
 
-              iframe.src += "&autoplay=1";
+              // If autoplay is already there, change it to play.
+              if (iframe.src.search('autoplay=0') >= 1) {
+                iframe.src = iframe.src.replace('autoplay=0', 'autoplay=1');
+              }
+              // Otherwise add it.
+              else {
+                iframe.src += "&autoplay=1";
+              }
+
               $(iframe).attr('onload', 'this.contentWindow.focus()');
               $(video).show();
             }
