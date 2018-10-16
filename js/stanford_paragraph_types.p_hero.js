@@ -32,10 +32,10 @@
     /**
      * Called after YouTubes API is ready and adds event reactions to videos.
      */
-    youTubeReady: function (context) {
+    youTubeReady: function () {
       // For each of the hero images, but only once, add onload/onready events
       // to its sibling video player.
-      $('.field-name-field-p-hero-image', context).once('youtube', function (i, heroImage) {
+      $('.field-name-field-p-hero-image').once('youtube', function (i, heroImage) {
 
         // Look for a hero video.
         var $video = $(heroImage).siblings('.field-name-field-p-hero-video').find('iframe[src*="youtube"]');
@@ -75,7 +75,7 @@
         var $play = Drupal.behaviors.stanfordParagraphPHero.getPlayerButton(event.target.getVideoUrl());
 
         // Add a click event to hide the hero image and play the video.
-        play.click(function (e) {
+        $play.click(function (e) {
           // Mouse has eventPhase 3, keyboard has 2. we only add the mouse
           // event so that a keyboard will navigate the user to the respective
           // YouTube page.
@@ -101,8 +101,8 @@
     /**
      * After vimeo API is loaded, add the play button and listener to iframes.
      */
-    vimeoReady: function (context) {
-      $('.field-name-field-p-hero-video iframe[src*="vimeo"]', context).each(function (i, iframe) {
+    vimeoReady: function () {
+      $('.field-name-field-p-hero-video iframe[src*="vimeo"]').each(function (i, iframe) {
         var player = new Vimeo.Player($(iframe));
 
         $fieldWrapper = $($(iframe).closest('.field-name-field-p-hero-video'));
@@ -110,7 +110,7 @@
 
         var $play = Drupal.behaviors.stanfordParagraphPHero.getPlayerButton($(iframe).attr('src'));
 
-        play.click(function (e) {
+        $play.click(function (e) {
           // Mouse has eventPhase 3, keyboard has 2. we only add the mouse
           // event so that a keyboard will navigate the user to the respective
           // Vimeo page.
