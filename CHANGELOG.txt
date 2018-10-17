@@ -1,6 +1,10 @@
 Stanford Paragraph Types
 -------------------------------
 
+7.x-1.5              2018-10-17
+-------------------------------
+- Updates to the autoplay handling and youtube/vimeo javascript apis.
+
 7.x-1.4              2018-06-26
 -------------------------------
 - added a little padding for mobile display
