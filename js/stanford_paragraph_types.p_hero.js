@@ -69,8 +69,8 @@
        * @param event
        */
       function onYoutubePlayerReady(event) {
-        $fieldWrapper = $(event.target.a.closest('.field-name-field-p-hero-video'));
-        $imageOverlay = $fieldWrapper.siblings('.field-name-field-p-hero-image');
+        var $fieldWrapper = $(event.target.a.closest('.field-name-field-p-hero-video'));
+        var $imageOverlay = $fieldWrapper.siblings('.field-name-field-p-hero-image');
 
         var $play = Drupal.behaviors.stanfordParagraphPHero.getPlayerButton(event.target.getVideoUrl());
 
@@ -82,10 +82,9 @@
           if (e.eventPhase == 3) {
             e.preventDefault();
 
-            // Dad is the hero image.
-            $dad = $(this).parent();
-            $dad.hide();
-            $dad.siblings('.group-overlay-text').hide();
+            var $heroImage = $(this).parent();
+            $heroImage.hide();
+            $heroImage.siblings('.group-overlay-text').hide();
 
             // Play and show the video.
             $fieldWrapper.show();
