@@ -1,6 +1,10 @@
 Stanford Paragraph Types
 -------------------------------
 
+7.x-1.6              2018-12-06
+-------------------------------
+- Bug fix in hero paragraph type javascript when multiple of the same item are on the same page.
+
 7.x-1.5              2018-10-17
 -------------------------------
 - Updates to the autoplay handling and youtube/vimeo javascript apis.
