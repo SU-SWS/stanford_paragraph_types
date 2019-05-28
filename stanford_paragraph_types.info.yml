@@ -5,6 +5,5 @@ core: 8.x
 package: Stanford
 dependencies:
   - paragraphs
-  - stanford_components
-  - stanford_paragraph_types_view_mode
+  - jumpstart_ui
 version: 8.x-1.0-dev
