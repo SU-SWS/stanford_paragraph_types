@@ -1,4 +1,0 @@
-bundle: Stanford
-excluded:
-  - core.entity_view_mode.paragraph.alternative_1
-required: true

@@ -5,6 +5,12 @@
   "license": "GPL-2.0+",
   "minimum-stability": "dev",
   "require": {
-      "composer/installers": "^1.2"
+    "drupal/allowed_formats": "~1.1",
+    "drupal/ds": "~3.3",
+    "drupal/entity_reference_revisions": "~1.6",
+    "drupal/field_formatter_class": "~1.1",
+    "drupal/paragraphs": "~1.8",
+    "drupal/viewfield": "3.0@alpha",
+    "su-sws/jumpstart_ui": "dev-8.x-1.x"
   }
 }

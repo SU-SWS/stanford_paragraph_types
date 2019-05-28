@@ -1,6 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: stanford_expandable_card
-label: 'Expandable Card'
-behavior_plugins: {  }

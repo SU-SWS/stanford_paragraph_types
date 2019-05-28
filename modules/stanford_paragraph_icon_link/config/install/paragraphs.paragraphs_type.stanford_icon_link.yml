@@ -1,6 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: stanford_icon_link
-label: 'Icon Link'
-behavior_plugins: {  }

@@ -1,6 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: stanford_callout_block
-label: 'Callout Block'
-behavior_plugins: {  }

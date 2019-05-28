@@ -6,4 +6,4 @@ package: Stanford
 dependencies:
   - paragraphs
   - jumpstart_ui
-version: 8.x-1.0-dev
+version: 8.x-2.0-dev

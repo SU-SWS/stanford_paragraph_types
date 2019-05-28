@@ -8,9 +8,8 @@ dependencies:
   - field
   - field_formatter_class
   - paragraphs
-  - stanford_paragraph_section_header
   - stanford_paragraph_types
   - viewfield
   - views
-version: 8.x-1.0
+version: 8.x-2.0-dev
 description: 'A simple paragraph type for Viewfields'

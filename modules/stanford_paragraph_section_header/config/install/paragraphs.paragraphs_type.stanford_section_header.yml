@@ -1,6 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: stanford_section_header
-label: 'Section Header'
-behavior_plugins: {  }

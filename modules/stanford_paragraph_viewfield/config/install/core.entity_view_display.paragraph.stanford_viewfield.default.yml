@@ -14,7 +14,7 @@ third_party_settings:
   ds:
     layout:
       id: layout_basic
-      library: stanford_layouts/basic
+      library: jumpstart_ui/basic
       disable_css: false
       entity_classes: all_classes
       settings: {  }
